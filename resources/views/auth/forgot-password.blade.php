@@ -1,7 +1,4 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-    </div>
+<x-layouts.guest title="Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.">
 
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -10,16 +7,28 @@
         @csrf
 
         <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div class="input-group mb-3">
+            <input id="email" type="email" class="form-control {{ $errors->get('email') ? 'is-invalid' : '' }}"
+                   {{ $errors->get('email') ? 'aria-invalid="true" aria-describedby="email-error"' : '' }} placeholder="{{ __('Email') }}"
+                   name="email" value="{{ old('email') }}" required autofocus>
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-envelope"></span>
+                </div>
+            </div>
+            @error('email')
+            <span id="email-error" class="error invalid-feedback">{{ $message }}</span>
+            @enderror
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
+        <div class="row">
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary btn-block">{{ __('Email Password Reset Link') }}</button>
+            </div>
+            <!-- /.col -->
         </div>
     </form>
-</x-guest-layout>
+    <p class="mt-3 mb-1">
+        <a href="{{ route('login') }}">{{ __('Login') }}</a>
+    </p>
+</x-layouts.guest>
