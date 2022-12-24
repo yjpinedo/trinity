@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class BibleSchool extends Model
 {
     use HasFactory;
+
+    // Relationship
+    public function members()
+    {
+        return $this->belongsToMany(Member::class);
+    }
 }

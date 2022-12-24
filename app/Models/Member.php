@@ -24,4 +24,9 @@ class Member extends Model
     {
         $this->belongsTo(Neighborhood::class);
     }
+
+    public function bible_schools()
+    {
+        return $this->belongsToMany(BibleSchool::class);
+    }
 }
