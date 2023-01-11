@@ -12,6 +12,9 @@ class SectorLivewire extends Component
     use WithOrderTrait, WithPagination;
 
     protected $paginationTheme = 'bootstrap';
+    protected $queryString = [
+        'search' => ['except' => '']
+    ];
 
     public $search = '';
 
@@ -20,6 +23,11 @@ class SectorLivewire extends Component
         'name' => 'Name',
         'description' => 'Description',
     ];
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {
