@@ -13,6 +13,8 @@ class SectorLivewire extends Component
 
     protected $paginationTheme = 'bootstrap';
 
+    public $search = '';
+
     public $columns = [
         'id' => '#',
         'name' => 'Name',
@@ -21,7 +23,17 @@ class SectorLivewire extends Component
 
     public function render()
     {
-        $posts = Sector::orderBy($this->sortColumn, $this->sortDirection)->paginate(10);
-        return view('livewire.admin.sector-livewire', ['sectors' => $posts])->layout('components.layouts.app');
+        $sectors = Sector::orderBy($this->sortColumn, $this->sortDirection);
+
+        if ($this->search && $this->search != '') {
+            $sectors->where(function ($query) {
+                $query->orWhere('id', 'like', "%$this->search%")
+                    ->orWhere('name', 'like', "%$this->search%")
+                    ->orWhere('description', 'like', "%$this->search%");
+            });
+        }
+
+        return view('livewire.admin.sector-livewire', ['sectors' => $sectors->paginate(10)])
+            ->layout('components.layouts.app');
     }
 }

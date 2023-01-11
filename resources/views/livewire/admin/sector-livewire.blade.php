@@ -4,7 +4,7 @@
     </x-slot>
 
     <x-slot name="page">
-        {{ __('Managment Sectors') }}
+        {{ __('Management Sectors') }}
     </x-slot>
 
     <x-slot name="user">
@@ -14,10 +14,16 @@
     <div class="row">
         <div class="col-12">
             <div class="card card-outline card-primary">
-                <div class="card-header align-middle">
-                    <h3 class="card-title"><i class="fas fa-list-ol text-primary"></i> {{ __('List of sectors') }}</h3>
-                    <x-app-config.button title="{{ __('Create new sector') }}" icon="fas fa-sitemap"
-                        class="btn-sm float-right" />
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-item-center">
+                        <h3 class="card-title"><i class="fas fa-list-ol text-primary"></i> {{ __('List of sectors') }}
+                        </h3>
+                        <div class="col-6">
+                            <x-app-config.input wire:model.debounce.500ms="search" placeholder="{{ __('Search id, title or description') }}" />
+                        </div>
+                        <x-app-config.button title="{{ __('Create new sector') }}" icon="fas fa-sitemap"
+                            class="btn-sm" />
+                    </div>
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
