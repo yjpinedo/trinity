@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">--}}
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+    @livewireStyles
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -58,8 +59,8 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">{{ $user ?? '' }}</a></li>
-                            <li class="breadcrumb-item active">{{ $page ?? 'Dashboard' }}</li>
+                            <li class="breadcrumb-item text-primary">{{ $user ?? '' }}</li>
+                            <li class="breadcrumb-item active">{{ $page ?? '' }}</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -135,6 +136,6 @@
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>--}}
 <!-- AdminLTE App -->
 <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+@livewireScripts
 </body>
 </html>
-

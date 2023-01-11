@@ -9,8 +9,9 @@ class Sector extends Model
 {
     use HasFactory;
 
-    // Relationship
+    protected $fillable = ['name', 'description', 'image'];
 
+    // Relationship
     public function neighborhoods ()
     {
         return $this->hasMany(Neighborhood::class);

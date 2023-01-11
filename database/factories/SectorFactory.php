@@ -17,7 +17,9 @@ class SectorFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->sentence(),
+            'description' => $this->faker->text(),
+            //'image' => 'sectors/' . $this->faker->image('public/storage/sectors', 640, 480, null, false),
         ];
     }
 }

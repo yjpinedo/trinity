@@ -1,9 +1,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ route('dashboard') }}" class="brand-link">
-        <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
-             class="brand-image img-circle elevation-3"
-             style="opacity: .8">
+        <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+            style="opacity: .8">
         <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
     </a>
 
@@ -16,13 +15,13 @@
                 <li class="nav-header">{{ __('MENU OPTIONS') }}</li>
                 <li class="nav-item">
                     <a href="{{ route('dashboard') }}"
-                       class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                        class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-home"></i>
                         <p>{{ __('Dashboard') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="../sectors.html" class="nav-link">
+                    <a href="{{ route('admin.sectors.index') }}" class="nav-link {{ request()->routeIs('admin.sectors.index') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-sitemap"></i>
                         <p>{{ __('Sectors') }}</p>
                     </a>
@@ -125,8 +124,8 @@
                 <li class="nav-item">
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();"
-                           class="nav-link">
+                        <a href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); this.closest('form').submit();" class="nav-link">
                             <i class="nav-icon fas fa-sign-out-alt"></i>
                             <p>{{ __('Logout') }}</p>
                         </a>
