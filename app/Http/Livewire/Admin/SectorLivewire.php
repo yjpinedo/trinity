@@ -13,10 +13,10 @@ class SectorLivewire extends Component
 {
     use WithOrderTrait, WithPagination, WithFileUploads;
 
-    public $search = '';
-    public $name, $description, $image;
-    public $identificationImage;
     public $btnAction = 'save';
+    public $identificationImage;
+    public $name, $description, $image;
+    public $search = '';
     public $sectorFind, $imageFind;
 
     public $columns = [
@@ -24,6 +24,8 @@ class SectorLivewire extends Component
         'name' => 'Name',
         'description' => 'Description',
     ];
+
+    protected $listeners = ['delete'];
 
     protected $paginationTheme = 'bootstrap';
 
@@ -37,11 +39,28 @@ class SectorLivewire extends Component
         'image' => 'nullable|image:max2048',
     ];
 
-    protected $listeners = ['delete'];
-
-    public function updatingSearch()
+    public function delete(Sector $sector)
     {
-        $this->resetPage();
+        if ($sector->image) {
+            Storage::delete($sector->image);
+        }
+        $sector->delete();
+        $this->resetTo();
+    }
+
+    public function edit(Sector $sector)
+    {
+        $this->btnAction = 'edit';
+        $this->sectorFind = $sector;
+        $this->name = $sector->name;
+        if ($sector->description) {
+            $this->description = $sector->description;
+        }
+        if ($sector->image) {
+            $this->imageFind = $sector->image;
+        } else {
+            $this->imageFind = null;
+        }
     }
 
     public function mount()
@@ -63,6 +82,14 @@ class SectorLivewire extends Component
 
         return view('livewire.admin.sector-livewire', ['sectors' => $sectors->paginate(10)])
             ->layout('components.layouts.app');
+    }
+
+    public function resetTo()
+    {
+        $this->reset(['name', 'description', 'image']);
+        $this->identificationImage = rand();
+        $this->imageFind = null;
+        $this->btnAction = 'save';
     }
 
     public function save()
@@ -108,33 +135,8 @@ class SectorLivewire extends Component
         $this->emit('alert', ['icon' => 'success', 'message' => "The sector $sectorNew->name $action successfully"]);
     }
 
-    public function resetTo()
+    public function updatingSearch()
     {
-        $this->reset(['name', 'description', 'image']);
-        $this->identificationImage = rand();
-        $this->btnAction = 'save';
-    }
-
-    public function edit(Sector $sector)
-    {
-        $this->btnAction = 'edit';
-        $this->sectorFind = $sector;
-        $this->name = $sector->name;
-        if ($sector->description) {
-            $this->description = $sector->description;
-        }
-        if ($sector->image) {
-            $this->imageFind = $sector->image;
-        } else {
-            $this->imageFind = null;
-        }
-    }
-
-    public function delete(Sector $sector)
-    {
-        if ($sector->image) {
-            Storage::delete($sector->image);
-        }
-        $sector->delete();
+        $this->resetPage();
     }
 }

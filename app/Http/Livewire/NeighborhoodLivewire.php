@@ -12,11 +12,11 @@ class NeighborhoodLivewire extends Component
 {
     use WithOrderTrait, WithPagination;
 
-    public $sector_id_search = '';
-    public $sector_id = '';
+    public $btnAction = 'save';
     public $name, $description, $neighborhood;
     public $search = '';
-    public $btnAction = 'save';
+    public $sector_id = '';
+    public $sector_id_search = '';
 
     public $columns = [
         'id' => '#',
@@ -55,14 +55,6 @@ class NeighborhoodLivewire extends Component
         $this->emit('selected-item', $neighborhood->sector_id);
     }
 
-    public function resetTo()
-    {
-        $this->reset(['name', 'description', 'sector_id']);
-        $this->sector_id = '';
-        $this->btnAction = 'save';
-        $this->emit('clear-select');
-    }
-
     public function render()
     {
         $neighborhoods = Neighborhood::orderBy($this->sortColumn, $this->sortDirection)->with('sector');
@@ -80,6 +72,14 @@ class NeighborhoodLivewire extends Component
 
         return view('livewire.neighborhood-livewire', ['neighborhoods' => $neighborhoods->paginate(10), 'sectors' => Sector::pluck('name', 'id')])
             ->layout('components.layouts.app');
+    }
+
+    public function resetTo()
+    {
+        $this->reset(['name', 'description', 'sector_id']);
+        $this->sector_id = '';
+        $this->btnAction = 'save';
+        $this->emit('clear-select');
     }
 
     public function save()

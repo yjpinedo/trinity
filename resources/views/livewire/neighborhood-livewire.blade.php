@@ -83,7 +83,7 @@
                     <div class="card p-2">
                         <div class="row">
                             <div class="col-6">
-                                <x-app-config.input placeholder="{{ __('Search by id, name') }}" wire:model="search" />
+                                <x-app-config.input placeholder="{{ __('Search by id, name') }}" wire:model.debounce.500ms="search" />
                             </div>
                             <div class="col-6">
                                 <div wire:ignore>

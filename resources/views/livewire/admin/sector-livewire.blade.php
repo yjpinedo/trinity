@@ -13,26 +13,88 @@
         {{ __('Management Sectors') }}
     </x-slot>
 
+    <x-slot name="pageActive">
+        {{ __('Sectors') }}
+    </x-slot>
+
     <x-slot name="user">
         {{ Auth::user()->name }}
     </x-slot>
 
     <div class="row">
-        <div class="col-8">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-4">
             <div class="card card-outline card-primary">
-                <div class="card-header">
-                    <div class="d-flex justify-content-between align-item-center">
-                        <h3 class="card-title"><i class="fas fa-list-ol text-primary"></i> {{ __('List of sectors') }}
-                        </h3>
-                        <div class="">
-                            <x-app-config.input wire:model.debounce.500ms="search"
-                                placeholder="{{ __('Search id, title or description') }}" />
+                <div class="card-header text-center p-2">
+                    <h6><i class="fas fa-sitemap text-primary"></i> {{ __('Create new sector') }}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="ml-4 tab-content" wire:loading wire:target="image">
+                        <div class="tab-loading">
+                            <div>
+                                <h1 class=""><i class="fa fa-sync fa-spin text-primary mr-2"></i>
+                                    {{ __('Loading image') }}</h1>
+                            </div>
                         </div>
                     </div>
+
+                    @if ($image)
+                        <img class="img-fluid" src="{{ $image->temporaryUrl() }}">
+                    @elseif($imageFind)
+                        <img class="img-fluid" src="{{ Storage::url($imageFind) }}">
+                    @endif
+
+                    <x-app-config.form submit="save">
+                        <div class="form-group">
+                            <x-app-config.label value="Name" />
+                            <x-app-config.input wire:model.defer="name" />
+                            <x-app-config.label-error for="name" />
+                        </div>
+                        <div class="form-group">
+                            <x-app-config.label value="Description" />
+                            <textarea class="form-control" rows="5" wire:model.defer="description"></textarea>
+                            <x-app-config.label-error for="description" />
+                        </div>
+                        <div class="form-group">
+                            <x-app-config.label value="Image" /> <br>
+                            <input type="file" wire:model="image" id="{{ $identificationImage }}">
+                            <br>
+                            <x-app-config.label-error for="image" />
+                            <div class="form-group">
+                                <x-slot name="actions">
+                                    <div class="d-flex justify-content-between alingn-items-center">
+                                        <x-app-config.button type="button" title="Reset" color="secondary"
+                                            icon="fas fa-ban" wire:click="resetTo()" />
+                                        @if ($btnAction == 'save')
+                                            <x-app-config.button type="sumit" title="Register" icon="fas fa-plus" />
+                                        @else
+                                            <x-app-config.button type="sumit" title="Edit" icon="fas fa-edit"
+                                                color="info" />
+                                        @endif
+                                    </div>
+                                </x-slot>
+                            </div>
+                        </div>
+                    </x-app-config.form>
                 </div>
-                <div class="card-body p-0">
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-8">
+            <div class="card card-outline card-primary">
+                <div class="card-header text-center p-2">
+                    <h6 class=""><i class="fas fa-table text-primary"></i> {{ __('List of sectors') }}
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="card p-2">
+                        <div class="row">
+                            <div class="col-12">
+                                <x-app-config.input wire:model.debounce.500ms="search"
+                                    placeholder="{{ __('Search by id, title, description') }}" />
+                            </div>
+                        </div>
+                    </div>
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                     @foreach ($columns as $key => $column)
@@ -66,7 +128,10 @@
                                             </th>
                                         @endif
                                     @endforeach
-                                    <th style="width: 10%" class="text-center"></th>
+                                    <th style="width: 10%" class="text-center">
+                                        {{ __('Actions') }}
+                                        <i class="fas fa-cogs text-primary"></i>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -101,62 +166,6 @@
                         </div>
                     </div>
                 @endif
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="card card-outline card-primary">
-                <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-sitemap text-primary"></i> {{ __('Create new sector') }}
-                </div>
-                <div class="card-body">
-
-                    <div class="ml-4 tab-content" wire:loading wire:target="image">
-                        <div class="tab-loading">
-                            <div>
-                                <h1 class=""><i class="fa fa-sync fa-spin text-primary mr-2"></i>
-                                    {{ __('Loading image') }}</h1>
-                            </div>
-                        </div>
-                    </div>
-
-                    @if ($image)
-                        <img class="img-fluid" src="{{ $image->temporaryUrl() }}">
-                    @elseif($imageFind)
-                        <img class="img-fluid" src="{{ Storage::url($imageFind) }}">
-                    @endif
-
-                    <x-app-config.form submit="save">
-                        <div class="form-group">
-                            <x-app-config.label value="Name" />
-                            <x-app-config.input wire:model.defer="name" />
-                            <x-app-config.label-error for="name" />
-                        </div>
-                        <div class="form-group">
-                            <x-app-config.label value="Description" />
-                            <textarea class="form-control" rows="5" wire:model.defer="description"></textarea>
-                            <x-app-config.label-error for="description" />
-                        </div>
-                        <div class="form-group">
-                            <x-app-config.label value="Image" /> <br>
-                            <input type="file" wire:model="image" id="{{ $identificationImage }}">
-                            <br>
-                            <x-app-config.label-error for="image" />
-                            <div class="form-group">
-                                <x-slot name="actions">
-                                    <div class="">
-                                        <x-app-config.button type="button" title="Reset" color="secondary"
-                                            icon="fas fa-ban" wire:click="resetTo()" />
-                                        @if ($btnAction == 'save')
-                                            <x-app-config.button type="sumit" title="Register" icon="fas fa-plus" />
-                                        @else
-                                            <x-app-config.button type="sumit" title="Edit" icon="fas fa-edit"
-                                                color="warning" />
-                                        @endif
-                                    </div>
-                                </x-slot>
-                            </div>
-                    </x-app-config.form>
-                </div>
             </div>
         </div>
     </div>
@@ -209,5 +218,4 @@
             });
         </script>
     @endpush
-
 </div>
