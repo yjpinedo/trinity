@@ -88,13 +88,19 @@ class SectorLivewire extends Component
             $action = 'updated';
             $this->imageFind = null;
         } else {
-            $image = $this->image->store('public/admin/sectors');
 
             $sectorNew = Sector::create([
                 'name' => $this->name,
                 'description' => $this->description,
-                'image' => $image,
+
             ]);
+
+            if ($this->image) {
+                $image = $this->image->store('public/admin/sectors');
+                $sectorNew->image = $image;
+                $sectorNew->save();
+            }
+
             $action = 'registered';
         }
 
