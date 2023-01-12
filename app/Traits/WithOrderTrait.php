@@ -5,7 +5,7 @@ namespace App\Traits;
 trait WithOrderTrait
 {
     public $sortColumn = 'id';
-    public $sortDirection = 'asc';
+    public $sortDirection = 'desc';
 
     public function sortBy($column)
     {
@@ -13,7 +13,7 @@ trait WithOrderTrait
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } else {
             $this->sortColumn = $column;
-            $this->sortDirection = 'asc';
+            $this->sortDirection = 'desc';
         }
     }
 }

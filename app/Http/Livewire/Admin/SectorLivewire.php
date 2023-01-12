@@ -4,19 +4,20 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\Sector;
 use App\Traits\WithOrderTrait;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
 class SectorLivewire extends Component
 {
-    use WithOrderTrait, WithPagination;
-
-    protected $paginationTheme = 'bootstrap';
-    protected $queryString = [
-        'search' => ['except' => '']
-    ];
+    use WithOrderTrait, WithPagination, WithFileUploads;
 
     public $search = '';
+    public $name, $description, $image;
+    public $identificationImage;
+    public $btnAction = 'save';
+    public $sectorFind, $imageFind;
 
     public $columns = [
         'id' => '#',
@@ -24,9 +25,28 @@ class SectorLivewire extends Component
         'description' => 'Description',
     ];
 
+    protected $paginationTheme = 'bootstrap';
+
+    protected $queryString = [
+        'search' => ['except' => '']
+    ];
+
+    protected $rules = [
+        'name' => 'required|max:255|min:2',
+        'description' => 'nullable|max:500|min:3',
+        'image' => 'nullable|image:max2048',
+    ];
+
+    protected $listeners = ['delete'];
+
     public function updatingSearch()
     {
         $this->resetPage();
+    }
+
+    public function mount()
+    {
+        $this->identificationImage = rand();
     }
 
     public function render()
@@ -43,5 +63,72 @@ class SectorLivewire extends Component
 
         return view('livewire.admin.sector-livewire', ['sectors' => $sectors->paginate(10)])
             ->layout('components.layouts.app');
+    }
+
+    public function save()
+    {
+        $this->validate();
+
+        $sectorNew = null;
+        $action = null;
+
+        if ($this->sectorFind) {
+            if ($this->image) {
+                if ($this->imageFind) {
+                    Storage::delete($this->imageFind);
+                }
+                $this->sectorFind->image = $this->image->store('public/admin/sectors');
+            }
+            $this->sectorFind->name = $this->name;
+            $this->sectorFind->description = $this->description;
+
+            $this->sectorFind->save();
+
+            $sectorNew = $this->sectorFind;
+            $action = 'updated';
+            $this->imageFind = null;
+        } else {
+            $image = $this->image->store('public/admin/sectors');
+
+            $sectorNew = Sector::create([
+                'name' => $this->name,
+                'description' => $this->description,
+                'image' => $image,
+            ]);
+            $action = 'registered';
+        }
+
+        $this->resetTo();
+        $this->emit('alert', ['icon' => 'success', 'message' => "The sector $sectorNew->name $action successfully"]);
+    }
+
+    public function resetTo()
+    {
+        $this->reset(['name', 'description', 'image']);
+        $this->identificationImage = rand();
+        $this->btnAction = 'save';
+    }
+
+    public function edit(Sector $sector)
+    {
+        $this->btnAction = 'edit';
+        $this->sectorFind = $sector;
+        $this->name = $sector->name;
+        if ($sector->description) {
+            $this->description = $sector->description;
+        }
+        if ($sector->image) {
+            $this->imageFind = $sector->image;
+        } else {
+            $this->imageFind = null;
+        }
+    }
+
+    public function delete(Sector $sectorDelete)
+    {
+        if ($sectorDelete->image) {
+            Storage::delete($sectorDelete->image);
+        }
+        $sectorDelete->delete();
     }
 }

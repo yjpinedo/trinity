@@ -1,7 +1,7 @@
 @props(['idModal'])
 
 <div>
-    <div class="modal fade" id="{{ $idModal }}">
+    <div class="modal fade" wire:ignore id="{{ $idModal }}">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
