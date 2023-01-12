@@ -27,7 +27,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="../neighborhood.html" class="nav-link">
+                    <a href="{{ route('admin.neighborhood.index') }}" class="nav-link {{ request()->routeIs('admin.neighborhood.index') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-map-marked-alt"></i>
                         <p>{{ __('Neighborhood') }}</p>
                     </a>
