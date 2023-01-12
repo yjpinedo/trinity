@@ -9,8 +9,9 @@ class Neighborhood extends Model
 {
     use HasFactory;
 
-    // Relationship
+    protected $fillable = ['name', 'description', 'sector_id'];
 
+    // Relationship
     public function sector()
     {
         return $this->belongsTo(Sector::class);

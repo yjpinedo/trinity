@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\Admin\SectorLivewire;
+use App\Http\Livewire\NeighborhoodLivewire;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,6 +17,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
     Route::prefix('admin')->group(function () {
         Route::get('/sectors', SectorLivewire::class)->name('admin.sectors.index');
+        Route::get('/neighborhood', NeighborhoodLivewire::class)->name('admin.neighborhood.index');
     });
 });
 

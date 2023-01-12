@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Sector;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,11 @@ class NeighborhoodFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->sentence(4),
+            'description' => $this->faker->text(),
+            'sector_id' => Sector::all()->random()->id,
+            'created_at' => $this->faker->date(),
+            'updated_at' => $this->faker->date(),
         ];
     }
 }

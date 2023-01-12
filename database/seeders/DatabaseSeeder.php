@@ -16,9 +16,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        Storage::deleteDirectory('public/sectors');
+        //Storage::deleteDirectory('public/sectors');
         //Storage::makeDirectory('public/sectors');
+        \App\Models\User::factory()->create([
+            'name' => 'Administrator',
+            'email' => 'admin@admin.com'
+        ]);
         \App\Models\Sector::factory(5)->create();
+        \App\Models\Neighborhood::factory(200)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

@@ -130,11 +130,11 @@ class SectorLivewire extends Component
         }
     }
 
-    public function delete(Sector $sectorDelete)
+    public function delete(Sector $sector)
     {
-        if ($sectorDelete->image) {
-            Storage::delete($sectorDelete->image);
+        if ($sector->image) {
+            Storage::delete($sector->image);
         }
-        $sectorDelete->delete();
+        $sector->delete();
     }
 }
