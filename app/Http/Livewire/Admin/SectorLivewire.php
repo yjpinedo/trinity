@@ -90,6 +90,7 @@ class SectorLivewire extends Component
         $this->identificationImage = rand();
         $this->imageFind = null;
         $this->btnAction = 'save';
+        $this->emit('hide-btn');
     }
 
     public function save()

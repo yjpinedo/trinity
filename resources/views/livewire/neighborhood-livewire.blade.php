@@ -47,19 +47,21 @@
                         </div>
                         <div class="form-group">
                             <x-app-config.label value="Name" />
-                            <x-app-config.input wire:model.defer="name" />
+                            <x-app-config.input wire:model.defer="name" id="idNameNeighborhood"/>
                             <x-app-config.label-error for="name" />
                         </div>
                         <div class="form-group">
                             <x-app-config.label value="Description" />
-                            <textarea class="form-control" rows="5" wire:model.defer="description"></textarea>
+                            <textarea class="form-control" rows="5" wire:model.defer="description" id="idDescriptionNeighborhood"></textarea>
                             <x-app-config.label-error for="description" />
                         </div>
                         <div class="form-group">
                             <x-slot name="actions">
                                 <div class="d-flex justify-content-between alingn-items-center">
-                                    <x-app-config.button type="button" title="Reset" color="secondary"
-                                        icon="fas fa-ban" wire:click="resetTo()" />
+                                    <div wire:ignore>
+                                        <x-app-config.button type="button" title="Reset" color="secondary"
+                                        icon="fas fa-ban" wire:click="resetTo()" id="btnResetNeighborhood"/>
+                                    </div>
                                     @if ($btnAction == 'save')
                                         <x-app-config.button type="submit" title="Register" icon="fas fa-plus" />
                                     @else
@@ -83,7 +85,8 @@
                     <div class="card p-2">
                         <div class="row">
                             <div class="col-6">
-                                <x-app-config.input placeholder="{{ __('Search by id, name') }}" wire:model.debounce.500ms="search" />
+                                <x-app-config.input placeholder="{{ __('Search by id, name') }}"
+                                    wire:model.debounce.500ms="search" />
                             </div>
                             <div class="col-6">
                                 <div wire:ignore>
@@ -183,6 +186,13 @@
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             document.addEventListener('livewire:load', function() {
+
+                $('#btnResetNeighborhood').hide();
+
+                hideShowBtn('input', '#idNameNeighborhood', '#btnResetNeighborhood');
+                hideShowBtn('input', '#idDescriptionNeighborhood', '#btnResetNeighborhood');
+                hideShowBtn('change', '#selectSectorSave', '#btnResetNeighborhood');
+
                 //Initialize Select2 Elements
                 // Filtered
                 let select2 = $('#selectSectorId').select2({
@@ -249,6 +259,16 @@
                     }
                 });
             });
+
+            function hideShowBtn(event, field, button) {
+                $(field).on(event, () => {
+                    if ($(field).val() !== '') {
+                        $(button).show();
+                    } else {
+                        $(button).hide();
+                    }
+                });
+            }
         </script>
     @endpush
 </div>
