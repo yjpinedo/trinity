@@ -6,6 +6,6 @@
     @if ($btnAction == 'save')
         <x-app-config.button type="sumit" title="Register" icon="fas fa-save text-indigo" color="default"/>
     @else
-        <x-app-config.button type="sumit" title="Edit" icon="fas fa-edit text-cyan" color="default" />
+        <x-app-config.button type="sumit" title="Update" icon="fas fa-save text-indigo" color="default" />
     @endif
 </div>

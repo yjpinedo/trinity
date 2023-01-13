@@ -17,7 +17,8 @@ class BibleSchoolFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->sentence(2),
+            'description' => $this->faker->text(),
         ];
     }
 }

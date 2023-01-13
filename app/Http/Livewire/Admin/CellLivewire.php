@@ -80,6 +80,7 @@ class CellLivewire extends Component
         $this->reset(['name', 'description', 'neighborhood_id']);
         $this->neighborhood_id = '';
         $this->btnAction = 'save';
+        $this->cell = new Cell;
         $this->emit('clear-select');
     }
 

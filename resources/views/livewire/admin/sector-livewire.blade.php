@@ -104,11 +104,12 @@
                                         <td>{{ $sector->name }}</td>
                                         <td>{{ str($sector->description)->limit(100, '...') }}</td>
                                         <td style="width: 12%" class="align-middle text-center">
-                                            <x-app-config.button title="Delete" color="outline-light text-danger" icon="fas fa-trash"
-                                                class="btn-sm"
+                                            <x-app-config.button title="Delete" color="outline-light text-danger"
+                                                icon="fas fa-trash" class="btn-sm"
                                                 wire:click="$emit('deleteSector', {{ $sector }})" />
-                                            <x-app-config.button title="Edit" color="outline-light text-cyan" icon="fas fa-edit"
-                                                class="btn-sm" wire:click="edit('{{ $sector->id }}')" />
+                                            <x-app-config.button title="Edit" color="outline-light text-cyan"
+                                                icon="fas fa-edit" class="btn-sm"
+                                                wire:click="edit('{{ $sector->id }}')" />
                                         </td>
                                     </tr>
                                 @empty
@@ -187,6 +188,8 @@
                     timerProgressBar: true,
                 });
             });
+
+            Livewire.on('show-btn', () => $('#btnResetSectors').show());
 
             Livewire.on('hide-btn', () => $('#btnResetSectors').hide());
 

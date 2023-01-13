@@ -79,6 +79,7 @@ class NeighborhoodLivewire extends Component
         $this->reset(['name', 'description', 'sector_id']);
         $this->sector_id = '';
         $this->btnAction = 'save';
+        $this->neighborhood = new Neighborhood;
         $this->emit('clear-select');
     }
 
