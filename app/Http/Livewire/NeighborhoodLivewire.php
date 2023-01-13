@@ -98,8 +98,12 @@ class NeighborhoodLivewire extends Component
             ]
         );
 
+        if ($this->neighborhood) {
+            $action = 'updated';
+        }
+
         $this->resetTo();
-        $this->emit('alert', ['icon' => 'success', 'message' => "The sector $neighborhoodNew->name registered successfully"]);
+        $this->emit('alert', ['icon' => 'success', 'message' => "The sector $neighborhoodNew->name $action successfully"]);
     }
 
     public function updatingSearch()

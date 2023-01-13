@@ -9,6 +9,8 @@ class Cell extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'description', 'neighborhood_id', 'leader_id'];
+
     // Relationship
     public function leader()
     {
