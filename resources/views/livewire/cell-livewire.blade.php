@@ -72,18 +72,7 @@
                         </div>
                         <div class="form-group">
                             <x-slot name="actions">
-                                <div class="d-flex justify-content-between alingn-items-center">
-                                    <div wire:ignore>
-                                        <x-app-config.button type="button" title="Reset" color="secondary"
-                                            icon="fas fa-ban" wire:click="resetTo()" id="btnResetCell" />
-                                    </div>
-                                    @if ($btnAction == 'save')
-                                        <x-app-config.button type="submit" title="Register" icon="fas fa-plus" />
-                                    @else
-                                        <x-app-config.button type="submit" title="Update" icon="fas fa-edit"
-                                            color="info" />
-                                    @endif
-                                </div>
+                                @include('partials.actions', ['idButtonReset' => 'Cell'])
                             </x-slot>
                         </div>
                     </x-app-config.form>
@@ -119,41 +108,13 @@
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    @foreach ($columns as $key => $column)
-                                        @if ($key == 'id')
-                                            <th class="align-middle" style="width: 8%; cursor: pointer;"
-                                                wire:click="sortBy('{{ $key }}')">
-                                                {{ __($column) }}
-                                                @if ($sortColumn == $key)
-                                                    @if ($sortDirection == 'asc')
-                                                        <i class="fas fa-sort-numeric-up text-primary"></i>
-                                                    @else
-                                                        <i class="fas fa-sort-numeric-down-alt text-primary"></i>
-                                                    @endif
-                                                @else
-                                                    <i class="fas fa-sort text-primary"></i>
-                                                @endif
-                                            </th>
-                                        @else
-                                            <th style="width: 12%; cursor: pointer;"
-                                                wire:click="sortBy('{{ $key }}')">
-                                                {{ __($column) }}
-                                                @if ($sortColumn == $key)
-                                                    @if ($sortDirection == 'asc')
-                                                        <i class="fas fa-sort-alpha-up text-primary"></i>
-                                                    @else
-                                                        <i class="fas fa-sort-alpha-down-alt text-primary"></i>
-                                                    @endif
-                                                @else
-                                                    <i class="fas fa-sort text-primary"></i>
-                                                @endif
-                                            </th>
-                                        @endif
-                                    @endforeach
-                                    <th style="width: 10%" class="text-center">
-                                        {{ __('Actions') }}
-                                        <i class="fas fa-cogs text-primary"></i>
-                                    </th>
+                                    @include('partials.columns-table', [
+                                        'percentage' => [
+                                            'id' => '7%',
+                                            'column' => '13%',
+                                            'action' => '14%',
+                                        ],
+                                    ])
                                 </tr>
                             </thead>
                             <tbody>
@@ -164,15 +125,15 @@
                                         <td>{{ $cellTable->created_at }}</td>
                                         <td>{{ $cellTable->neighborhood->name }}</td>
                                         <td style="width: 12%" class="align-middle text-center">
-                                            <x-app-config.button color="outline-light text-danger" icon="fas fa-trash"
+                                            <x-app-config.button  title="Delete" color="outline-light text-danger" icon="fas fa-trash"
                                                 class="btn-sm" wire:click="$emit('deleteCell', {{ $cellTable }})" />
-                                            <x-app-config.button color="outline-light text-cyan" icon="fas fa-edit"
+                                            <x-app-config.button title="Edit" color="outline-light text-cyan" icon="fas fa-edit"
                                                 class="btn-sm" wire:click="edit('{{ $cellTable->id }}')" />
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5">{{ __('Not cells lists') }}</td>
+                                        <td colspan="5" class="text-center">{{ __('Not cells lists') }}</td>
                                     </tr>
                                 @endforelse
                             </tbody>
