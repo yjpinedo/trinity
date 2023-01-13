@@ -8,15 +8,15 @@
     @endpush
 
     <x-slot name="title">
-        {{ __('Neighborhood') }}
+        {{ __('Cells') }}
     </x-slot>
 
     <x-slot name="page">
-        {{ __('Management Neighborhood') }}
+        {{ __('Management Cells') }}
     </x-slot>
 
     <x-slot name="pageActive">
-        {{ __('Neighborhood') }}
+        {{ __('Cells') }}
     </x-slot>
 
     <x-slot name="user">
@@ -28,31 +28,46 @@
             <div class="card card-outline card-primary">
                 <div class="card-header  text-center p-2">
                     <h6><i class="fas fa-map-marked-alt text-primary"></i>
-                        {{ __('Create new sector') }}
+                        {{ __('Create new cells') }}
                     </h6>
                 </div>
                 <div class="card-body">
                     <x-app-config.form submit="save">
                         <div class="form-group">
-                            <x-app-config.label value="{{ __('Sector') }}" /> <br>
+                            <x-app-config.label value="{{ __('Neighborhood') }}" /> <br>
                             <div wire:ignore>
-                                <select class="form-control select2bs4" id="selectSectorSave" style="width: 100%;">
+                                <select class="form-control select2bs4" id="selectNeighborhoodSave"
+                                    style="width: 100%;">
                                     <option value="">{{ __('Choose') }}</option>
-                                    @foreach ($sectors as $key => $sector)
-                                        <option value="{{ $key }}">{{ $sector }}</option>
+                                    @foreach ($neighborhoods as $key => $neighborhood)
+                                        <option value="{{ $key }}">{{ $neighborhood }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <x-app-config.label-error for="sector_id" />
+                            <x-app-config.label-error for="neighborhood_id" />
                         </div>
+                        @if (count($leaders) > 0)
+                            <div class="form-group">
+                                <x-app-config.label value="{{ __('Neighborhood') }}" /> <br>
+                                <div wire:ignore>
+                                    <select class="form-control select2bs4" id="selectLeaderSave" style="width: 100%;">
+                                        <option value="">{{ __('Choose') }}</option>
+                                        @foreach ($leaders as $key => $leader)
+                                            <option value="{{ $key }}">{{ $leader }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <x-app-config.label-error for="neighborhood_id" />
+                            </div>
+                        @endif
                         <div class="form-group">
                             <x-app-config.label value="Name" />
-                            <x-app-config.input wire:model.defer="name" id="idNameNeighborhood"/>
+                            <x-app-config.input wire:model.defer="name" id="idNameCell" />
                             <x-app-config.label-error for="name" />
                         </div>
                         <div class="form-group">
                             <x-app-config.label value="Description" />
-                            <textarea class="form-control" rows="5" wire:model.defer="description" id="idDescriptionNeighborhood"></textarea>
+                            <textarea class="form-control" rows="5" wire:model.defer="description" id="idDescriptionCell"></textarea>
                             <x-app-config.label-error for="description" />
                         </div>
                         <div class="form-group">
@@ -60,7 +75,7 @@
                                 <div class="d-flex justify-content-between alingn-items-center">
                                     <div wire:ignore>
                                         <x-app-config.button type="button" title="Reset" color="secondary"
-                                        icon="fas fa-ban" wire:click="resetTo()" id="btnResetNeighborhood"/>
+                                            icon="fas fa-ban" wire:click="resetTo()" id="btnResetCell" />
                                     </div>
                                     @if ($btnAction == 'save')
                                         <x-app-config.button type="submit" title="Register" icon="fas fa-plus" />
@@ -78,7 +93,7 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-8">
             <div class="card card-outline card-primary">
                 <div class="card-header text-center p-2">
-                    <h6><i class="fas fa-table text-primary"></i> {{ __('List of neighborhoods') }}
+                    <h6><i class="fas fa-table text-primary"></i> {{ __('List of cells') }}
                     </h6>
                 </div>
                 <div class="card-body">
@@ -90,17 +105,16 @@
                             </div>
                             <div class="col-6">
                                 <div wire:ignore>
-                                    <select class="form-control select2bs4" id="selectSectorId" style="width: 100%">
+                                    <select class="form-control select2bs4" id="selectCellId" style="width: 100%">
                                         <option value="">{{ __('Choose') }}</option>
-                                        @foreach ($sectors as $key => $sector)
-                                            <option value="{{ $key }}">{{ $sector }}</option>
+                                        @foreach ($neighborhoods as $key => $neighborhood)
+                                            <option value="{{ $key }}">{{ $neighborhood }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover">
                             <thead>
@@ -143,35 +157,34 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($neighborhoods as $neighborhoodTable)
+                                @forelse ($cells as $cellTable)
                                     <tr>
-                                        <td>{{ $neighborhoodTable->id }}</td>
-                                        <td>{{ $neighborhoodTable->name }}</td>
-                                        <td>{{ $neighborhoodTable->created_at }}</td>
-                                        <td>{{ $neighborhoodTable->sector->name }}</td>
+                                        <td>{{ $cellTable->id }}</td>
+                                        <td>{{ $cellTable->name }}</td>
+                                        <td>{{ $cellTable->created_at }}</td>
+                                        <td>{{ $cellTable->neighborhood->name }}</td>
                                         <td style="width: 12%" class="align-middle text-center">
                                             <x-app-config.button color="outline-light text-danger" icon="fas fa-trash"
-                                                class="btn-sm"
-                                                wire:click="$emit('deleteNeighborhood', {{ $neighborhoodTable }})" />
+                                                class="btn-sm" wire:click="$emit('deleteCell', {{ $cellTable }})" />
                                             <x-app-config.button color="outline-light text-cyan" icon="fas fa-edit"
-                                                class="btn-sm" wire:click="edit('{{ $neighborhoodTable->id }}')" />
+                                                class="btn-sm" wire:click="edit('{{ $cellTable->id }}')" />
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4">{{ __('Not neighborhoods lists') }}</td>
+                                        <td colspan="5">{{ __('Not cells lists') }}</td>
                                     </tr>
                                 @endforelse
                             </tbody>
                         </table>
                     </div>
                 </div>
-                @if ($neighborhoods->hasPages())
+                @if ($cells->hasPages())
                     <div class="card-footer bg-white">
                         <div class="d-flex justify-content-between align-item-center pb-0">
-                            {{ __('Showing') }} {!! $neighborhoods->firstItem() !!} {{ __('to') }} {!! $neighborhoods->lastItem() !!}
-                            {{ __('of') }} {!! $neighborhoods->total() !!} {{ __('entries') }}
-                            {!! $neighborhoods->links() !!}
+                            {{ __('Showing') }} {!! $cells->firstItem() !!} {{ __('to') }} {!! $cells->lastItem() !!}
+                            {{ __('of') }} {!! $cells->total() !!} {{ __('entries') }}
+                            {!! $cells->links() !!}
                         </div>
                     </div>
                 @endif
@@ -187,34 +200,36 @@
         <script>
             document.addEventListener('livewire:load', function() {
 
-                $('#btnResetNeighborhood').hide();
-
-                hideShowBtn('input', '#idNameNeighborhood', '#btnResetNeighborhood');
-                hideShowBtn('input', '#idDescriptionNeighborhood', '#btnResetNeighborhood');
-                hideShowBtn('change', '#selectSectorSave', '#btnResetNeighborhood');
+                // Hide - Show btn
+                $('#btnResetCell').hide();
+                hideShowBtn('input', '#idNameCell', '#btnResetCell');
+                hideShowBtn('input', '#idDescriptionCell', '#btnResetCell');
+                hideShowBtn('change', '#selectNeighborhoodSave', '#btnResetCell');
 
                 //Initialize Select2 Elements
                 // Filtered
-                let select2 = $('#selectSectorId').select2({
+                let select2 = $('#selectCellId').select2({
                     theme: 'bootstrap4'
                 }).on('change', () => {
-                    @this.set('sector_id_search', select2.select2("val"));
+                    @this.set('neighborhood_id_serach', select2.select2("val"));
                 });
 
                 // Save
-                let select2Save = $('#selectSectorSave').select2({
+                let select2NeighborhoodSave = $('#selectNeighborhoodSave').select2({
                     theme: 'bootstrap4'
                 }).on('change', () => {
-                    @this.set('sector_id', select2Save.select2("val"));
+                    @this.set('neighborhood_id', select2NeighborhoodSave.select2("val"));
+                });
+
+                let select2LeaderSave = $('#selectLeaderSave').select2({
+                    theme: 'bootstrap4'
+                }).on('change', () => {
+                    @this.set('leader_id', select2LeaderSave.select2("val"));
                 });
             })
 
             Livewire.on('clear-select', () => {
-                $('#selectSectorSave').val('').trigger('change');
-            });
-
-            Livewire.on('selected-item', sector_id => {
-                $('#selectSectorSave').val(sector_id).trigger('change');
+                $('#selectNeighborhoodSave').val('').trigger('change');
             });
 
             Livewire.on('alert', (data) => {
@@ -230,7 +245,11 @@
                 });
             });
 
-            Livewire.on('deleteNeighborhood', neighborhood => {
+            Livewire.on('selected-item', neighborhood_id => {
+                $('#selectNeighborhoodSave').val(neighborhood_id).trigger('change');
+            });
+
+            Livewire.on('deleteCell', cell => {
                 Swal.fire({
                     title: "{{ __('Are you sure you want to delete') }}",
                     toast: true,
@@ -244,14 +263,14 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
 
-                        Livewire.emit('delete', neighborhood.id);
+                        Livewire.emit('delete', cell.id);
 
                         Swal.fire({
                             position: 'top-end',
                             toast: true,
                             icon: 'success',
-                            title: "{{ __('Delete neighborhood') }}",
-                            text: `{{ __('The neighborhood ${neighborhood.name} has been successfully removed') }}`,
+                            title: "{{ __('Delete cell') }}",
+                            text: `{{ __('The cell ${cell.name} has been successfully removed') }}`,
                             showConfirmButton: false,
                             timer: 2500,
                             timerProgressBar: true,

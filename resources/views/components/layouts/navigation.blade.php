@@ -33,7 +33,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="../cells.html" class="nav-link">
+                    <a href="{{ route('admin.cells.index') }}" class="nav-link {{ request()->routeIs('admin.cells.index') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-compress-arrows-alt"></i>
                         <p>{{ __('Cells') }}</p>
                     </a>

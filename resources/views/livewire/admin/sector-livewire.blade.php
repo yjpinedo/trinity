@@ -38,20 +38,20 @@
                     </div>
 
                     @if ($image)
-                        <img class="img-fluid" src="{{ $image->temporaryUrl() }}">
+                        <img id="idImageSector" class="img-fluid" src="{{ $image->temporaryUrl() }}">
                     @elseif($imageFind)
-                        <img class="img-fluid" src="{{ Storage::url($imageFind) }}">
+                        <img id="idImageSector" class="img-fluid" src="{{ Storage::url($imageFind) }}">
                     @endif
 
                     <x-app-config.form submit="save">
                         <div class="form-group">
                             <x-app-config.label value="Name" />
-                            <x-app-config.input wire:model.defer="name" />
+                            <x-app-config.input wire:model.defer="name" id="idNameSector" />
                             <x-app-config.label-error for="name" />
                         </div>
                         <div class="form-group">
                             <x-app-config.label value="Description" />
-                            <textarea class="form-control" rows="5" wire:model.defer="description"></textarea>
+                            <textarea class="form-control" rows="5" wire:model.defer="description" id="idDescriptionSector"></textarea>
                             <x-app-config.label-error for="description" />
                         </div>
                         <div class="form-group">
@@ -62,8 +62,10 @@
                             <div class="form-group">
                                 <x-slot name="actions">
                                     <div class="d-flex justify-content-between alingn-items-center">
-                                        <x-app-config.button type="button" title="Reset" color="secondary"
-                                            icon="fas fa-ban" wire:click="resetTo()" />
+                                        <div wire:ignore>
+                                            <x-app-config.button type="button" title="Reset" color="secondary"
+                                                icon="fas fa-ban" wire:click="resetTo()" id="btnResetSectors" />
+                                        </div>
                                         @if ($btnAction == 'save')
                                             <x-app-config.button type="sumit" title="Register" icon="fas fa-plus" />
                                         @else
@@ -174,6 +176,15 @@
         <!-- SweetAlert2 -->
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
+            document.addEventListener('livewire:load', function() {
+                $('#btnResetSectors').hide();
+
+                hideShowBtn('input', '#idNameSector', '#btnResetSectors');
+                hideShowBtn('input', '#idDescriptionSector', '#btnResetSectors');
+                hideShowBtn('input', '#{{ $identificationImage }}', '#btnResetSectors');
+            });
+
+
             Livewire.on('deleteSector', sector => {
                 Swal.fire({
                     title: "{{ __('Are you sure you want to delete') }}",
@@ -216,6 +227,18 @@
                     timerProgressBar: true,
                 });
             });
+
+            Livewire.on('hide-btn', () => $('#btnResetSectors').hide());
+
+            function hideShowBtn(event, field, button) {
+                $(field).on(event, () => {
+                    if ($(field).val() !== '') {
+                        $(button).show();
+                    } else {
+                        $(button).hide();
+                    }
+                });
+            }
         </script>
     @endpush
 </div>

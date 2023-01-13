@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Neighborhood;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,11 @@ class CellFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->sentence(4),
+            'description' => $this->faker->text(),
+            'neighborhood_id' => Neighborhood::all()->random()->id,
+            'created_at' => $this->faker->date(),
+            'updated_at' => $this->faker->date(),
         ];
     }
 }
