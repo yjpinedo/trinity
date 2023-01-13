@@ -1,7 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
-
+namespace App\Http\Livewire\Admin;
 use App\Models\Cell;
 use App\Models\Neighborhood;
 use App\Traits\WithOrderTrait;

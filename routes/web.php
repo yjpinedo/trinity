@@ -1,10 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Admin\CellLivewire;
 use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\Admin\SectorLivewire;
-use App\Http\Livewire\CellLivewire;
-use App\Http\Livewire\NeighborhoodLivewire;
-use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Admin\NeighborhoodLivewire;
 
 Route::get('/', function () {
     return view('welcome');
