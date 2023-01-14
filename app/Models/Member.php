@@ -20,18 +20,18 @@ class Member extends Model
         return $this->belongsTo(Cell::class);
     }
 
+    public function lead()
+    {
+        return $this->hasOne(Cell::class, 'leader_id');
+    }
+
     public function neighborhood()
     {
         $this->belongsTo(Neighborhood::class);
     }
 
-    public function neighborhoods()
+    public function teacher()
     {
-        $this->hasMany(Neighborhood::class);
-    }
-
-    public function bible_schools()
-    {
-        return $this->hasOne(BibleSchool::class);
+        return $this->hasMany(BibleSchool::class, 'teacher_id');
     }
 }
