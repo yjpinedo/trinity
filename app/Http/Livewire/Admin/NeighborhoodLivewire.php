@@ -111,4 +111,9 @@ class NeighborhoodLivewire extends Component
     {
         $this->resetPage();
     }
+
+    public function updatingSectorIdSearch()
+    {
+        $this->resetPage();
+    }
 }

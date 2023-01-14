@@ -9,7 +9,7 @@ class BibleSchool extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'description', 'teacher_id'];
 
     // Relationship
     public function members()
@@ -19,6 +19,6 @@ class BibleSchool extends Model
 
     public function teacher()
     {
-        return $this->hasOne(Member::class, 'teacher_id');
+        return $this->belongsTo(Member::class, 'teacher_id');
     }
 }

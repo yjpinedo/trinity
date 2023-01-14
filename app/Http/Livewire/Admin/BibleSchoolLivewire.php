@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\BibleSchool;
+use App\Models\Member;
 use App\Traits\WithOrderTrait;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -14,12 +15,14 @@ class BibleSchoolLivewire extends Component
     public $btnAction = 'save';
     public $name, $description, $bibleSchool;
     public $search = '';
+    public $teacher_id_search = '';
+    public $teacher_id = '';
 
     public $columns = [
         'id' => '#',
         'name' => 'Name',
         'created_at' => 'Date created',
-        //'teacher_id' => 'Teacher',
+        'teacher_id' => 'Teacher',
     ];
 
     protected $listeners = ['delete'];
@@ -34,6 +37,7 @@ class BibleSchoolLivewire extends Component
     protected $rules = [
         'name' => ['required', 'max:255', 'min:2'],
         'description' => ['nullable', 'max:500', 'min:2'],
+        'teacher_id' => ['required', 'exists:members,id'],
     ];
 
     public function delete(BibleSchool $bibleSchool)
@@ -46,15 +50,16 @@ class BibleSchoolLivewire extends Component
         $this->bibleSchool = $bibleSchool;
         $this->name = $bibleSchool->name;
         $this->description = $bibleSchool->description;
-        //$this->teacher_id = $bibleSchool->teacher_id;
+        $this->teacher_id = $bibleSchool->teacher_id;
         $this->btnAction = 'edit';
-        //$this->emit('selected-item', $bibleSchool->teacher_id);
-        $this->emit('show-btn');
+        $this->emit('selected-item', $bibleSchool->teacher_id);
+        //$this->emit('show-btn');
     }
 
     public function render()
     {
-        $biblesSchools = BibleSchool::orderBy($this->sortColumn, $this->sortDirection);
+        $biblesSchools = BibleSchool::orderBy($this->sortColumn, $this->sortDirection)->with('teacher');
+        $teachers = Member::orderBy('name', 'asc')->pluck('name', 'id');
 
         if ($this->search && $this->search != '') {
             $biblesSchools->where(function ($query) {
@@ -63,7 +68,11 @@ class BibleSchoolLivewire extends Component
             });
         }
 
-        return view('livewire.admin.bible-school-livewire', ['biblesSchools' => $biblesSchools->paginate(10)])
+        if ($this->teacher_id_search && $this->teacher_id_search != '') {
+            $biblesSchools->where('teacher_id', $this->teacher_id_search);
+        }
+
+        return view('livewire.admin.bible-school-livewire', ['biblesSchools' => $biblesSchools->paginate(10), 'teachers' => $teachers])
             ->layout('components.layouts.app');
     }
 
@@ -79,7 +88,7 @@ class BibleSchoolLivewire extends Component
             [
                 'name' => $this->name,
                 'description' => $this->description,
-                //'teacher_id' => $this->teacher_id,
+                'teacher_id' => $this->teacher_id,
             ]
         );
 
@@ -94,9 +103,20 @@ class BibleSchoolLivewire extends Component
     public function resetTo()
     {
         $this->reset(['name', 'description']);
-        //$this->teacher_id = '';
+        $this->teacher_id = '';
         $this->btnAction = 'save';
         $this->bibleSchool = new BibleSchool;
-        $this->emit('hide-btn');
+        $this->emit('clear-select');
+        //$this->emit('hide-btn');
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingTeacherIdSearch()
+    {
+        $this->resetPage();
     }
 }

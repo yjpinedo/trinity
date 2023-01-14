@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Sector::factory(5)->create();
         \App\Models\Neighborhood::factory(200)->create();
         \App\Models\Cell::factory(100)->create();
+        \App\Models\Member::factory(10)->create();
         \App\Models\BibleSchool::factory(10)->create();
 
         // \App\Models\User::factory()->create([

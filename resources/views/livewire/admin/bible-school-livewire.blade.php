@@ -33,18 +33,18 @@
                 </div>
                 <div class="card-body">
                     <x-app-config.form submit="save">
-                        {{--  <div class="form-group">
-                                <x-app-config.label value="{{ __('Sector') }}" /> <br>
+                         <div class="form-group">
+                                <x-app-config.label value="{{ __('Teacher') }}" /> <br>
                                 <div wire:ignore>
-                                    <select class="form-control select2bs4" id="selectSectorSave" style="width: 100%;">
+                                    <select class="form-control select2bs4" id="selectTeacherSave" style="width: 100%;">
                                         <option value="">{{ __('Choose') }}</option>
-                                        @foreach ($sectors as $key => $sector)
-                                            <option value="{{ $key }}">{{ $sector }}</option>
+                                        @foreach ($teachers as $key => $teacher)
+                                            <option value="{{ $key }}">{{ $teacher }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <x-app-config.label-error for="sector_id" />
-                            </div> --}}
+                            </div>
                         <div class="form-group">
                             <x-app-config.label value="Name" />
                             <x-app-config.input wire:model.defer="name" id="idNameBibleSchool" />
@@ -77,16 +77,16 @@
                                 <x-app-config.input placeholder="{{ __('Search by id, name') }}"
                                     wire:model.debounce.500ms="search" />
                             </div>
-                            {{-- <div class="col-6">
+                            <div class="col-6">
                                     <div wire:ignore>
-                                        <select class="form-control select2bs4" id="selectSectorId" style="width: 100%">
+                                        <select class="form-control select2bs4" id="selectTeacherSearch" style="width: 100%">
                                             <option value="">{{ __('Choose') }}</option>
-                                            @foreach ($sectors as $key => $sector)
-                                                <option value="{{ $key }}">{{ $sector }}</option>
+                                            @foreach ($teachers as $key => $teacher)
+                                                <option value="{{ $key }}">{{ $teacher }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                </div> --}}
+                                </div>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -108,6 +108,7 @@
                                         <td>{{ $biblesSchoolTable->id }}</td>
                                         <td>{{ $biblesSchoolTable->name }}</td>
                                         <td>{{ $biblesSchoolTable->created_at }}</td>
+                                        <td>{{ $biblesSchoolTable->teacher->name ?? __('Not teacher asigned') }}</td>
                                         <td style="width: 12%" class="align-middle text-center">
                                             <x-app-config.button title="Delete" color="outline-light text-danger"
                                                 icon="fas fa-trash" class="btn-sm" wire:click="$emit('deleteBiblesSchool', {{ $biblesSchoolTable }})" />
@@ -118,7 +119,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="text-center">{{ __('Not bible schools lists') }}
+                                        <td colspan="5" class="text-center">{{ __('Not bible schools lists') }}
                                         </td>
                                     </tr>
                                 @endforelse
@@ -152,22 +153,22 @@
 
                 hideShowBtn('input', '#idNameBibleSchool', '#btnResetBibleSchool');
                 hideShowBtn('input', '#idDescriptionBibleSchool', '#btnResetBibleSchool');
-                /* hideShowBtn('change', '#selectSectorSave', '#btnResetBibleSchool'); */
+                hideShowBtn('change', '#selectTeacherSave', '#btnResetBibleSchool');
 
                 //Initialize Select2 Elements
                 // Filtered
-                /* let select2 = $('#selectSectorId').select2({
+                let select2 = $('#selectTeacherSearch').select2({
                     theme: 'bootstrap4'
                 }).on('change', () => {
-                    @this.set('sector_id_search', select2.select2("val"));
-                }); */
+                    @this.set('teacher_id_search', select2.select2("val"));
+                });
 
                 // Save
-                /* let select2Save = $('#selectSectorSave').select2({
+                let select2Save = $('#selectTeacherSave').select2({
                     theme: 'bootstrap4'
                 }).on('change', () => {
-                    @this.set('sector_id', select2Save.select2("val"));
-                }); */
+                    @this.set('teacher_id', select2Save.select2("val"));
+                });
             });
 
             Livewire.on('alert', (data) => {
@@ -183,17 +184,17 @@
                 });
             });
 
-            Livewire.on('show-btn', () => $('#btnResetBibleSchool').show());
+            /* Livewire.on('show-btn', () => $('#btnResetBibleSchool').show());
 
-            Livewire.on('hide-btn', () => $('#btnResetBibleSchool').hide());
+            Livewire.on('hide-btn', () => $('#btnResetBibleSchool').hide()); */
 
-            /* Livewire.on('clear-select', () => {
-                $('#selectSectorSave').val('').trigger('change');
+            Livewire.on('clear-select', () => {
+                $('#selectTeacherSave').val('').trigger('change');
             });
 
-            Livewire.on('selected-item', sector_id => {
-                $('#selectSectorSave').val(sector_id).trigger('change');
-            }); */
+            Livewire.on('selected-item', teacher_id => {
+                $('#selectTeacherSave').val(teacher_id).trigger('change');
+            });
 
             Livewire.on('deleteBiblesSchool', bibleSchool => {
                 Swal.fire({
