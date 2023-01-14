@@ -9,9 +9,16 @@ class BibleSchool extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'description', 'teacher_id'];
+
     // Relationship
     public function members()
     {
         return $this->belongsToMany(Member::class);
+    }
+
+    public function teacher()
+    {
+        return $this->belongsTo(Member::class, 'teacher_id');
     }
 }

@@ -8,6 +8,22 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
+
+        <!-- Sidebar user (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 text-center d-flex justify-content-center">
+            <div class="info">
+                <form method="POST" action="{{ route('logout') }}" class="form-inline">
+                    @csrf
+                    <a href="#">{{ Auth::user()->name }} | </a>
+                    <a href="{{ route('logout') }}"
+                        onclick="event.preventDefault(); this.closest('form').submit();" class="ml-1 d-block">
+                        {{ __('Logout') }}
+                        <i class="fas fa-power-off text-danger" title="{{ __('Logout') }}"></i>
+                    </a>
+                </form>
+            </div>
+        </div>
+
         <!-- Sidebar Mendu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
@@ -21,25 +37,29 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.sectors.index') }}" class="nav-link {{ request()->routeIs('admin.sectors.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.sectors.index') }}"
+                        class="nav-link {{ request()->routeIs('admin.sectors.index') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-sitemap"></i>
                         <p>{{ __('Sectors') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.neighborhood.index') }}" class="nav-link {{ request()->routeIs('admin.neighborhood.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.neighborhood.index') }}"
+                        class="nav-link {{ request()->routeIs('admin.neighborhood.index') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-map-marked-alt"></i>
                         <p>{{ __('Neighborhood') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.cells.index') }}" class="nav-link {{ request()->routeIs('admin.cells.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.cells.index') }}"
+                        class="nav-link {{ request()->routeIs('admin.cells.index') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-compress-arrows-alt"></i>
                         <p>{{ __('Cells') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="../bible-school.html" class="nav-link">
+                    <a href="{{ route('admin.bible-school.index') }}"
+                    class="nav-link {{ request()->routeIs('admin.bible-school.index') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-school"></i>
                         <p>{{ __('Bible Schools') }}</p>
                     </a>
@@ -120,16 +140,6 @@
                             </a>
                         </li>
                     </ul>
-                </li>
-                <li class="nav-item">
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <a href="{{ route('logout') }}"
-                            onclick="event.preventDefault(); this.closest('form').submit();" class="nav-link">
-                            <i class="nav-icon fas fa-sign-out-alt"></i>
-                            <p>{{ __('Logout') }}</p>
-                        </a>
-                    </form>
                 </li>
             </ul>
         </nav>

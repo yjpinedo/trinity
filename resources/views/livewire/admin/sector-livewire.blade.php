@@ -61,18 +61,7 @@
                             <x-app-config.label-error for="image" />
                             <div class="form-group">
                                 <x-slot name="actions">
-                                    <div class="d-flex justify-content-between alingn-items-center">
-                                        <div wire:ignore>
-                                            <x-app-config.button type="button" title="Reset" color="secondary"
-                                                icon="fas fa-ban" wire:click="resetTo()" id="btnResetSectors" />
-                                        </div>
-                                        @if ($btnAction == 'save')
-                                            <x-app-config.button type="sumit" title="Register" icon="fas fa-plus" />
-                                        @else
-                                            <x-app-config.button type="sumit" title="Edit" icon="fas fa-edit"
-                                                color="info" />
-                                        @endif
-                                    </div>
+                                    @include('partials.actions', ['idButtonReset' => 'Sectors'])
                                 </x-slot>
                             </div>
                         </div>
@@ -99,41 +88,13 @@
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    @foreach ($columns as $key => $column)
-                                        @if ($key == 'id')
-                                            <th class="align-middle" style="width: 8%; cursor: pointer;"
-                                                wire:click="sortBy('{{ $key }}')">
-                                                {{ __($column) }}
-                                                @if ($sortColumn == $key)
-                                                    @if ($sortDirection == 'asc')
-                                                        <i class="fas fa-sort-numeric-up text-primary"></i>
-                                                    @else
-                                                        <i class="fas fa-sort-numeric-down-alt text-primary"></i>
-                                                    @endif
-                                                @else
-                                                    <i class="fas fa-sort text-primary"></i>
-                                                @endif
-                                            </th>
-                                        @else
-                                            <th style="width: 20%; cursor: pointer;"
-                                                wire:click="sortBy('{{ $key }}')">
-                                                {{ __($column) }}
-                                                @if ($sortColumn == $key)
-                                                    @if ($sortDirection == 'asc')
-                                                        <i class="fas fa-sort-alpha-up text-primary"></i>
-                                                    @else
-                                                        <i class="fas fa-sort-alpha-down-alt text-primary"></i>
-                                                    @endif
-                                                @else
-                                                    <i class="fas fa-sort text-primary"></i>
-                                                @endif
-                                            </th>
-                                        @endif
-                                    @endforeach
-                                    <th style="width: 10%" class="text-center">
-                                        {{ __('Actions') }}
-                                        <i class="fas fa-cogs text-primary"></i>
-                                    </th>
+                                    @include('partials.columns-table', [
+                                        'percentage' => [
+                                            'id' => '6%',
+                                            'column' => '18%',
+                                            'action' => '14%',
+                                        ],
+                                    ])
                                 </tr>
                             </thead>
                             <tbody>
@@ -143,16 +104,17 @@
                                         <td>{{ $sector->name }}</td>
                                         <td>{{ str($sector->description)->limit(100, '...') }}</td>
                                         <td style="width: 12%" class="align-middle text-center">
-                                            <x-app-config.button color="outline-light text-danger" icon="fas fa-trash"
-                                                class="btn-sm"
+                                            <x-app-config.button title="Delete" color="outline-light text-danger"
+                                                icon="fas fa-trash" class="btn-sm"
                                                 wire:click="$emit('deleteSector', {{ $sector }})" />
-                                            <x-app-config.button color="outline-light text-cyan" icon="fas fa-edit"
-                                                class="btn-sm" wire:click="edit('{{ $sector->id }}')" />
+                                            <x-app-config.button title="Edit" color="outline-light text-cyan"
+                                                icon="fas fa-edit" class="btn-sm"
+                                                wire:click="edit('{{ $sector->id }}')" />
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4">{{ __('Not sectors lists') }}</td>
+                                        <td colspan="4" class="text-center">{{ __('Not sectors lists') }}</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -183,7 +145,6 @@
                 hideShowBtn('input', '#idDescriptionSector', '#btnResetSectors');
                 hideShowBtn('input', '#{{ $identificationImage }}', '#btnResetSectors');
             });
-
 
             Livewire.on('deleteSector', sector => {
                 Swal.fire({
@@ -227,6 +188,8 @@
                     timerProgressBar: true,
                 });
             });
+
+            Livewire.on('show-btn', () => $('#btnResetSectors').show());
 
             Livewire.on('hide-btn', () => $('#btnResetSectors').hide());
 

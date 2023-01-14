@@ -1,7 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
-
+namespace App\Http\Livewire\Admin;
 use App\Models\Cell;
 use App\Models\Neighborhood;
 use App\Traits\WithOrderTrait;
@@ -81,6 +80,7 @@ class CellLivewire extends Component
         $this->reset(['name', 'description', 'neighborhood_id']);
         $this->neighborhood_id = '';
         $this->btnAction = 'save';
+        $this->cell = new Cell;
         $this->emit('clear-select');
     }
 

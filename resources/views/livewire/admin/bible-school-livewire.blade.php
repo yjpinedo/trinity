@@ -8,15 +8,15 @@
     @endpush
 
     <x-slot name="title">
-        {{ __('Cells') }}
+        {{ __('Bible School') }}
     </x-slot>
 
     <x-slot name="page">
-        {{ __('Management Cells') }}
+        {{ __('Management Bible School') }}
     </x-slot>
 
     <x-slot name="pageActive">
-        {{ __('Cells') }}
+        {{ __('Bible School') }}
     </x-slot>
 
     <x-slot name="user">
@@ -27,52 +27,37 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-4">
             <div class="card card-outline card-primary">
                 <div class="card-header  text-center p-2">
-                    <h6><i class="fas fa-map-marked-alt text-primary"></i>
-                        {{ __('Create new cells') }}
+                    <h6><i class="fas fa-school text-primary"></i>
+                        {{ __('Create new bible school') }}
                     </h6>
                 </div>
                 <div class="card-body">
                     <x-app-config.form submit="save">
-                        <div class="form-group">
-                            <x-app-config.label value="{{ __('Neighborhood') }}" /> <br>
-                            <div wire:ignore>
-                                <select class="form-control select2bs4" id="selectNeighborhoodSave"
-                                    style="width: 100%;">
-                                    <option value="">{{ __('Choose') }}</option>
-                                    @foreach ($neighborhoods as $key => $neighborhood)
-                                        <option value="{{ $key }}">{{ $neighborhood }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <x-app-config.label-error for="neighborhood_id" />
-                        </div>
-                        @if (count($leaders) > 0)
-                            <div class="form-group">
-                                <x-app-config.label value="{{ __('Neighborhood') }}" /> <br>
+                         <div class="form-group">
+                                <x-app-config.label value="{{ __('Teacher') }}" /> <br>
                                 <div wire:ignore>
-                                    <select class="form-control select2bs4" id="selectLeaderSave" style="width: 100%;">
+                                    <select class="form-control select2bs4" id="selectTeacherSave" style="width: 100%;">
                                         <option value="">{{ __('Choose') }}</option>
-                                        @foreach ($leaders as $key => $leader)
-                                            <option value="{{ $key }}">{{ $leader }}</option>
+                                        @foreach ($teachers as $key => $teacher)
+                                            <option value="{{ $key }}">{{ $teacher }}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <x-app-config.label-error for="neighborhood_id" />
+                                <x-app-config.label-error for="sector_id" />
                             </div>
-                        @endif
                         <div class="form-group">
                             <x-app-config.label value="Name" />
-                            <x-app-config.input wire:model.defer="name" id="idNameCell" />
+                            <x-app-config.input wire:model.defer="name" id="idNameBibleSchool" />
                             <x-app-config.label-error for="name" />
                         </div>
                         <div class="form-group">
                             <x-app-config.label value="Description" />
-                            <textarea class="form-control" rows="5" wire:model.defer="description" id="idDescriptionCell"></textarea>
+                            <textarea class="form-control" rows="5" wire:model.defer="description" id="idDescriptionBibleSchool"></textarea>
                             <x-app-config.label-error for="description" />
                         </div>
                         <div class="form-group">
                             <x-slot name="actions">
-                                @include('partials.actions', ['idButtonReset' => 'Cell'])
+                                @include('partials.actions', ['idButtonReset' => 'BibleSchool'])
                             </x-slot>
                         </div>
                     </x-app-config.form>
@@ -82,7 +67,7 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-8">
             <div class="card card-outline card-primary">
                 <div class="card-header text-center p-2">
-                    <h6><i class="fas fa-table text-primary"></i> {{ __('List of cells') }}
+                    <h6><i class="fas fa-table text-primary"></i> {{ __('List of bibles schools') }}
                     </h6>
                 </div>
                 <div class="card-body">
@@ -93,15 +78,15 @@
                                     wire:model.debounce.500ms="search" />
                             </div>
                             <div class="col-6">
-                                <div wire:ignore>
-                                    <select class="form-control select2bs4" id="selectCellId" style="width: 100%">
-                                        <option value="">{{ __('Choose') }}</option>
-                                        @foreach ($neighborhoods as $key => $neighborhood)
-                                            <option value="{{ $key }}">{{ $neighborhood }}</option>
-                                        @endforeach
-                                    </select>
+                                    <div wire:ignore>
+                                        <select class="form-control select2bs4" id="selectTeacherSearch" style="width: 100%">
+                                            <option value="">{{ __('Choose') }}</option>
+                                            @foreach ($teachers as $key => $teacher)
+                                                <option value="{{ $key }}">{{ $teacher }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -110,42 +95,45 @@
                                 <tr>
                                     @include('partials.columns-table', [
                                         'percentage' => [
-                                            'id' => '7%',
-                                            'column' => '13%',
-                                            'action' => '14%',
+                                            'id' => '8%',
+                                            'column' => '11%',
+                                            'action' => '12%',
                                         ],
                                     ])
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($cells as $cellTable)
+                                @forelse ($biblesSchools as $biblesSchoolTable)
                                     <tr>
-                                        <td>{{ $cellTable->id }}</td>
-                                        <td>{{ $cellTable->name }}</td>
-                                        <td>{{ $cellTable->created_at }}</td>
-                                        <td>{{ $cellTable->neighborhood->name }}</td>
+                                        <td>{{ $biblesSchoolTable->id }}</td>
+                                        <td>{{ $biblesSchoolTable->name }}</td>
+                                        <td>{{ $biblesSchoolTable->created_at }}</td>
+                                        <td>{{ $biblesSchoolTable->teacher->name ?? __('Not teacher asigned') }}</td>
                                         <td style="width: 12%" class="align-middle text-center">
-                                            <x-app-config.button  title="Delete" color="outline-light text-danger" icon="fas fa-trash"
-                                                class="btn-sm" wire:click="$emit('deleteCell', {{ $cellTable }})" />
-                                            <x-app-config.button title="Edit" color="outline-light text-cyan" icon="fas fa-edit"
-                                                class="btn-sm" wire:click="edit('{{ $cellTable->id }}')" />
+                                            <x-app-config.button title="Delete" color="outline-light text-danger"
+                                                icon="fas fa-trash" class="btn-sm" wire:click="$emit('deleteBiblesSchool', {{ $biblesSchoolTable }})" />
+                                            <x-app-config.button title="Edit" color="outline-light text-cyan"
+                                                icon="fas fa-edit" class="btn-sm"
+                                                wire:click="edit('{{ $biblesSchoolTable->id }}')" />
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="text-center">{{ __('Not cells lists') }}</td>
+                                        <td colspan="5" class="text-center">{{ __('Not bible schools lists') }}
+                                        </td>
                                     </tr>
                                 @endforelse
                             </tbody>
                         </table>
                     </div>
                 </div>
-                @if ($cells->hasPages())
+                @if ($biblesSchools->hasPages())
                     <div class="card-footer bg-white">
                         <div class="d-flex justify-content-between align-item-center pb-0">
-                            {{ __('Showing') }} {!! $cells->firstItem() !!} {{ __('to') }} {!! $cells->lastItem() !!}
-                            {{ __('of') }} {!! $cells->total() !!} {{ __('entries') }}
-                            {!! $cells->links() !!}
+                            {{ __('Showing') }} {!! $biblesSchools->firstItem() !!} {{ __('to') }}
+                            {!! $biblesSchools->lastItem() !!}
+                            {{ __('of') }} {!! $biblesSchools->total() !!} {{ __('entries') }}
+                            {!! $biblesSchools->links() !!}
                         </div>
                     </div>
                 @endif
@@ -161,36 +149,26 @@
         <script>
             document.addEventListener('livewire:load', function() {
 
-                // Hide - Show btn
-                $('#btnResetCell').hide();
-                hideShowBtn('input', '#idNameCell', '#btnResetCell');
-                hideShowBtn('input', '#idDescriptionCell', '#btnResetCell');
-                hideShowBtn('change', '#selectNeighborhoodSave', '#btnResetCell');
+                $('#btnResetBibleSchool').hide();
+
+                hideShowBtn('input', '#idNameBibleSchool', '#btnResetBibleSchool');
+                hideShowBtn('input', '#idDescriptionBibleSchool', '#btnResetBibleSchool');
+                hideShowBtn('change', '#selectTeacherSave', '#btnResetBibleSchool');
 
                 //Initialize Select2 Elements
                 // Filtered
-                let select2 = $('#selectCellId').select2({
+                let select2 = $('#selectTeacherSearch').select2({
                     theme: 'bootstrap4'
                 }).on('change', () => {
-                    @this.set('neighborhood_id_serach', select2.select2("val"));
+                    @this.set('teacher_id_search', select2.select2("val"));
                 });
 
                 // Save
-                let select2NeighborhoodSave = $('#selectNeighborhoodSave').select2({
+                let select2Save = $('#selectTeacherSave').select2({
                     theme: 'bootstrap4'
                 }).on('change', () => {
-                    @this.set('neighborhood_id', select2NeighborhoodSave.select2("val"));
+                    @this.set('teacher_id', select2Save.select2("val"));
                 });
-
-                let select2LeaderSave = $('#selectLeaderSave').select2({
-                    theme: 'bootstrap4'
-                }).on('change', () => {
-                    @this.set('leader_id', select2LeaderSave.select2("val"));
-                });
-            })
-
-            Livewire.on('clear-select', () => {
-                $('#selectNeighborhoodSave').val('').trigger('change');
             });
 
             Livewire.on('alert', (data) => {
@@ -206,11 +184,19 @@
                 });
             });
 
-            Livewire.on('selected-item', neighborhood_id => {
-                $('#selectNeighborhoodSave').val(neighborhood_id).trigger('change');
+            /* Livewire.on('show-btn', () => $('#btnResetBibleSchool').show());
+
+            Livewire.on('hide-btn', () => $('#btnResetBibleSchool').hide()); */
+
+            Livewire.on('clear-select', () => {
+                $('#selectTeacherSave').val('').trigger('change');
             });
 
-            Livewire.on('deleteCell', cell => {
+            Livewire.on('selected-item', teacher_id => {
+                $('#selectTeacherSave').val(teacher_id).trigger('change');
+            });
+
+            Livewire.on('deleteBiblesSchool', bibleSchool => {
                 Swal.fire({
                     title: "{{ __('Are you sure you want to delete') }}",
                     toast: true,
@@ -224,14 +210,14 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
 
-                        Livewire.emit('delete', cell.id);
+                        Livewire.emit('delete', bibleSchool.id);
 
                         Swal.fire({
                             position: 'top-end',
                             toast: true,
                             icon: 'success',
-                            title: "{{ __('Delete cell') }}",
-                            text: `{{ __('The cell ${cell.name} has been successfully removed') }}`,
+                            title: "{{ __('Delete bibleSchool') }}",
+                            text: `{{ __('The bibleSchool ${bibleSchool.name} has been successfully removed') }}`,
                             showConfirmButton: false,
                             timer: 2500,
                             timerProgressBar: true,

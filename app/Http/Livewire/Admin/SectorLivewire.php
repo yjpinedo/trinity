@@ -61,6 +61,8 @@ class SectorLivewire extends Component
         } else {
             $this->imageFind = null;
         }
+
+        $this->emit('show-btn');
     }
 
     public function mount()
@@ -90,6 +92,7 @@ class SectorLivewire extends Component
         $this->identificationImage = rand();
         $this->imageFind = null;
         $this->btnAction = 'save';
+        $this->sectorFind = new Sector;
         $this->emit('hide-btn');
     }
 

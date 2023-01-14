@@ -1,6 +1,6 @@
 @props(['title' => null, 'icon' => null, 'color' => 'primary'])
 
-<button {{ $attributes->merge(['class' => "btn btn-$color"]) }}>
+<button {{ $attributes->merge(['class' => "btn btn-$color btn-flat"]) }}>
     {{ $title }}
 
     @if ($icon)

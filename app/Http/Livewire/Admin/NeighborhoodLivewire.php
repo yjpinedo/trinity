@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Admin;
 
 use App\Models\Neighborhood;
 use App\Models\Sector;
@@ -79,6 +79,7 @@ class NeighborhoodLivewire extends Component
         $this->reset(['name', 'description', 'sector_id']);
         $this->sector_id = '';
         $this->btnAction = 'save';
+        $this->neighborhood = new Neighborhood;
         $this->emit('clear-select');
     }
 
@@ -107,6 +108,11 @@ class NeighborhoodLivewire extends Component
     }
 
     public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSectorIdSearch()
     {
         $this->resetPage();
     }

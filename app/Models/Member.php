@@ -25,8 +25,13 @@ class Member extends Model
         $this->belongsTo(Neighborhood::class);
     }
 
+    public function neighborhoods()
+    {
+        $this->hasMany(Neighborhood::class);
+    }
+
     public function bible_schools()
     {
-        return $this->belongsToMany(BibleSchool::class);
+        return $this->hasOne(BibleSchool::class);
     }
 }
