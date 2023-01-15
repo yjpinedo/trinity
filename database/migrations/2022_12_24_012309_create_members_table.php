@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
             $table->string('cellphone')->nullable();
-            $table->boolean('is_baptized')->default(0);
+            $table->enum('is_baptized', ['Si', 'No'])->default('No');
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('neighborhood_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('cell_id')->nullable()->constrained()->onDelete('cascade');

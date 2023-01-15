@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Neighborhood;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -28,7 +29,8 @@ class MemberFactory extends Factory
             'address' => $this->faker->streetAddress(),
             'phone' => $this->faker->tollFreePhoneNumber(),
             'cellphone' => $this->faker->tollFreePhoneNumber(),
-            'is_baptized' => $this->faker->randomElement([0, 1]),
+            'is_baptized' => $this->faker->randomElement(['Si', 'No']),
+            'neighborhood_id' => Neighborhood::all()->random()->id,
         ];
     }
 }
