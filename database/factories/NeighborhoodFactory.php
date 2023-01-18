@@ -21,6 +21,7 @@ class NeighborhoodFactory extends Factory
             'name' => $this->faker->sentence(4),
             'description' => $this->faker->text(),
             'sector_id' => Sector::all()->random()->id,
+            'state' => $this->faker->randomElement(['Activo', 'Inactivo']),
             'created_at' => $this->faker->date(),
             'updated_at' => $this->faker->date(),
         ];

@@ -23,9 +23,10 @@ class NeighborhoodLivewire extends Component
         'name' => 'Name',
         'created_at' => 'Date created',
         'sector_id' => 'Sector',
+        'state' => 'State',
     ];
 
-    protected $listeners = ['delete'];
+    protected $listeners = ['delete', 'changeState'];
 
     protected $paginationTheme = 'bootstrap';
 
@@ -39,6 +40,16 @@ class NeighborhoodLivewire extends Component
         'name' => ['required', 'max:255', 'min:2'],
         'description' => ['nullable', 'max:500', 'min:2'],
     ];
+
+    public function changeState(Neighborhood $neighborhood)
+    {
+        if ($neighborhood->state == 'Inactivo') {
+            $neighborhood->state = 'Activo';
+        } else {
+            $neighborhood->state = 'Inactivo';
+        }
+        $neighborhood->save();
+    }
 
     public function delete(Neighborhood $neighborhood)
     {

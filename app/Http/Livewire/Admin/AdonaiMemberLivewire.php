@@ -38,12 +38,12 @@ class AdonaiMemberLivewire extends Component
     {
         $members = Member::orderBy($this->sortColumn, $this->sortDirection)->whereHas('neighborhood', function ($neighborhood) {
             return $neighborhood->whereHas('sector', function ($sector) {
-                return $sector->where('slug', 'dolor-aliquam-vel');
+                return $sector->where('slug', 'qui-et-autem');
             });
         });
 
         $neighborhoods = Neighborhood::orderBy('name', 'asc')->whereHas('sector', function ($sector) {
-            return $sector->where('slug', 'dolor-aliquam-vel');
+            return $sector->where('slug', 'qui-et-autem');
         })->pluck('name', 'id');
 
         if ($this->search && $this->search != '') {
