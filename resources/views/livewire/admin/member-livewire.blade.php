@@ -1,10 +1,30 @@
 <div>
     @push('css')
         <!-- Select2 -->
-        <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+        {{-- <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}"> --}}
         <!-- SweetAlert2 -->
-        <link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+        {{-- <link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}"> --}}
+        <!-- iCheck for checkboxes and radio inputs -->
+        {{-- <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}"> --}}
+        <!-- Tempusdominus Bootstrap 4 -->
+        {{-- <link rel="stylesheet" href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}"> --}}
+        <!-- BS Stepper -->
+        {{-- <link rel="stylesheet" href="{{ asset('plugins/bs-stepper/css/bs-stepper.min.css') }}"> --}}
+        <style>
+            .btn-circle.btn-xl {
+                width: 60px;
+                height: 60px;
+                padding: 13px 18px;
+                border-radius: 80px;
+                font-size: 15px;
+                text-align: center;
+            }
+
+            .display-none {
+                display: none;
+            }
+        </style>
     @endpush
 
     <x-slot name="title">
@@ -24,9 +44,220 @@
     </x-slot>
 
     <div class="row">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
+            <div class="card card-outline card-primary">
+                <div class="card-header  text-center p-2">
+                    <h6><i class="fas fa-user-friends text-primary"></i>
+                        {{ __('Create new member') }}
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <x-app-config.form submit="save">
+                        <div class="text-center ">
+                            <a class="btn {{ $step == 1 ? 'btn-primary' : 'btn-default' }} btn-circle btn-xl mr-4"
+                                wire:click="changeStep('1')">
+                                <h4>1</h4>
+                            </a>
+                            <a class="btn {{ $step == 2 ? 'btn-primary' : 'btn-default' }} btn-circle btn-xl"
+                                wire:click="changeStep('2')">
+                                <h4>2</h4>
+                            </a>
+                            <a class="btn {{ $step == 3 ? 'btn-primary' : 'btn-default' }} btn-circle btn-xl ml-4"
+                                wire:click="changeStep('3')">
+                                <h4>3</h4>
+                            </a>
+                        </div>
+
+                        <hr>
+
+                        <div class="step-1 mt-2 {{ $step != 1 ? 'display-none' : '' }}">
+                            <div class="form-group text-center">
+                                <h5><strong>{{ __('Personal Information') }}</strong></h5>
+                            </div>
+                            <div class="form-group">
+                                <x-app-config.label for="idNameMember" value="Name" />
+                                <x-app-config.input wire:model.defer="name" id="idNameMember" autofocus="autofocus" />
+                                <x-app-config.label-error for="name" />
+                            </div>
+                            <div class="form-group">
+                                <x-app-config.label for="idLastnameMember" value="Lastname" />
+                                <x-app-config.input wire:model.defer="lastname" id="idLastnameMember" />
+                                <x-app-config.label-error for="lastname" />
+                            </div>
+                            <div class="form-group">
+                                <x-app-config.label for="idEmailMember" value="Email" />
+                                <x-app-config.input wire:model.defer="email" id="idEmailMember" />
+                                <x-app-config.label-error for="email" />
+                            </div>
+                            <div class="form-group">
+                                <x-app-config.label for="idDocumentTypeMember" value="Document Type" />
+                                <select class="custom-select" id="idDocumentTypeMember"
+                                    wire:model.defer="document_type">
+                                    <option value="">{{ __('Choosen') }}</option>
+                                    <option value="Registro civil">{{ __('Registro civil') }}</option>
+                                    <option value="Tarjeta de identidad">{{ __('Tarjeta de identidad') }}
+                                    </option>
+                                    <option value="Cédula de ciudanía">{{ __('Cédula de ciudanía') }}</option>
+                                    <option value="Tarjeta de extranjería">{{ __('Tarjeta de extranjería') }}
+                                    </option>
+                                    <option value="Pasaporte">{{ __('Pasaporte') }}</option>
+                                </select>
+                                <x-app-config.label-error for="document_type" />
+                            </div>
+                            <div class="form-group">
+                                <x-app-config.label for="idDocumentNumberMember" value="Document Number" />
+                                <x-app-config.input wire:model.defer="document_number" id="idDocumentNumberMember" />
+                                <x-app-config.label-error for="document_number" />
+                            </div>
+                        </div>
+
+                        <div class="step-2 {{ $step != 2 ? 'display-none' : '' }}">
+                            <div class="form-group">
+                                <x-app-config.label for="idDateMember" value="Date of Birth" />
+                                <input type="date" class="form-control" wire:model.defer="date_of_birth"
+                                    id="idDateMember">
+                                <x-app-config.label-error for="date_of_birth" />
+                            </div>
+                            <div class="form-group clearfix">
+                                <x-app-config.label value="Sex" />
+                                <br>
+                                <div class="icheck-primary d-inline mr-2">
+                                    <input type="radio" id="idSexFemaleMember" wire:model="sex" value="Femenino">
+                                    <x-app-config.label for="idSexFemaleMember" value="Female" />
+                                </div>
+                                <div class="icheck-primary d-inline">
+                                    <input type="radio" id="idSexMaleMember" wire:model="sex" value="Masculino">
+                                    <x-app-config.label for="idSexMaleMember" value="Male" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <x-app-config.label for="idCivilStateMember" value="{{ __('Civil State') }}" />
+                                <select class="custom-select" id="idCivilStateMember" wire:model="civil_state">
+                                    <option value="">{{ __('Choosen') }}</option>
+                                    <option value="Soltero">{{ __('Soltero') }}</option>
+                                    <option value="Casado">{{ __('Casado') }}
+                                    </option>
+                                    <option value="Conviviente civil">{{ __('Conviviente civil') }}</option>
+                                    <option value="Divorciado">{{ __('Divorciado') }}
+                                    </option>
+                                    <option value="Viudo">{{ __('Viudo') }}</option>
+                                </select>
+                                <x-app-config.label-error for="civil_state" />
+                            </div>
+                            <div class="form-group text-center">
+                                <h5><strong>{{ __('Contact information') }}</strong></h5>
+                            </div>
+                            <div class="form-group">
+                                <x-app-config.label for="idAddressMember" value="Address" />
+                                <x-app-config.input wire:model.defer="address" id="idAddressMember" />
+                                <x-app-config.label-error for="address" />
+                            </div>
+                            <div class="form-group">
+                                <x-app-config.label value="Neighborhood" /> <br>
+                                <div wire:ignore>
+                                    <select class="form-control select2bs4" id="selectNeighborhoodSave"
+                                        style="width: 100%;">
+                                        <option value="">{{ __('Choose') }}</option>
+                                        @foreach ($neighborhoods as $key => $neighborhood)
+                                            <option value="{{ $key }}">{{ $neighborhood }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <x-app-config.label-error for="neighborhood_id" />
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="step-3 {{ $step != 3 ? 'display-none' : '' }}">
+                            <div class="form-group">
+                                <x-app-config.label for="idPhoneMember" value="Phone" />
+                                <x-app-config.input wire:model.defer="phone" id="idPhoneMember" />
+                                <x-app-config.label-error for="phone" />
+                            </div>
+                            <div class="form-group">
+                                <x-app-config.label for="idCellPhoneMember" value="CellPhone" />
+                                <x-app-config.input wire:model.defer="cellphone" id="idCellPhoneMember" />
+                                <x-app-config.label-error for="cellphone" />
+                            </div>
+                            <div class="form-group text-center">
+                                <h5><strong>{{ __('Ecclesiastical information') }}</strong></h5>
+                            </div>
+                            <div class="form-group clearfix">
+                                <x-app-config.label value="{{ __('Is Baptized') }}" />
+                                <br>
+                                <div class="icheck-primary d-inline mr-2">
+                                    <input type="radio" id="idIsBaptizedNotMember" wire:model="is_baptized"
+                                        value="No">
+                                    <x-app-config.label for="idIsBaptizedNotMember" value="Not" />
+                                </div>
+                                <div class="icheck-primary d-inline">
+                                    <input type="radio" id="idIsBaptizedYesMember" wire:model="is_baptized"
+                                        value="Si">
+                                    <x-app-config.label for="idIsBaptizedYesMember" value="Yes" />
+                                </div>
+                                <x-app-config.label-error for="is_baptized" />
+                            </div>
+                            <br>
+                            @if (count($biblesSchols))
+                                <div class="form-group clearfix">
+                                    <label>{{ __('Bible schools') }}</label>
+                                    <br>
+                                    <div class="card p-2">
+                                        <div class="icheck-primary">
+                                            <input type="checkbox" id="allSchool" wire:model="all_school">
+                                            <label for="allSchool">
+                                                All school
+                                            </label>
+                                        </div>
+                                        <br>
+
+                                        <div class="row">
+                                            @foreach ($biblesSchols as $key => $bibleScholCheck)
+                                                <div class="col-6">
+                                                    <div class="icheck-primary">
+                                                        <input type="checkbox" id="{{ $key }}"
+                                                            wire:model="bibles_schools" value="{{ $key }}">
+                                                        <label for="{{ $key }}">
+                                                            {{ $bibleScholCheck }}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+
+                        @if ($step == 1)
+                            <a wire:click="changeStep('2')" class="btn btn-default btn-flat">{{ 'Next' }} <i
+                                    class="fas fa-long-arrow-alt-right text-primary"></i></a>
+                        @elseif($step == 2)
+                            <a wire:click="changeStep('1')" class="btn btn-default btn-flat"><i
+                                    class="fas fa-long-arrow-alt-left text-danger"></i> {{ __('Previous') }}</a>
+                            <a wire:click="changeStep('3')" class="btn btn-default btn-flat">{{ 'Next' }} <i
+                                    class="fas fa-long-arrow-alt-right text-primary"></i></a>
+                        @else
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <a wire:click="changeStep('2')" class="btn btn-default btn-flat"><i
+                                            class="fas fa-long-arrow-alt-left text-danger"></i>
+                                        {{ __('Previous') }}</a>
+                                </div>
+                                <div>
+                                    <x-app-config.button type="button" title="Reset" color="default"
+                                        icon="far fa-minus-square text-orange" wire:click="resetTo()"
+                                        id="btnResetMember" />
+                                    <x-app-config.button type="sumit" title="Register"
+                                        icon="fas fa-save text-indigo" color="default" />
+                                </div>
+                            </div>
+                        @endif
+                    </x-app-config.form>
+                </div>
+            </div>
         </div>
-        <div class="col-12 col-sm-12 col-md-12 col-lg-8">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-8">
             <div class="card card-outline card-primary">
                 <div class="card-header text-center p-2">
                     <h6><i class="fas fa-table text-primary"></i> {{ __('List of members') }}
@@ -36,13 +267,15 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                                <x-app-config.input placeholder="{{ __('Nam, last, doc, ema, addre, pho and cellp') }}"
+                                <x-app-config.input
+                                    placeholder="{{ __('Nam, last, doc, ema, addre, pho and cellp') }}"
                                     wire:model.debounce.500ms="search" />
                             </div>
                         </div>
                         <div class="col-6">
                             <div wire:ignore>
-                                <select class="form-control select2bs4" id="selectNeighborhoodId" style="width: 100%">
+                                <select class="form-control select2bs4" id="selectNeighborhoodId"
+                                    style="width: 100%">
                                     <option value="">{{ __('Choose') }}</option>
                                     @foreach ($neighborhoods as $key => $neighborhood)
                                         <option value="{{ $key }}">{{ $neighborhood }}</option>
@@ -133,7 +366,8 @@
                                             <x-app-config.button title="Delete" color="outline-light text-danger"
                                                 icon="fas fa-trash" class="btn-sm" {{-- wire:click="$emit('deleteNeighborhood', {{ $memberTable }})" --}} />
                                             <x-app-config.button title="Edit" color="outline-light text-cyan"
-                                                icon="fas fa-edit" class="btn-sm" {{-- wire:click="edit('{{ $memberTable->id }}')" --}} />
+                                                icon="fas fa-edit" class="btn-sm"
+                                                wire:click="edit('{{ $memberTable->id }}')" />
                                         </td>
                                     </tr>
                                 @empty
@@ -158,18 +392,10 @@
         </div>
 
         @push('js')
-            <!-- Select2 -->
-            <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
             <!-- SweetAlert2 -->
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>
                 document.addEventListener('livewire:load', function() {
-
-                    /* $('#btnResetNeighborhood').hide();
-
-                    hideShowBtn('input', '#idNameNeighborhood', '#btnResetNeighborhood');
-                    hideShowBtn('input', '#idDescriptionNeighborhood', '#btnResetNeighborhood');
-                    hideShowBtn('change', '#selectSectorSave', '#btnResetNeighborhood'); */
 
                     //Initialize Select2 Elements
                     // Filtered
@@ -180,19 +406,15 @@
                     });
 
                     // Save
-                    /* let select2Save = $('#selectSectorSave').select2({
+                    let select2NeighborhoodSave = $('#selectNeighborhoodSave').select2({
                         theme: 'bootstrap4'
                     }).on('change', () => {
-                        @this.set('sector_id', select2Save.select2("val"));
-                    }); */
+                        @this.set('neighborhood_id', select2NeighborhoodSave.select2("val"));
+                    });
                 });
 
-                /* Livewire.on('clear-select', () => {
-                    $('#selectSectorSave').val('').trigger('change');
-                });
-
-                Livewire.on('selected-item', sector_id => {
-                    $('#selectSectorSave').val(sector_id).trigger('change');
+                Livewire.on('clear-select', () => {
+                    $('#selectNeighborhoodSave').val('').trigger('change');
                 });
 
                 Livewire.on('alert', (data) => {
@@ -208,45 +430,39 @@
                     });
                 });
 
-                Livewire.on('deleteNeighborhood', neighborhood => {
-                    Swal.fire({
-                        title: "{{ __('Are you sure you want to delete') }}",
-                        toast: true,
-                        text: `{{ __('There is no way back') }}`,
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        position: 'top-end',
-                        confirmButtonText: "{{ __('Yes, delete it!') }}"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-
-                            Livewire.emit('delete', neighborhood.id);
-
-                            Swal.fire({
-                                position: 'top-end',
-                                toast: true,
-                                icon: 'success',
-                                title: "{{ __('Delete neighborhood') }}",
-                                text: `{{ __('The neighborhood ${neighborhood.name} has been successfully removed') }}`,
-                                showConfirmButton: false,
-                                timer: 2500,
-                                timerProgressBar: true,
-                            });
-                        }
-                    });
+                Livewire.on('selected-item', neighborhood_id => {
+                    $('#selectNeighborhoodSave').val(neighborhood_id).trigger('change');
                 });
 
-                function hideShowBtn(event, field, button) {
-                    $(field).on(event, () => {
-                        if ($(field).val() !== '') {
-                            $(button).show();
-                        } else {
-                            $(button).hide();
-                        }
-                    });
-                } */
+                /*   Livewire.on('deleteNeighborhood', neighborhood => {
+                     Swal.fire({
+                         title: "{{ __('Are you sure you want to delete') }}",
+                         toast: true,
+                         text: `{{ __('There is no way back') }}`,
+                         icon: 'warning',
+                         showCancelButton: true,
+                         confirmButtonColor: '#3085d6',
+                         cancelButtonColor: '#d33',
+                         position: 'top-end',
+                         confirmButtonText: "{{ __('Yes, delete it!') }}"
+                     }).then((result) => {
+                         if (result.isConfirmed) {
+
+                             Livewire.emit('delete', neighborhood.id);
+
+                             Swal.fire({
+                                 position: 'top-end',
+                                 toast: true,
+                                 icon: 'success',
+                                 title: "{{ __('Delete neighborhood') }}",
+                                 text: `{{ __('The neighborhood ${neighborhood.name} has been successfully removed') }}`,
+                                 showConfirmButton: false,
+                                 timer: 2500,
+                                 timerProgressBar: true,
+                             });
+                         }
+                     });
+                 }); */
             </script>
         @endpush
     </div>

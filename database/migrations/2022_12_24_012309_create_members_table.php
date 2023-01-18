@@ -19,13 +19,13 @@ return new class extends Migration
             $table->string('lastname');
             $table->string('email')->unique();
             $table->enum('document_type', ['Registro civil', 'Tarjeta de identidad', 'Cédula de ciudanía', 'Tarjeta de extranjería', 'Pasaporte']);
-            $table->string('document_number');
+            $table->string('document_number')->unique();
             $table->timestamp('date_of_birth');
             $table->enum('sex', ['Femenino', 'Masculino']);
             $table->enum('civil_state', ['Soltero', 'Casado', 'Conviviente civil', 'Divorciado', 'Viudo']);
             $table->string('address')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('cellphone')->nullable();
+            $table->string('phone')->nullable()->unique();
+            $table->string('cellphone')->nullable()->unique();
             $table->enum('is_baptized', ['Si', 'No'])->default('No');
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('neighborhood_id')->nullable()->constrained()->onDelete('cascade');
