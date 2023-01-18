@@ -1,16 +1,5 @@
 <div>
     @push('css')
-        <!-- Select2 -->
-        {{-- <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}"> --}}
-        <!-- SweetAlert2 -->
-        {{-- <link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}"> --}}
-        <!-- iCheck for checkboxes and radio inputs -->
-        {{-- <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}"> --}}
-        <!-- Tempusdominus Bootstrap 4 -->
-        {{-- <link rel="stylesheet" href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}"> --}}
-        <!-- BS Stepper -->
-        {{-- <link rel="stylesheet" href="{{ asset('plugins/bs-stepper/css/bs-stepper.min.css') }}"> --}}
         <style>
             .btn-circle.btn-xl {
                 width: 60px;
@@ -247,9 +236,14 @@
                                 <div>
                                     <x-app-config.button type="button" title="Reset" color="default"
                                         icon="far fa-minus-square text-orange" wire:click="resetTo()"
-                                        id="btnResetMember" />
-                                    <x-app-config.button type="sumit" title="Register"
-                                        icon="fas fa-save text-indigo" color="default" />
+                                        id="btnReset" />
+                                    @if ($btnAction == 'save')
+                                        <x-app-config.button type="sumit" title="Register"
+                                            icon="fas fa-save text-indigo" color="default" />
+                                    @else
+                                        <x-app-config.button type="sumit" title="Update"
+                                            icon="fas fa-save text-indigo" color="default" />
+                                    @endif
                                 </div>
                             </div>
                         @endif
@@ -259,88 +253,116 @@
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-8">
             <div class="card card-outline card-primary">
-                <div class="card-header text-center p-2">
-                    <h6><i class="fas fa-table text-primary"></i> {{ __('List of members') }}
-                    </h6>
+                <div class="card-header p-2">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mt-2 ml-2"><i class="fas fa-table text-primary"></i>
+                                {{ __('List of members') }}
+                            </h6>
+                        </div>
+                        @if (!$actionFilters)
+                            <a style="cursor: pointer" wire:click="$set('actionFilters', true)"
+                                class="btn btn-default btn-sm btn-flat">{{ __('Show Filters Advances') }} <i
+                                    class="fas fa-eye text-primary"></i></a>
+                        @else
+                            <a style="cursor: pointer" wire:click="$set('actionFilters', false)"
+                                class="btn btn-default btn-sm btn-flat">{{ __('Hide Filters Advances') }} <i
+                                    class="fas fa-eye-slash text-danger"></i></a>
+                        @endif
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-8">
                             <div class="form-group">
                                 <x-app-config.input
                                     placeholder="{{ __('Nam, last, doc, ema, addre, pho and cellp') }}"
                                     wire:model.debounce.500ms="search" />
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div wire:ignore>
-                                <select class="form-control select2bs4" id="selectNeighborhoodId"
-                                    style="width: 100%">
-                                    <option value="">{{ __('Choose') }}</option>
-                                    @foreach ($neighborhoods as $key => $neighborhood)
-                                        <option value="{{ $key }}">{{ $neighborhood }}</option>
-                                    @endforeach
-                                </select>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
+                            <div class="form-group">
+                                <div wire:ignore>
+                                    <select class="custom-select select2bs4" id="selectNeighborhoodId"
+                                        style="width: 100%">
+                                        <option value="">{{ __('Choose') }}</option>
+                                        @foreach ($neighborhoods as $key => $neighborhood)
+                                            <option value="{{ $key }}">{{ $neighborhood }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-3">
-                            <div class="form-group">
-                                <select class="custom-select" wire:model="document_type_search">
-                                    <option value="">{{ __('Document type') }}</option>
-                                    <option value="Registro civil">{{ __('Registro civil') }}</option>
-                                    <option value="Tarjeta de identidad">{{ __('Tarjeta de identidad') }}</option>
-                                    <option value="Cédula de ciudanía">{{ __('Cédula de ciudanía') }}</option>
-                                    <option value="Tarjeta de extranjería">{{ __('Tarjeta de extranjería') }}
-                                    </option>
-                                    <option value="Pasaporte">{{ __('Pasaporte') }}</option>
-                                </select>
+                    @if ($actionFilters)
+                        <div class="card pt-3 px-3">
+                            <h6><i class="fas fa-search text-primary"></i>
+                                <strong>{{ __('Filters Advances') }}</strong>
+                            </h6>
+                            <hr class="mt-0">
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3">
+                                    <div class="form-group">
+                                        <select class="custom-select" wire:model="document_type_search">
+                                            <option value="">{{ __('Document type') }}</option>
+                                            <option value="Registro civil">{{ __('Registro civil') }}</option>
+                                            <option value="Tarjeta de identidad">{{ __('Tarjeta de identidad') }}
+                                            </option>
+                                            <option value="Cédula de ciudanía">{{ __('Cédula de ciudanía') }}
+                                            </option>
+                                            <option value="Tarjeta de extranjería">
+                                                {{ __('Tarjeta de extranjería') }}
+                                            </option>
+                                            <option value="Pasaporte">{{ __('Pasaporte') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3">
+                                    <div class="form-group">
+                                        <select class="custom-select" wire:model="sex_search">
+                                            <option value="">{{ __('Sex') }}</option>
+                                            <option value="Femenino">{{ __('Femenino') }}</option>
+                                            <option value="Masculino">{{ __('Masculino') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3">
+                                    <div class="form-group">
+                                        <select class="custom-select" wire:model="civil_state_search">
+                                            <option value="">{{ __('Civil state') }}</option>
+                                            <option value="Soltero">{{ __('Soltero') }}</option>
+                                            <option value="Casado">{{ __('Casado') }}</option>
+                                            <option value="Conviviente civil">{{ __('Conviviente civil') }}
+                                            </option>
+                                            <option value="Divorciado">{{ __('Divorciado') }}</option>
+                                            <option value="Viudo">{{ __('Viudo') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3">
+                                    <div class="form-group">
+                                        <select class="custom-select" wire:model="is_baptized_search">
+                                            <option value="">{{ __('Baptized') }}</option>
+                                            <option value="Si">{{ __('Si') }}</option>
+                                            <option value="No">{{ __('No') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                                    <div class="form-group">
+                                        <input type="date" class="form-control" wire:model="from">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                                    <div class="form-group">
+                                        <input type="date" class="form-control" wire:model="to">
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-3">
-                            <div class="form-group">
-                                <select class="custom-select" wire:model="sex_search">
-                                    <option value="">{{ __('Sex') }}</option>
-                                    <option value="Femenino">{{ __('Femenino') }}</option>
-                                    <option value="Masculino">{{ __('Masculino') }}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="form-group">
-                                <select class="custom-select" wire:model="civil_state_search">
-                                    <option value="">{{ __('Civil state') }}</option>
-                                    <option value="Soltero">{{ __('Soltero') }}</option>
-                                    <option value="Casado">{{ __('Casado') }}</option>
-                                    <option value="Conviviente civil">{{ __('Conviviente civil') }}</option>
-                                    <option value="Divorciado">{{ __('Divorciado') }}</option>
-                                    <option value="Viudo">{{ __('Viudo') }}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="form-group">
-                                <select class="custom-select" wire:model="is_baptized_search">
-                                    <option value="">{{ __('Baptized') }}</option>
-                                    <option value="Si">{{ __('Si') }}</option>
-                                    <option value="No">{{ __('No') }}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <input type="date" class="form-control" wire:model="from">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <input type="date" class="form-control" wire:model="to">
-                            </div>
-                        </div>
-                    </div>
+                    @endif
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover">
                             <thead>
@@ -363,11 +385,11 @@
                                         <td>{{ $memberTable->is_baptized }}</td>
                                         <td>{{ $memberTable->neighborhood->name }}</td>
                                         <td style="width: 12%" class="align-middle text-center">
-                                            <x-app-config.button title="Delete" color="outline-light text-danger"
-                                                icon="fas fa-trash" class="btn-sm" {{-- wire:click="$emit('deleteNeighborhood', {{ $memberTable }})" --}} />
-                                            <x-app-config.button title="Edit" color="outline-light text-cyan"
-                                                icon="fas fa-edit" class="btn-sm"
-                                                wire:click="edit('{{ $memberTable->id }}')" />
+                                            <x-app-config.button title="Delete" color="outline-light text-danger" icon="fas fa-trash"
+                                                class="btn-sm"
+                                                wire:click="$emit('deleteMember', {{ $memberTable }})" />
+                                            <x-app-config.button title="Edit" color="outline-light text-cyan" icon="fas fa-edit"
+                                                class="btn-sm" wire:click="edit('{{ $memberTable->id }}')" />
                                         </td>
                                     </tr>
                                 @empty
@@ -434,35 +456,35 @@
                     $('#selectNeighborhoodSave').val(neighborhood_id).trigger('change');
                 });
 
-                /*   Livewire.on('deleteNeighborhood', neighborhood => {
-                     Swal.fire({
-                         title: "{{ __('Are you sure you want to delete') }}",
-                         toast: true,
-                         text: `{{ __('There is no way back') }}`,
-                         icon: 'warning',
-                         showCancelButton: true,
-                         confirmButtonColor: '#3085d6',
-                         cancelButtonColor: '#d33',
-                         position: 'top-end',
-                         confirmButtonText: "{{ __('Yes, delete it!') }}"
-                     }).then((result) => {
-                         if (result.isConfirmed) {
+                Livewire.on('deleteMember', member => {
+                    Swal.fire({
+                        title: "{{ __('Are you sure you want to delete') }}",
+                        toast: true,
+                        text: `{{ __('There is no way back') }}`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        position: 'top-end',
+                        confirmButtonText: "{{ __('Yes, delete it!') }}"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
 
-                             Livewire.emit('delete', neighborhood.id);
+                            Livewire.emit('delete', member.id);
 
-                             Swal.fire({
-                                 position: 'top-end',
-                                 toast: true,
-                                 icon: 'success',
-                                 title: "{{ __('Delete neighborhood') }}",
-                                 text: `{{ __('The neighborhood ${neighborhood.name} has been successfully removed') }}`,
-                                 showConfirmButton: false,
-                                 timer: 2500,
-                                 timerProgressBar: true,
-                             });
-                         }
-                     });
-                 }); */
+                            Swal.fire({
+                                position: 'top-end',
+                                toast: true,
+                                icon: 'success',
+                                title: "{{ __('Delete member') }}",
+                                text: `{{ __('The member ${member.name} has been successfully removed') }}`,
+                                showConfirmButton: false,
+                                timer: 2500,
+                                timerProgressBar: true,
+                            });
+                        }
+                    });
+                });
             </script>
         @endpush
     </div>

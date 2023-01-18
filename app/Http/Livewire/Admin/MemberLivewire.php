@@ -15,7 +15,9 @@ class MemberLivewire extends Component
     use WithOrderTrait, WithPagination;
 
     public $all_school = false;
+    public $actionFilters = false;
     public $bibles_schools = [];
+    public $btnAction = 'save';
     public $document_type_search, $sex_search, $civil_state_search, $is_baptized_search;
     public $is_baptized = 'No';
     public $name, $lastname, $email, $document_type, $document_number, $date_of_birth, $civil_state, $address, $phone, $cellphone, $member;
@@ -37,30 +39,45 @@ class MemberLivewire extends Component
 
     protected $paginationTheme = 'bootstrap';
 
+    protected $listeners = ['delete'];
+
     protected $queryString = [
         'search' => ['except' => ''],
-        'neighborhood_id_serach' => ['except' => ''],
+        //'neighborhood_id_serach' => ['except' => ''],
+        'document_type_search' => ['except' => ''],
+        'sex_search' => ['except' => ''],
+        'civil_state_search' => ['except' => ''],
+        'is_baptized_search' => ['except' => ''],
     ];
 
-    protected $rules = [
-        'name' => ['required', 'min:2', 'max:80'],
-        'lastname' => ['required', 'min:2', 'max:80'],
-        'email' => ['required', 'email', 'unique:members,email'],
-        'document_type' => ['required', 'in:Registro civil,Tarjeta de identidad,Cédula de ciudanía,Tarjeta de extranjería,Pasaporte'],
-        'document_number' => ['required', 'numeric', 'digits_between:6,12', 'unique:members,document_number'],
-        'date_of_birth' => ['required', 'date', 'before:today'],
-        'sex' => ['required', 'in:Femenino,Masculino'],
-        'civil_state' => ['required', 'in:Soltero,Casado,Conviviente civil,Divorciado,Viudo'],
-        'address' => ['nullable', 'min:2', 'max:500'],
-        'phone' => ['nullable', 'numeric', 'digits_between:6,8', 'unique:members,phone'],
-        'cellphone' => ['nullable', 'numeric', 'digits_between:6,10', 'unique:members,cellphone'],
-        'is_baptized' => ['required', 'in:Si,No'],
-        'neighborhood_id' => ['required', 'exists:neighborhoods,id'],
-    ];
+    protected function rules()
+    {
+        $id = $this->member->id ?? '';
+        return [
+            'name' => ['required', 'min:2', 'max:80'],
+            'lastname' => ['required', 'min:2', 'max:80'],
+            'email' => ['required', 'email', 'unique:members,email,' . $id],
+            'document_type' => ['required', 'in:Registro civil,Tarjeta de identidad,Cédula de ciudanía,Tarjeta de extranjería,Pasaporte'],
+            'document_number' => ['required', 'numeric', 'digits_between:6,12', 'unique:members,document_number,' . $id],
+            'date_of_birth' => ['required', 'date', 'before:today'],
+            'sex' => ['required', 'in:Femenino,Masculino'],
+            'civil_state' => ['required', 'in:Soltero,Casado,Conviviente civil,Divorciado,Viudo'],
+            'address' => ['nullable', 'min:2', 'max:500'],
+            'phone' => ['nullable', 'numeric', 'digits_between:6,8', 'unique:members,phone,' . $id],
+            'cellphone' => ['nullable', 'numeric', 'digits_between:6,10', 'unique:members,cellphone,' . $id],
+            'is_baptized' => ['required', 'in:Si,No'],
+            'neighborhood_id' => ['required', 'exists:neighborhoods,id'],
+        ];
+    }
 
     public function changeStep($step)
     {
         $this->step = $step;
+    }
+
+    public function delete(Member $member)
+    {
+        $member->delete();
     }
 
     public function edit(Member $member)
@@ -71,7 +88,7 @@ class MemberLivewire extends Component
         $this->email = $member->email;
         $this->document_type = $member->document_type;
         $this->document_number = $member->document_number;
-        $this->date_of_birth =  Carbon::parse($member->date_of_birth)->toDateString();
+        $this->date_of_birth = Carbon::parse($member->date_of_birth)->toDateString();
         $this->sex = $member->sex;
         $this->civil_state = $member->civil_state;
         $this->address = $member->address;
@@ -79,6 +96,8 @@ class MemberLivewire extends Component
         $this->cellphone = $member->cellphone;
         $this->is_baptized = $member->is_baptized;
         $this->neighborhood_id = $member->neighborhood_id;
+
+        $this->btnAction = 'edit';
 
         $this->emit('selected-item', $member->neighborhood_id);
     }
@@ -136,7 +155,9 @@ class MemberLivewire extends Component
         $this->all_school = false;
         $this->bibles_schools = [];
         $this->is_baptized = 'No';
+        $this->member = new Member;
         $this->sex = 'Femenino';
+        $this->btnAction = 'save';
 
         $this->emit('clear-select');
     }
