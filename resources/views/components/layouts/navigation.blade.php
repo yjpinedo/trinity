@@ -64,8 +64,8 @@
                         <p>{{ __('Bible Schools') }}</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                <li class="nav-item {{ request()->routeIs('admin.members.*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->routeIs('admin.members.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user-friends"></i>
                         <p>
                             {{ __('Members') }}
@@ -74,9 +74,10 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="../members/create-member.html" class="nav-link">
+                            <a href="{{ route('admin.members.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.members.index') ? 'active' : '' }}">
                                 <i class="fas fa-genderless nav-icon text-primary"></i>
-                                <p>{{ __('Create new member') }}</p>
+                                <p>{{ __('Members') }}</p>
                             </a>
                         </li>
                         <li class="nav-item">

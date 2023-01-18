@@ -35,7 +35,7 @@ class CellLivewire extends Component
     ];
 
     protected $rules = [
-        'neighborhood_id' => ['required', 'exists:neighborhoods,id',],
+        'neighborhood_id' => ['required', 'exists:neighborhoods,id'],
         'name' => ['required', 'max:255', 'min:2'],
         'description' => ['nullable', 'max:500', 'min:2'],
     ];

@@ -1,30 +1,51 @@
 @foreach ($columns as $key => $column)
-    @if ($key == 'id')
-        <th class="align-middle" style="width: {{ $percentage['id'] }}; cursor: pointer;" wire:click="sortBy('{{ $key }}')">
+    @if ($key == 'neighborhood_sector_id')
+        <th style="width: 10%; cursor: pointer;">
             {{ __($column) }}
-            @if ($sortColumn == $key)
-                @if ($sortDirection == 'asc')
-                    <i class="fas fa-sort-numeric-up text-primary"></i>
-                @else
-                    <i class="fas fa-sort-numeric-down-alt text-primary"></i>
-                @endif
-            @else
-                <i class="fas fa-sort text-primary"></i>
-            @endif
+            <i class="fas fa-sort text-primary"></i>
         </th>
     @else
-        <th style="width: {{ $percentage['column'] }}; cursor: pointer;" wire:click="sortBy('{{ $key }}')">
-            {{ __($column) }}
-            @if ($sortColumn == $key)
-                @if ($sortDirection == 'asc')
-                    <i class="fas fa-sort-alpha-up text-primary"></i>
+        @if ($key == 'id')
+            <th class="align-middle" style="width: {{ $percentage['id'] }}; cursor: pointer;"
+                wire:click="sortBy('{{ $key }}')">
+                {{ __($column) }}
+                @if ($sortColumn == $key)
+                    @if ($sortDirection == 'asc')
+                        <i class="fas fa-sort-numeric-up text-primary"></i>
+                    @else
+                        <i class="fas fa-sort-numeric-down-alt text-primary"></i>
+                    @endif
                 @else
-                    <i class="fas fa-sort-alpha-down-alt text-primary"></i>
+                    <i class="fas fa-sort text-primary"></i>
                 @endif
-            @else
-                <i class="fas fa-sort text-primary"></i>
-            @endif
-        </th>
+            </th>
+        @elseif ($key == 'is_baptized')
+            <th style="width: 11%; cursor: pointer;" wire:click="sortBy('{{ $key }}')">
+                {{ __($column) }}
+                @if ($sortColumn == $key)
+                    @if ($sortDirection == 'asc')
+                        <i class="fas fa-sort-alpha-up text-primary"></i>
+                    @else
+                        <i class="fas fa-sort-alpha-down-alt text-primary"></i>
+                    @endif
+                @else
+                    <i class="fas fa-sort text-primary"></i>
+                @endif
+            </th>
+        @else
+            <th style="width: {{ $percentage['column'] }}; cursor: pointer;" wire:click="sortBy('{{ $key }}')">
+                {{ __($column) }}
+                @if ($sortColumn == $key)
+                    @if ($sortDirection == 'asc')
+                        <i class="fas fa-sort-alpha-up text-primary"></i>
+                    @else
+                        <i class="fas fa-sort-alpha-down-alt text-primary"></i>
+                    @endif
+                @else
+                    <i class="fas fa-sort text-primary"></i>
+                @endif
+            </th>
+        @endif
     @endif
 @endforeach
 <th style="width: {{ $percentage['action'] }}" class="text-center">

@@ -9,6 +9,24 @@ class Member extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'lastname',
+        'email',
+        'document_type',
+        'document_number',
+        'date_of_birth',
+        'sex',
+        'civil_state',
+        'address',
+        'phone',
+        'cellphone',
+        'is_baptized',
+        'user_id',
+        'neighborhood_id',
+        'cell_id'
+    ];
+
     // Relationship
     public function user()
     {
@@ -20,18 +38,18 @@ class Member extends Model
         return $this->belongsTo(Cell::class);
     }
 
+    public function lead()
+    {
+        return $this->hasOne(Cell::class, 'leader_id');
+    }
+
     public function neighborhood()
     {
-        $this->belongsTo(Neighborhood::class);
+        return $this->belongsTo(Neighborhood::class, 'neighborhood_id');
     }
 
-    public function neighborhoods()
+    public function teacher()
     {
-        $this->hasMany(Neighborhood::class);
-    }
-
-    public function bible_schools()
-    {
-        return $this->hasOne(BibleSchool::class);
+        return $this->hasMany(BibleSchool::class, 'teacher_id');
     }
 }
