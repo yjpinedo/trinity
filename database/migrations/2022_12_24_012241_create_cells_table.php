@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->foreignId('neighborhood_id')->constrained()->onDelete('cascade');
+            $table->enum('state', ['Activo', 'Inactivo'])->default('Activo');
             $table->timestamps();
         });
     }

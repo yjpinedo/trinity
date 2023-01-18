@@ -122,11 +122,24 @@
                                     <tr>
                                         <td>{{ $cellTable->id }}</td>
                                         <td>{{ $cellTable->name }}</td>
-                                        <td>{{ $cellTable->created_at }}</td>
+                                        <td>{{ $cellTable->created_at->format('Y-m-d') }}</td>
                                         <td>{{ $cellTable->neighborhood->name }}</td>
+                                        <td class="text-center align-middle">
+                                            <span
+                                                class="badge badge-{{ $cellTable->state == 'Activo' ? 'success' : 'danger' }}">{{ $cellTable->state }}</span>
+                                        </td>
                                         <td style="width: 12%" class="align-middle text-center">
-                                            <x-app-config.button  color="link text-danger" icon="fas fa-trash"
-                                                class="btn-sm" wire:click="$emit('deleteCell', {{ $cellTable }})" />
+                                            @if ($cellTable->state == 'Activo')
+                                                <x-app-config.button color="link text-danger" icon="fas fa-power-off"
+                                                    class="btn-sm"
+                                                    wire:click="$emit('changeStateCell', {{ $cellTable }})" />
+                                            @else
+                                                <x-app-config.button color="link text-success" icon="fas fa-power-off"
+                                                    class="btn-sm"
+                                                    wire:click="$emit('changeStateCell', {{ $cellTable }})" />
+                                            @endif
+                                            {{-- <x-app-config.button  color="link text-danger" icon="fas fa-trash"
+                                                class="btn-sm" wire:click="$emit('deleteCell', {{ $cellTable }})" /> --}}
                                             <x-app-config.button color="link text-cyan" icon="fas fa-edit"
                                                 class="btn-sm" wire:click="edit('{{ $cellTable->id }}')" />
                                         </td>
@@ -210,7 +223,37 @@
                 $('#selectNeighborhoodSave').val(neighborhood_id).trigger('change');
             });
 
-            Livewire.on('deleteCell', cell => {
+            Livewire.on('changeStateCell', cell => {
+                Swal.fire({
+                    title: "{{ __('Are you sure you want to change state') }}",
+                    toast: true,
+                    text: `{{ __('There is no way back') }}`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    position: 'top-end',
+                    confirmButtonText: "{{ __('Yes, change state it!') }}"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        Livewire.emit('changeState', cell.id);
+
+                        Swal.fire({
+                            position: 'top-end',
+                            toast: true,
+                            icon: 'success',
+                            title: "{{ __('Change state cell') }}",
+                            text: `{{ __('The state of the cell ${cell.name} was successfully updated') }}`,
+                            showConfirmButton: false,
+                            timer: 2500,
+                            timerProgressBar: true,
+                        });
+                    }
+                });
+            });
+
+            /* Livewire.on('deleteCell', cell => {
                 Swal.fire({
                     title: "{{ __('Are you sure you want to delete') }}",
                     toast: true,
@@ -238,7 +281,7 @@
                         });
                     }
                 });
-            });
+            }); */
 
             function hideShowBtn(event, field, button) {
                 $(field).on(event, () => {

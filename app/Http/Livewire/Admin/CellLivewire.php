@@ -23,9 +23,10 @@ class CellLivewire extends Component
         'name' => 'Name',
         'created_at' => 'Date created',
         'neighborhood_id' => 'Neighborhood',
+        'state' => 'State',
     ];
 
-    protected $listeners = ['delete'];
+    protected $listeners = ['delete', 'changeState'];
 
     protected $paginationTheme = 'bootstrap';
 
@@ -39,6 +40,16 @@ class CellLivewire extends Component
         'name' => ['required', 'max:255', 'min:2'],
         'description' => ['nullable', 'max:500', 'min:2'],
     ];
+
+    public function changeState(Cell $cell)
+    {
+        if ($cell->state == 'Inactivo') {
+            $cell->state = 'Activo';
+        } else {
+            $cell->state = 'Inactivo';
+        }
+        $cell->save();
+    }
 
     public function delete(Cell $cell)
     {
