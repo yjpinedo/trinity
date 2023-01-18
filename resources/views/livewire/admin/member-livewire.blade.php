@@ -364,7 +364,7 @@
                         </div>
                     @endif
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     @include('partials.columns-table', [
@@ -385,10 +385,10 @@
                                         <td>{{ $memberTable->is_baptized }}</td>
                                         <td>{{ $memberTable->neighborhood->name }}</td>
                                         <td style="width: 12%" class="align-middle text-center">
-                                            <x-app-config.button title="Delete" color="outline-light text-danger" icon="fas fa-trash"
+                                            <x-app-config.button color="link text-danger" icon="fas fa-trash"
                                                 class="btn-sm"
                                                 wire:click="$emit('deleteMember', {{ $memberTable }})" />
-                                            <x-app-config.button title="Edit" color="outline-light text-cyan" icon="fas fa-edit"
+                                            <x-app-config.button color="link text-cyan" icon="fas fa-edit"
                                                 class="btn-sm" wire:click="edit('{{ $memberTable->id }}')" />
                                         </td>
                                     </tr>

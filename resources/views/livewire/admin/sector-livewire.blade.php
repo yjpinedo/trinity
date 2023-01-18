@@ -85,14 +85,14 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     @include('partials.columns-table', [
                                         'percentage' => [
                                             'id' => '6%',
-                                            'column' => '18%',
-                                            'action' => '14%',
+                                            'column' => '15%',
+                                            'action' => '15%',
                                         ],
                                     ])
                                 </tr>
@@ -102,14 +102,27 @@
                                     <tr>
                                         <td>{{ $sector->id }}</td>
                                         <td>{{ $sector->name }}</td>
-                                        <td>{{ str($sector->description)->limit(100, '...') }}</td>
+                                        <td>{{ $sector->created_at->format('Y-m-d') }}</td>
+                                        <td class="text-center align-middle">
+                                            <span
+                                                class="badge badge-{{ $sector->state == 'Activo' ? 'success' : 'danger' }}">{{ $sector->state }}</span>
+                                        </td>
                                         <td style="width: 12%" class="align-middle text-center">
-                                            <x-app-config.button title="Delete" color="outline-light text-danger"
+                                            @if ($sector->state == 'Activo')
+                                                <x-app-config.button color="link text-danger" icon="fas fa-power-off"
+                                                    class="btn-sm"
+                                                    wire:click="$emit('changeStateSector', {{ $sector }})" />
+                                            @else
+                                                <x-app-config.button color="link text-success" icon="fas fa-power-off"
+                                                    class="btn-sm"
+                                                    wire:click="$emit('changeStateSector', {{ $sector }})" />
+                                            @endif
+
+                                            {{-- <x-app-config.button title="Delete" color="outline-light text-danger"
                                                 icon="fas fa-trash" class="btn-sm"
-                                                wire:click="$emit('deleteSector', {{ $sector }})" />
-                                            <x-app-config.button title="Edit" color="outline-light text-cyan"
-                                                icon="fas fa-edit" class="btn-sm"
-                                                wire:click="edit('{{ $sector->id }}')" />
+                                                wire:click="$emit('deleteSector', {{ $sector }})" /> --}}
+                                            <x-app-config.button color="link text-cyan" icon="fas fa-edit"
+                                                class="btn-sm" wire:click="edit('{{ $sector->id }}')" />
                                         </td>
                                     </tr>
                                 @empty
@@ -146,7 +159,7 @@
                 hideShowBtn('input', '#{{ $identificationImage }}', '#btnResetSectors');
             });
 
-            Livewire.on('deleteSector', sector => {
+            /* Livewire.on('deleteSector', sector => {
                 Swal.fire({
                     title: "{{ __('Are you sure you want to delete') }}",
                     toast: true,
@@ -168,6 +181,36 @@
                             icon: 'success',
                             title: "{{ __('Delete sector') }}",
                             text: `{{ __('The sector ${sector.name} has been successfully removed') }}`,
+                            showConfirmButton: false,
+                            timer: 2500,
+                            timerProgressBar: true,
+                        });
+                    }
+                });
+            }); */
+
+            Livewire.on('changeStateSector', sector => {
+                Swal.fire({
+                    title: "{{ __('Are you sure you want to change state') }}",
+                    toast: true,
+                    text: `{{ __('There is no way back') }}`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    position: 'top-end',
+                    confirmButtonText: "{{ __('Yes, change state it!') }}"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        Livewire.emit('changeState', sector.id);
+
+                        Swal.fire({
+                            position: 'top-end',
+                            toast: true,
+                            icon: 'success',
+                            title: "{{ __('Change state sector') }}",
+                            text: `{{ __('The state of the sector ${sector.name} was successfully updated') }}`,
                             showConfirmButton: false,
                             timer: 2500,
                             timerProgressBar: true,

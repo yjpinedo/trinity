@@ -90,7 +90,7 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     @include('partials.columns-table', [
@@ -110,9 +110,9 @@
                                         <td>{{ $biblesSchoolTable->created_at }}</td>
                                         <td>{{ $biblesSchoolTable->teacher->name ?? __('Not teacher asigned') }}</td>
                                         <td style="width: 12%" class="align-middle text-center">
-                                            <x-app-config.button title="Delete" color="outline-light text-danger"
+                                            <x-app-config.button color="link text-danger"
                                                 icon="fas fa-trash" class="btn-sm" wire:click="$emit('deleteBiblesSchool', {{ $biblesSchoolTable }})" />
-                                            <x-app-config.button title="Edit" color="outline-light text-cyan"
+                                            <x-app-config.button color="link text-cyan"
                                                 icon="fas fa-edit" class="btn-sm"
                                                 wire:click="edit('{{ $biblesSchoolTable->id }}')" />
                                         </td>

@@ -9,7 +9,7 @@ class Sector extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'image'];
+    protected $fillable = ['name', 'slug', 'description', 'image'];
 
     // Relationship
     public function neighborhoods ()
