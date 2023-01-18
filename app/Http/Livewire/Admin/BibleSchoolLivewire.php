@@ -23,9 +23,10 @@ class BibleSchoolLivewire extends Component
         'name' => 'Name',
         'created_at' => 'Date created',
         'teacher_id' => 'Teacher',
+        'state' => 'State',
     ];
 
-    protected $listeners = ['delete'];
+    protected $listeners = ['delete', 'changeState'];
 
     protected $paginationTheme = 'bootstrap';
 
@@ -39,6 +40,16 @@ class BibleSchoolLivewire extends Component
         'description' => ['nullable', 'max:500', 'min:2'],
         'teacher_id' => ['required', 'exists:members,id'],
     ];
+
+    public function changeState(BibleSchool $bibleSchool)
+    {
+        if ($bibleSchool->state == 'Inactivo') {
+            $bibleSchool->state = 'Activo';
+        } else {
+            $bibleSchool->state = 'Inactivo';
+        }
+        $bibleSchool->save();
+    }
 
     public function delete(BibleSchool $bibleSchool)
     {

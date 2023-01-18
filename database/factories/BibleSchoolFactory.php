@@ -21,6 +21,7 @@ class BibleSchoolFactory extends Factory
             'name' => $this->faker->sentence(2),
             'description' => $this->faker->text(),
             'teacher_id' => Member::all()->random()->id,
+            'state' => $this->faker->randomElement(['Activo', 'Inactivo']),
         ];
     }
 }
