@@ -22,10 +22,11 @@ class SectorLivewire extends Component
     public $columns = [
         'id' => '#',
         'name' => 'Name',
-        'description' => 'Description',
+        'created_at' => 'Date Created',
+        'state' => 'State',
     ];
 
-    protected $listeners = ['delete'];
+    protected $listeners = ['delete', 'changeState'];
 
     protected $paginationTheme = 'bootstrap';
 
@@ -38,6 +39,16 @@ class SectorLivewire extends Component
         'description' => 'nullable|max:500|min:3',
         'image' => 'nullable|image:max2048',
     ];
+
+    public function changeState(Sector $sector)
+    {
+        if ($sector->state == 'Inactivo') {
+            $sector->state = 'Activo';
+        } else {
+            $sector->state = 'Inactivo';
+        }
+        $sector->save();
+    }
 
     public function delete(Sector $sector)
     {
@@ -122,8 +133,8 @@ class SectorLivewire extends Component
 
             $sectorNew = Sector::create([
                 'name' => $this->name,
+                'slug' => str($this->name)->slug(),
                 'description' => $this->description,
-
             ]);
 
             if ($this->image) {

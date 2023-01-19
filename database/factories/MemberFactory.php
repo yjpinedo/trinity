@@ -31,6 +31,7 @@ class MemberFactory extends Factory
             'cellphone' => $this->faker->tollFreePhoneNumber(),
             'is_baptized' => $this->faker->randomElement(['Si', 'No']),
             'neighborhood_id' => Neighborhood::all()->random()->id,
+            'state' => $this->faker->randomElement(['Activo', 'Inactivo']),
         ];
     }
 }

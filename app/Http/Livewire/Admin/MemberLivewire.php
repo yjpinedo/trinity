@@ -34,12 +34,13 @@ class MemberLivewire extends Component
         'name' => 'Name',
         'is_baptized' => 'Is Baptized',
         'neighborhood_id' => 'Neighborhood',
+        'state' => 'State',
         //'neighborhood_sector_id' => 'Sector',
     ];
 
     protected $paginationTheme = 'bootstrap';
 
-    protected $listeners = ['delete'];
+    protected $listeners = ['delete', 'changeState'];
 
     protected $queryString = [
         'search' => ['except' => ''],
@@ -68,6 +69,16 @@ class MemberLivewire extends Component
             'is_baptized' => ['required', 'in:Si,No'],
             'neighborhood_id' => ['required', 'exists:neighborhoods,id'],
         ];
+    }
+
+    public function changeState(Member $member)
+    {
+        if ($member->state == 'Inactivo') {
+            $member->state = 'Activo';
+        } else {
+            $member->state = 'Inactivo';
+        }
+        $member->save();
     }
 
     public function changeStep($step)

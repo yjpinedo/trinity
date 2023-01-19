@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Member extends Model
 {
@@ -26,6 +27,14 @@ class Member extends Model
         'neighborhood_id',
         'cell_id'
     ];
+
+    protected $appends = ['age'];
+
+    //Accesors
+    public function getAgeAttribute()
+    {
+        return Carbon::createFromDate($this->date_of_birth)->age;
+    }
 
     // Relationship
     public function user()

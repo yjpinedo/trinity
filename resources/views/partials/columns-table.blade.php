@@ -32,6 +32,19 @@
                     <i class="fas fa-sort text-primary"></i>
                 @endif
             </th>
+        @elseif ($key == 'state')
+            <th class="text-center" style="width: 8%; cursor: pointer;" wire:click="sortBy('{{ $key }}')">
+                {{ __($column) }}
+                @if ($sortColumn == $key)
+                    @if ($sortDirection == 'asc')
+                        <i class="fas fa-sort-alpha-up text-primary"></i>
+                    @else
+                        <i class="fas fa-sort-alpha-down-alt text-primary"></i>
+                    @endif
+                @else
+                    <i class="fas fa-sort text-primary"></i>
+                @endif
+            </th>
         @else
             <th style="width: {{ $percentage['column'] }}; cursor: pointer;" wire:click="sortBy('{{ $key }}')">
                 {{ __($column) }}
@@ -48,7 +61,15 @@
         @endif
     @endif
 @endforeach
-<th style="width: {{ $percentage['action'] }}" class="text-center">
-    {{ __('Actions') }}
-    <i class="fas fa-cogs text-primary"></i>
-</th>
+
+@if (!isset($actionShow))
+    <th style="width: {{ $percentage['action'] }}" class="text-center">
+        {{ __('Actions') }}
+        <i class="fas fa-cogs text-primary"></i>
+    </th>
+@else
+    <th style="width: {{ $percentage['action'] }}" class="">
+        {{ __('Age') }}
+        <i class="fas fa-minus text-danger"></i>
+    </th>
+@endif

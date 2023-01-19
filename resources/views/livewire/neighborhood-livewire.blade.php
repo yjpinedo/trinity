@@ -91,7 +91,7 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     @include('partials.columns-table', [
@@ -110,11 +110,24 @@
                                         <td>{{ $neighborhoodTable->name }}</td>
                                         <td>{{ $neighborhoodTable->created_at }}</td>
                                         <td>{{ $neighborhoodTable->sector->name }}</td>
+                                        <td class="text-center align-middle">
+                                            <span
+                                                class="badge badge-{{ $neighborhoodTable->state == 'Activo' ? 'success' : 'danger' }}">{{ $neighborhoodTable->state }}</span>
+                                        </td>
                                         <td style="width: 12%" class="align-middle text-center">
-                                            <x-app-config.button title="Delete" color="outline-light text-danger" icon="fas fa-trash"
+                                            @if ($neighborhoodTable->state == 'Activo')
+                                                <x-app-config.button color="link text-danger" icon="fas fa-power-off"
+                                                    class="btn-sm"
+                                                    wire:click="$emit('changeStateNeighborhood', {{ $neighborhoodTable }})" />
+                                            @else
+                                                <x-app-config.button color="link text-success" icon="fas fa-power-off"
+                                                    class="btn-sm"
+                                                    wire:click="$emit('changeStateNeighborhood', {{ $neighborhoodTable }})" />
+                                            @endif
+                                            {{-- <x-app-config.button color="link text-danger" icon="fas fa-trash"
                                                 class="btn-sm"
-                                                wire:click="$emit('deleteNeighborhood', {{ $neighborhoodTable }})" />
-                                            <x-app-config.button title="Edit" color="outline-light text-cyan" icon="fas fa-edit"
+                                                wire:click="$emit('deleteNeighborhood', {{ $neighborhoodTable }})" /> --}}
+                                            <x-app-config.button color="link text-cyan" icon="fas fa-edit"
                                                 class="btn-sm" wire:click="edit('{{ $neighborhoodTable->id }}')" />
                                         </td>
                                     </tr>
@@ -191,7 +204,7 @@
                 });
             });
 
-            Livewire.on('deleteNeighborhood', neighborhood => {
+            /* Livewire.on('deleteNeighborhood', neighborhood => {
                 Swal.fire({
                     title: "{{ __('Are you sure you want to delete') }}",
                     toast: true,
@@ -213,6 +226,36 @@
                             icon: 'success',
                             title: "{{ __('Delete neighborhood') }}",
                             text: `{{ __('The neighborhood ${neighborhood.name} has been successfully removed') }}`,
+                            showConfirmButton: false,
+                            timer: 2500,
+                            timerProgressBar: true,
+                        });
+                    }
+                });
+            }); */
+
+            Livewire.on('changeStateNeighborhood', neighborhood => {
+                Swal.fire({
+                    title: "{{ __('Are you sure you want to change state') }}",
+                    toast: true,
+                    text: `{{ __('There is no way back') }}`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    position: 'top-end',
+                    confirmButtonText: "{{ __('Yes, change state it!') }}"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        Livewire.emit('changeState', neighborhood.id);
+
+                        Swal.fire({
+                            position: 'top-end',
+                            toast: true,
+                            icon: 'success',
+                            title: "{{ __('Change state neighborhood') }}",
+                            text: `{{ __('The state of the neighborhood ${neighborhood.name} was successfully updated') }}`,
                             showConfirmButton: false,
                             timer: 2500,
                             timerProgressBar: true,

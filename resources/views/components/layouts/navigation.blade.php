@@ -15,8 +15,8 @@
                 <form method="POST" action="{{ route('logout') }}" class="form-inline">
                     @csrf
                     <a href="#">{{ Auth::user()->name }} | </a>
-                    <a href="{{ route('logout') }}"
-                        onclick="event.preventDefault(); this.closest('form').submit();" class="ml-1 d-block">
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();"
+                        class="ml-1 d-block">
                         {{ __('Logout') }}
                         <i class="fas fa-power-off text-danger" title="{{ __('Logout') }}"></i>
                     </a>
@@ -59,7 +59,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.bible-school.index') }}"
-                    class="nav-link {{ request()->routeIs('admin.bible-school.index') ? 'active' : '' }}">
+                        class="nav-link {{ request()->routeIs('admin.bible-school.index') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-school"></i>
                         <p>{{ __('Bible Schools') }}</p>
                     </a>
@@ -75,37 +75,42 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('admin.members.index') }}"
-                            class="nav-link {{ request()->routeIs('admin.members.index') ? 'active' : '' }}">
+                                class="nav-link {{ request()->routeIs('admin.members.index') ? 'active' : '' }}">
                                 <i class="fas fa-genderless nav-icon text-primary"></i>
                                 <p>{{ __('Members') }}</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../members/adonais.html" class="nav-link">
+                            <a href="{{ route('admin.members.index-adonais') }}"
+                                class="nav-link {{ request()->routeIs('admin.members.index-adonais') ? 'active' : '' }}">
                                 <i class="fas fa-genderless nav-icon text-primary"></i>
                                 <p>{{ __('Adonais') }}</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../members/beraca.html" class="nav-link">
+                            <a href="{{ route('admin.members.index-beraca') }}"
+                                class="nav-link {{ request()->routeIs('admin.members.index-beraca') ? 'active' : '' }}">
                                 <i class="fas fa-genderless nav-icon text-primary"></i>
                                 <p>{{ __('Beraca') }}</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../members/kyrios.html" class="nav-link">
-                                <i class="fas fa-genderless nav-icon text-primary"></i>
-                                <p>{{ __('Kyrios') }}</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../members/jehova-nissi.html" class="nav-link">
+                            <a href="{{ route('admin.members.index-jehova-nissi') }}"
+                                class="nav-link {{ request()->routeIs('admin.members.index-jehova-nissi') ? 'active' : '' }}">
                                 <i class="fas fa-genderless nav-icon text-primary"></i>
                                 <p>{{ __('Jehova Nissi') }}</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../members/shalom.html" class="nav-link">
+                            <a href="{{ route('admin.members.index-kyrios') }}"
+                                class="nav-link {{ request()->routeIs('admin.members.index-kyrios') ? 'active' : '' }}">
+                                <i class="fas fa-genderless nav-icon text-primary"></i>
+                                <p>{{ __('Kyrios') }}</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.members.index-shalom') }}"
+                                class="nav-link {{ request()->routeIs('admin.members.index-shalom') ? 'active' : '' }}">
                                 <i class="fas fa-genderless nav-icon text-primary"></i>
                                 <p>{{ __('Shalom') }}</p>
                             </a>

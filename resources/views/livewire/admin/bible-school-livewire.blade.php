@@ -90,7 +90,7 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     @include('partials.columns-table', [
@@ -109,10 +109,23 @@
                                         <td>{{ $biblesSchoolTable->name }}</td>
                                         <td>{{ $biblesSchoolTable->created_at }}</td>
                                         <td>{{ $biblesSchoolTable->teacher->name ?? __('Not teacher asigned') }}</td>
+                                        <td class="text-center align-middle">
+                                            <span
+                                                class="badge badge-{{ $biblesSchoolTable->state == 'Activo' ? 'success' : 'danger' }}">{{ $biblesSchoolTable->state }}</span>
+                                        </td>
                                         <td style="width: 12%" class="align-middle text-center">
-                                            <x-app-config.button title="Delete" color="outline-light text-danger"
-                                                icon="fas fa-trash" class="btn-sm" wire:click="$emit('deleteBiblesSchool', {{ $biblesSchoolTable }})" />
-                                            <x-app-config.button title="Edit" color="outline-light text-cyan"
+                                            @if ($biblesSchoolTable->state == 'Activo')
+                                                <x-app-config.button color="link text-danger" icon="fas fa-power-off"
+                                                    class="btn-sm"
+                                                    wire:click="$emit('changeStateBiblesSchool', {{ $biblesSchoolTable }})" />
+                                            @else
+                                                <x-app-config.button color="link text-success" icon="fas fa-power-off"
+                                                    class="btn-sm"
+                                                    wire:click="$emit('changeStateBiblesSchool', {{ $biblesSchoolTable }})" />
+                                            @endif
+                                            {{-- <x-app-config.button color="link text-danger"
+                                                icon="fas fa-trash" class="btn-sm" wire:click="$emit('deleteBiblesSchool', {{ $biblesSchoolTable }})" /> --}}
+                                            <x-app-config.button color="link text-cyan"
                                                 icon="fas fa-edit" class="btn-sm"
                                                 wire:click="edit('{{ $biblesSchoolTable->id }}')" />
                                         </td>
@@ -196,7 +209,37 @@
                 $('#selectTeacherSave').val(teacher_id).trigger('change');
             });
 
-            Livewire.on('deleteBiblesSchool', bibleSchool => {
+            Livewire.on('changeStateBiblesSchool', bibleSchool => {
+                Swal.fire({
+                    title: "{{ __('Are you sure you want to change state') }}",
+                    toast: true,
+                    text: `{{ __('There is no way back') }}`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    position: 'top-end',
+                    confirmButtonText: "{{ __('Yes, change state it!') }}"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        Livewire.emit('changeState', bibleSchool.id);
+
+                        Swal.fire({
+                            position: 'top-end',
+                            toast: true,
+                            icon: 'success',
+                            title: "{{ __('Change state bible school') }}",
+                            text: `{{ __('The state of the bible school ${bibleSchool.name} was successfully updated') }}`,
+                            showConfirmButton: false,
+                            timer: 2500,
+                            timerProgressBar: true,
+                        });
+                    }
+                });
+            });
+
+            /* Livewire.on('deleteBiblesSchool', bibleSchool => {
                 Swal.fire({
                     title: "{{ __('Are you sure you want to delete') }}",
                     toast: true,
@@ -224,7 +267,7 @@
                         });
                     }
                 });
-            });
+            }); */
 
             function hideShowBtn(event, field, button) {
                 $(field).on(event, () => {

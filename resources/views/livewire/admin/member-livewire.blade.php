@@ -1,5 +1,6 @@
 <div>
     @push('css')
+        <link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
         <style>
             .btn-circle.btn-xl {
                 width: 60px;
@@ -364,7 +365,7 @@
                         </div>
                     @endif
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     @include('partials.columns-table', [
@@ -384,11 +385,24 @@
                                         <td>{{ $memberTable->name }} {{ $memberTable->lastname }}</td>
                                         <td>{{ $memberTable->is_baptized }}</td>
                                         <td>{{ $memberTable->neighborhood->name }}</td>
+                                        <td class="text-center align-middle">
+                                            <span
+                                                class="badge badge-{{ $memberTable->state == 'Activo' ? 'success' : 'danger' }}">{{ $memberTable->state }}</span>
+                                        </td>
                                         <td style="width: 12%" class="align-middle text-center">
-                                            <x-app-config.button title="Delete" color="outline-light text-danger" icon="fas fa-trash"
+                                            @if ($memberTable->state == 'Activo')
+                                                <x-app-config.button color="link text-danger" icon="fas fa-power-off"
+                                                    class="btn-sm"
+                                                    wire:click="$emit('changeStateMember', {{ $memberTable }})" />
+                                            @else
+                                                <x-app-config.button color="link text-success" icon="fas fa-power-off"
+                                                    class="btn-sm"
+                                                    wire:click="$emit('changeStateMember', {{ $memberTable }})" />
+                                            @endif
+                                            {{-- <x-app-config.button color="link text-danger" icon="fas fa-trash"
                                                 class="btn-sm"
-                                                wire:click="$emit('deleteMember', {{ $memberTable }})" />
-                                            <x-app-config.button title="Edit" color="outline-light text-cyan" icon="fas fa-edit"
+                                                wire:click="$emit('deleteMember', {{ $memberTable }})" /> --}}
+                                            <x-app-config.button color="link text-cyan" icon="fas fa-edit"
                                                 class="btn-sm" wire:click="edit('{{ $memberTable->id }}')" />
                                         </td>
                                     </tr>
@@ -412,79 +426,170 @@
                 @endif
             </div>
         </div>
-
-        @push('js')
-            <!-- SweetAlert2 -->
-            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-            <script>
-                document.addEventListener('livewire:load', function() {
-
-                    //Initialize Select2 Elements
-                    // Filtered
-                    let select2 = $('#selectNeighborhoodId').select2({
-                        theme: 'bootstrap4'
-                    }).on('change', () => {
-                        @this.set('neighborhood_id_serach', select2.select2("val"));
-                    });
-
-                    // Save
-                    let select2NeighborhoodSave = $('#selectNeighborhoodSave').select2({
-                        theme: 'bootstrap4'
-                    }).on('change', () => {
-                        @this.set('neighborhood_id', select2NeighborhoodSave.select2("val"));
-                    });
-                });
-
-                Livewire.on('clear-select', () => {
-                    $('#selectNeighborhoodSave').val('').trigger('change');
-                });
-
-                Livewire.on('alert', (data) => {
-                    Swal.fire({
-                        position: 'top-end',
-                        toast: true,
-                        icon: data.icon,
-                        title: "{{ __('Your work has been saved') }}",
-                        text: data.message,
-                        showConfirmButton: false,
-                        timer: 2500,
-                        timerProgressBar: true,
-                    });
-                });
-
-                Livewire.on('selected-item', neighborhood_id => {
-                    $('#selectNeighborhoodSave').val(neighborhood_id).trigger('change');
-                });
-
-                Livewire.on('deleteMember', member => {
-                    Swal.fire({
-                        title: "{{ __('Are you sure you want to delete') }}",
-                        toast: true,
-                        text: `{{ __('There is no way back') }}`,
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        position: 'top-end',
-                        confirmButtonText: "{{ __('Yes, delete it!') }}"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-
-                            Livewire.emit('delete', member.id);
-
-                            Swal.fire({
-                                position: 'top-end',
-                                toast: true,
-                                icon: 'success',
-                                title: "{{ __('Delete member') }}",
-                                text: `{{ __('The member ${member.name} has been successfully removed') }}`,
-                                showConfirmButton: false,
-                                timer: 2500,
-                                timerProgressBar: true,
-                            });
-                        }
-                    });
-                });
-            </script>
-        @endpush
     </div>
+
+    @push('js')
+        <!-- SweetAlert2 -->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            document.addEventListener('livewire:load', function() {
+
+                //Initialize Select2 Elements
+                // Filtered
+                let select2 = $('#selectNeighborhoodId').select2({
+                    theme: 'bootstrap4'
+                }).on('change', () => {
+                    @this.set('neighborhood_id_serach', select2.select2("val"));
+                });
+
+                // Save
+                let select2NeighborhoodSave = $('#selectNeighborhoodSave').select2({
+                    theme: 'bootstrap4'
+                }).on('change', () => {
+                    @this.set('neighborhood_id', select2NeighborhoodSave.select2("val"));
+                });
+            });
+
+            Livewire.on('clear-select', () => {
+                $('#selectNeighborhoodSave').val('').trigger('change');
+            });
+
+            Livewire.on('alert', (data) => {
+                Swal.fire({
+                    position: 'top-end',
+                    toast: true,
+                    icon: data.icon,
+                    title: "{{ __('Your work has been saved') }}",
+                    text: data.message,
+                    showConfirmButton: false,
+                    timer: 2500,
+                    timerProgressBar: true,
+                });
+            });
+
+            Livewire.on('selected-item', neighborhood_id => {
+                $('#selectNeighborhoodSave').val(neighborhood_id).trigger('change');
+            });
+
+            /* Livewire.on('changeStateMember', member => {
+                Swal.fire({
+                    title: "{{ __('Are you sure you want to change state') }}",
+                    toast: true,
+                    text: `{{ __('There is no way back') }}`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    position: 'top-end',
+                    confirmButtonText: "{{ __('Yes, change state it!') }}"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        Livewire.emit('changeState', member.id);
+
+                        Swal.fire({
+                            position: 'top-end',
+                            toast: true,
+                            icon: 'success',
+                            title: "{{ __('Change state member') }}",
+                            text: `{{ __('The state of the member ${member.name} was successfully updated') }}`,
+                            showConfirmButton: false,
+                            timer: 2500,
+                            timerProgressBar: true,
+                        });
+                    }
+                });
+            }); */
+
+            /* Livewire.on('changeStateMember', sector => {
+                Swal.fire({
+                    title: "{{ __('Are you sure you want to change state') }}",
+                    toast: true,
+                    text: `{{ __('There is no way back') }}`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    position: 'top-end',
+                    confirmButtonText: "{{ __('Yes, change state it!') }}"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        Livewire.emit('changeState', sector.id);
+
+                        Swal.fire({
+                            position: 'top-end',
+                            toast: true,
+                            icon: 'success',
+                            title: "{{ __('Change state sector') }}",
+                            text: `{{ __('The state of the sector ${sector.name} was successfully updated') }}`,
+                            showConfirmButton: false,
+                            timer: 2500,
+                            timerProgressBar: true,
+                        });
+                    }
+                });
+            }); */
+
+            /* Livewire.on('deleteMember', member => {
+                Swal.fire({
+                    title: "{{ __('Are you sure you want to delete') }}",
+                    toast: true,
+                    text: `{{ __('There is no way back') }}`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    position: 'top-end',
+                    confirmButtonText: "{{ __('Yes, delete it!') }}"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        Livewire.emit('delete', member.id);
+
+                        Swal.fire({
+                            position: 'top-end',
+                            toast: true,
+                            icon: 'success',
+                            title: "{{ __('Delete member') }}",
+                            text: `{{ __('The member ${member.name} has been successfully removed') }}`,
+                            showConfirmButton: false,
+                            timer: 2500,
+                            timerProgressBar: true,
+                        });
+                    }
+                });
+            }); */
+
+            Livewire.on('changeStateMember', member => {
+                Swal.fire({
+                    title: "{{ __('Are you sure you want to state') }}",
+                    toast: true,
+                    text: `{{ __('There is no way back') }}`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    position: 'top-end',
+                    confirmButtonText: "{{ __('Yes, state it!') }}"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        Livewire.emit('changeState', member.id);
+
+                        Swal.fire({
+                            position: 'top-end',
+                            toast: true,
+                            icon: 'success',
+                            title: "{{ __('Change state member') }}",
+                            text: `{{ __('The member ${member.name} has been successfully change') }}`,
+                            showConfirmButton: false,
+                            timer: 2500,
+                            timerProgressBar: true,
+                        });
+                    }
+                });
+            });
+        </script>
+    @endpush
+</div>

@@ -30,6 +30,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('neighborhood_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('cell_id')->nullable()->constrained()->onDelete('cascade');
+            $table->enum('state', ['Activo', 'Inactivo'])->default('Activo');
             $table->timestamps();
         });
     }
