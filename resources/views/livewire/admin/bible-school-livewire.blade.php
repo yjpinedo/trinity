@@ -107,7 +107,7 @@
                                     <tr>
                                         <td>{{ $biblesSchoolTable->id }}</td>
                                         <td>{{ $biblesSchoolTable->name }}</td>
-                                        <td>{{ $biblesSchoolTable->created_at }}</td>
+                                        <td>{{ $biblesSchoolTable->created_at->format('Y-m-d') }}</td>
                                         <td>{{ $biblesSchoolTable->teacher->name ?? __('Not teacher asigned') }}</td>
                                         <td class="text-center align-middle">
                                             <span

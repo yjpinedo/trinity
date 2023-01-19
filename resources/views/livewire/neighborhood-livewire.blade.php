@@ -108,7 +108,7 @@
                                     <tr>
                                         <td>{{ $neighborhoodTable->id }}</td>
                                         <td>{{ $neighborhoodTable->name }}</td>
-                                        <td>{{ $neighborhoodTable->created_at }}</td>
+                                        <td>{{ $neighborhoodTable->created_at->format('Y-m-d') }}</td>
                                         <td>{{ $neighborhoodTable->sector->name }}</td>
                                         <td class="text-center align-middle">
                                             <span
