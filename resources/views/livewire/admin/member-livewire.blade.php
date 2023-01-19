@@ -384,10 +384,23 @@
                                         <td>{{ $memberTable->name }} {{ $memberTable->lastname }}</td>
                                         <td>{{ $memberTable->is_baptized }}</td>
                                         <td>{{ $memberTable->neighborhood->name }}</td>
+                                        <td class="text-center align-middle">
+                                            <span
+                                                class="badge badge-{{ $memberTable->state == 'Activo' ? 'success' : 'danger' }}">{{ $memberTable->state }}</span>
+                                        </td>
                                         <td style="width: 12%" class="align-middle text-center">
-                                            <x-app-config.button color="link text-danger" icon="fas fa-trash"
+                                            @if ($memberTable->state == 'Activo')
+                                                <x-app-config.button color="link text-danger" icon="fas fa-power-off"
+                                                    class="btn-sm"
+                                                    wire:click="$emit('changeStateMember', {{ $memberTable }})" />
+                                            @else
+                                                <x-app-config.button color="link text-success" icon="fas fa-power-off"
+                                                    class="btn-sm"
+                                                    wire:click="$emit('changeStateMember', {{ $memberTable }})" />
+                                            @endif
+                                            {{-- <x-app-config.button color="link text-danger" icon="fas fa-trash"
                                                 class="btn-sm"
-                                                wire:click="$emit('deleteMember', {{ $memberTable }})" />
+                                                wire:click="$emit('deleteMember', {{ $memberTable }})" /> --}}
                                             <x-app-config.button color="link text-cyan" icon="fas fa-edit"
                                                 class="btn-sm" wire:click="edit('{{ $memberTable->id }}')" />
                                         </td>
@@ -456,7 +469,67 @@
                     $('#selectNeighborhoodSave').val(neighborhood_id).trigger('change');
                 });
 
-                Livewire.on('deleteMember', member => {
+                /* Livewire.on('changeStateMember', member => {
+                    Swal.fire({
+                        title: "{{ __('Are you sure you want to change state') }}",
+                        toast: true,
+                        text: `{{ __('There is no way back') }}`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        position: 'top-end',
+                        confirmButtonText: "{{ __('Yes, change state it!') }}"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+
+                            Livewire.emit('changeState', member.id);
+
+                            Swal.fire({
+                                position: 'top-end',
+                                toast: true,
+                                icon: 'success',
+                                title: "{{ __('Change state member') }}",
+                                text: `{{ __('The state of the member ${member.name} was successfully updated') }}`,
+                                showConfirmButton: false,
+                                timer: 2500,
+                                timerProgressBar: true,
+                            });
+                        }
+                    });
+                }); */
+
+                /* Livewire.on('changeStateMember', sector => {
+                    Swal.fire({
+                        title: "{{ __('Are you sure you want to change state') }}",
+                        toast: true,
+                        text: `{{ __('There is no way back') }}`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        position: 'top-end',
+                        confirmButtonText: "{{ __('Yes, change state it!') }}"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+
+                            Livewire.emit('changeState', sector.id);
+
+                            Swal.fire({
+                                position: 'top-end',
+                                toast: true,
+                                icon: 'success',
+                                title: "{{ __('Change state sector') }}",
+                                text: `{{ __('The state of the sector ${sector.name} was successfully updated') }}`,
+                                showConfirmButton: false,
+                                timer: 2500,
+                                timerProgressBar: true,
+                            });
+                        }
+                    });
+                }); */
+
+                /* Livewire.on('deleteMember', member => {
                     Swal.fire({
                         title: "{{ __('Are you sure you want to delete') }}",
                         toast: true,
@@ -478,6 +551,36 @@
                                 icon: 'success',
                                 title: "{{ __('Delete member') }}",
                                 text: `{{ __('The member ${member.name} has been successfully removed') }}`,
+                                showConfirmButton: false,
+                                timer: 2500,
+                                timerProgressBar: true,
+                            });
+                        }
+                    });
+                }); */
+
+                Livewire.on('changeStateMember', member => {
+                    Swal.fire({
+                        title: "{{ __('Are you sure you want to state') }}",
+                        toast: true,
+                        text: `{{ __('There is no way back') }}`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        position: 'top-end',
+                        confirmButtonText: "{{ __('Yes, state it!') }}"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+
+                            Livewire.emit('changeState', member.id);
+
+                            Swal.fire({
+                                position: 'top-end',
+                                toast: true,
+                                icon: 'success',
+                                title: "{{ __('Change state member') }}",
+                                text: `{{ __('The member ${member.name} has been successfully change') }}`,
                                 showConfirmButton: false,
                                 timer: 2500,
                                 timerProgressBar: true,
