@@ -170,7 +170,7 @@
                                 @endif
                             @empty
                                 <tr>
-                                    <td colspan="7" class="text-center">{{ __('Not members lists') }}</td>
+                                    <td colspan="8" class="text-center">{{ __('Not members lists') }}</td>
                                 </tr>
                             @endforelse
                         </tbody>

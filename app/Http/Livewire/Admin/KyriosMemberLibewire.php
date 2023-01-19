@@ -7,10 +7,11 @@ use Livewire\Component;
 use App\Models\Neighborhood;
 use Livewire\WithPagination;
 use App\Traits\WithOrderTrait;
+use App\Traits\WithRangeTypeNetworkTrait;
 
 class KyriosMemberLibewire extends Component
 {
-    use WithOrderTrait, WithPagination;
+    use WithOrderTrait, WithPagination, WithRangeTypeNetworkTrait;
 
     public $document_type_search, $sex_search, $civil_state_search, $is_baptized_search;
     public $is_baptized = 'No';
@@ -19,8 +20,6 @@ class KyriosMemberLibewire extends Component
     public $sex = 'Femenino';
     public $from, $to;
     public $type_red_search;
-    public $rangeFrom = 0;
-    public $rangeTo = 0;
 
     protected $paginationTheme = 'bootstrap';
 
@@ -83,22 +82,7 @@ class KyriosMemberLibewire extends Component
             $members->where('neighborhood_id', $this->neighborhood_id_serach);
         }
 
-        if ($this->type_red_search == 'children') {
-            $this->rangeFrom = 0;
-            $this->rangeTo = 13;
-        } elseif ($this->type_red_search == 'teenagers') {
-            $this->rangeFrom = 14;
-            $this->rangeTo = 18;
-        } elseif ($this->type_red_search == 'youths') {
-            $this->rangeFrom = 19;
-            $this->rangeTo = 30;
-        } elseif ($this->type_red_search == 'adults') {
-            $this->rangeFrom = 30;
-            $this->rangeTo = 200;
-        } else {
-            $this->rangeFrom = 0;
-            $this->rangeTo = 0;
-        }
+        $this->rangeByNetwork($this->type_red_search);
 
         return view('livewire.admin.kyrios-member-libewire', ['members' => $members->paginate(10), 'neighborhoods' => $neighborhoods])
             ->layout('components.layouts.app');
