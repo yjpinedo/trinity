@@ -8,7 +8,7 @@ use App\Models\Neighborhood;
 use Livewire\WithPagination;
 use App\Traits\WithOrderTrait;
 
-class AdonaiMemberLivewire extends Component
+class BeracaMemberLibewire extends Component
 {
     use WithOrderTrait, WithPagination;
 
@@ -38,12 +38,12 @@ class AdonaiMemberLivewire extends Component
     {
         $members = Member::orderBy($this->sortColumn, $this->sortDirection)->whereHas('neighborhood', function ($neighborhood) {
             return $neighborhood->whereHas('sector', function ($sector) {
-                return $sector->where('slug', 'adonais');
+                return $sector->where('slug', 'beraca');
             });
         });
 
         $neighborhoods = Neighborhood::orderBy('name', 'asc')->whereHas('sector', function ($sector) {
-            return $sector->where('slug', 'adonais');
+            return $sector->where('slug', 'beraca');
         })->pluck('name', 'id');
 
         if ($this->search && $this->search != '') {
@@ -100,7 +100,6 @@ class AdonaiMemberLivewire extends Component
             $this->rangeTo = 0;
         }
 
-        return view('livewire.admin.adonai-member-livewire', ['members' => $members->paginate(10), 'neighborhoods' => $neighborhoods])
-            ->layout('components.layouts.app');
+        return view('livewire.admin.beraca-member-libewire', ['members' => $members->paginate(10), 'neighborhoods' => $neighborhoods])->layout('components.layouts.app');
     }
 }

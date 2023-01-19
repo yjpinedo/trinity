@@ -1,14 +1,14 @@
 <div>
     <x-slot name="title">
-        {{ __('Members - Adonais') }}
+        {{ __('Members - Kyrios') }}
     </x-slot>
 
     <x-slot name="page">
-        {{ __('Members Adonais') }}
+        {{ __('Members Kyrios') }}
     </x-slot>
 
     <x-slot name="pageActive">
-        {{ __('Adonais') }}
+        {{ __('Kyrios') }}
     </x-slot>
 
     <x-slot name="user">
@@ -19,7 +19,7 @@
         <div class="card card-outline card-primary">
             <div class="card-header">
                 <h6 class=""><i class="fas fa-table text-primary"></i>
-                    {{ __('List of members adonais') }}
+                    {{ __('List of members kyrios') }}
                 </h6>
             </div>
             <div class="card-body mb-0">

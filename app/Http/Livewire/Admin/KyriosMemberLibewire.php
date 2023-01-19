@@ -8,7 +8,7 @@ use App\Models\Neighborhood;
 use Livewire\WithPagination;
 use App\Traits\WithOrderTrait;
 
-class AdonaiMemberLivewire extends Component
+class KyriosMemberLibewire extends Component
 {
     use WithOrderTrait, WithPagination;
 
@@ -38,12 +38,12 @@ class AdonaiMemberLivewire extends Component
     {
         $members = Member::orderBy($this->sortColumn, $this->sortDirection)->whereHas('neighborhood', function ($neighborhood) {
             return $neighborhood->whereHas('sector', function ($sector) {
-                return $sector->where('slug', 'adonais');
+                return $sector->where('slug', 'kyrios');
             });
         });
 
         $neighborhoods = Neighborhood::orderBy('name', 'asc')->whereHas('sector', function ($sector) {
-            return $sector->where('slug', 'adonais');
+            return $sector->where('slug', 'kyrios');
         })->pluck('name', 'id');
 
         if ($this->search && $this->search != '') {
@@ -86,13 +86,13 @@ class AdonaiMemberLivewire extends Component
         if ($this->type_red_search == 'children') {
             $this->rangeFrom = 0;
             $this->rangeTo = 13;
-        } elseif($this->type_red_search == 'teenagers') {
+        } elseif ($this->type_red_search == 'teenagers') {
             $this->rangeFrom = 14;
             $this->rangeTo = 18;
         } elseif ($this->type_red_search == 'youths') {
             $this->rangeFrom = 19;
             $this->rangeTo = 30;
-        } elseif($this->type_red_search == 'adults') {
+        } elseif ($this->type_red_search == 'adults') {
             $this->rangeFrom = 30;
             $this->rangeTo = 200;
         } else {
@@ -100,7 +100,7 @@ class AdonaiMemberLivewire extends Component
             $this->rangeTo = 0;
         }
 
-        return view('livewire.admin.adonai-member-livewire', ['members' => $members->paginate(10), 'neighborhoods' => $neighborhoods])
+        return view('livewire.admin.kyrios-member-libewire', ['members' => $members->paginate(10), 'neighborhoods' => $neighborhoods])
             ->layout('components.layouts.app');
     }
 }
