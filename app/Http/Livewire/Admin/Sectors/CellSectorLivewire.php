@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Cells;
+namespace App\Http\Livewire\Admin\Sectors;
 
 use App\Models\Cell;
 use App\Models\Sector;
@@ -57,7 +57,7 @@ class CellSectorLivewire extends Component
             $cells->where('neighborhood_id', $this->neighborhood_id_serach);
         }
 
-        return view('livewire.admin.cells.cell-sector-livewire', ['cells' => $cells->paginate(10), 'neighborhoods' => $neighborhoods, 'sector' => $this->sector])
+        return view('livewire.admin.sectors.cell-sector-livewire', ['cells' => $cells->paginate(10), 'neighborhoods' => $neighborhoods, 'sector' => $this->sector])
             ->layout('components.layouts.app');
     }
 

@@ -6,7 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\Admin\AdonaiMemberLivewire;
 use App\Http\Livewire\Admin\BeracaMemberLibewire;
 use App\Http\Livewire\Admin\BibleSchoolLivewire;
-use App\Http\Livewire\Admin\Cells\CellSectorLivewire;
+use App\Http\Livewire\Admin\Sectors\CellSectorLivewire;
 use App\Http\Livewire\Admin\JehovaNissiMemberLibewire;
 use App\Http\Livewire\Admin\KyriosMemberLibewire;
 use App\Http\Livewire\Admin\MemberLivewire;

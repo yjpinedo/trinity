@@ -19,9 +19,17 @@
 
         <div class="col-12">
             <div class="card card-outline card-primary">
-                <div class="card-header text-center p-2">
-                    <h6><i class="fas fa-table text-primary"></i> {{ __('List of cells') }}
-                    </h6>
+                <div class="card-header p-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6><i class="fas fa-table text-primary"></i> {{ __('List of cells') }}
+                            </h6>
+                        </div>
+                        <div>
+                            <a href="{{ route('admin.sectors.index') }}" class="btn btn-default btn-flat btn-sm"><i
+                                    class="fas fa-arrow-left text-primary"></i> {{ __('Return') }}</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="card p-2">
@@ -76,8 +84,7 @@
                                                 @endif
                                             </th>
                                         @else
-                                            <th style="cursor: pointer;"
-                                                wire:click="sortBy('{{ $key }}')">
+                                            <th style="cursor: pointer;" wire:click="sortBy('{{ $key }}')">
                                                 {{ __($column) }}
                                                 @if ($sortColumn == $key)
                                                     @if ($sortDirection == 'asc')
