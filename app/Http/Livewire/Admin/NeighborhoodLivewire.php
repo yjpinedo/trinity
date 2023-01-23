@@ -81,7 +81,7 @@ class NeighborhoodLivewire extends Component
             $neighborhoods->where('sector_id', $this->sector_id_search);
         }
 
-        return view('livewire.neighborhood-livewire', ['neighborhoods' => $neighborhoods->paginate(10), 'sectors' => Sector::pluck('name', 'id')])
+        return view('livewire.admin.neighborhood-livewire', ['neighborhoods' => $neighborhoods->paginate(10), 'sectors' => Sector::pluck('name', 'id')])
             ->layout('components.layouts.app');
     }
 

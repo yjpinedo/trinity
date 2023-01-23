@@ -12,8 +12,18 @@ class Sector extends Model
     protected $fillable = ['name', 'slug', 'description', 'image'];
 
     // Relationship
-    public function neighborhoods ()
+    public function neighborhoods()
     {
         return $this->hasMany(Neighborhood::class);
+    }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }

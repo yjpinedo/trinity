@@ -122,7 +122,9 @@
                                                 icon="fas fa-trash" class="btn-sm"
                                                 wire:click="$emit('deleteSector', {{ $sector }})" /> --}}
                                             <x-app-config.button color="link text-cyan" icon="fas fa-edit"
-                                                class="btn-sm" wire:click="edit('{{ $sector->id }}')" />
+                                                class="btn-sm" wire:click="edit('{{ $sector->slug }}')" />
+                                            <a href="{{ route('admin.sectors.index-cells-sector', $sector) }}" class="btn btn-link text-indigo btn-sm" title="{{ __('list cells') }}"><i
+                                                    class="fas fa-sitemap"></i></a>
                                         </td>
                                     </tr>
                                 @empty
@@ -203,7 +205,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
 
-                        Livewire.emit('changeState', sector.id);
+                        Livewire.emit('changeState', sector.slug);
 
                         Swal.fire({
                             position: 'top-end',

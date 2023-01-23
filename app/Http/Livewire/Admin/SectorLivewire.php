@@ -83,7 +83,7 @@ class SectorLivewire extends Component
 
     public function render()
     {
-        $sectors = Sector::orderBy($this->sortColumn, $this->sortDirection);
+        $sectors = Sector::orderBy($this->sortColumn, $this->sortDirection)->with('neighborhoods.cells');
 
         if ($this->search && $this->search != '') {
             $sectors->where(function ($query) {

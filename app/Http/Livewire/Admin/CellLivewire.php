@@ -82,7 +82,7 @@ class CellLivewire extends Component
             $cells->where('neighborhood_id', $this->neighborhood_id_serach);
         }
 
-        return view('livewire.cell-livewire', ['cells' => $cells->paginate(10), 'neighborhoods' => $neighborhoods, 'leaders' => []])
+        return view('livewire.admin.cell-livewire', ['cells' => $cells->paginate(10), 'neighborhoods' => $neighborhoods, 'leaders' => []])
             ->layout('components.layouts.app');
     }
 
