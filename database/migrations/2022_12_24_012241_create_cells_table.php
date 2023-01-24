@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('cells', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->foreignId('neighborhood_id')->constrained()->onDelete('cascade');
             $table->enum('state', ['Activo', 'Inactivo'])->default('Activo');

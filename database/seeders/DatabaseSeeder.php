@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Neighborhood;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 
@@ -35,12 +37,21 @@ class DatabaseSeeder extends Seeder
             \App\Models\Sector::factory()->create([
                 'name' => $value,
                 'slug' => str($value)->slug(),
-            ]);            # code...
+            ])->each(function ($sector) {
+                \App\Models\Neighborhood::factory(11)->create([
+                    'sector_id' => $sector->id,
+                ]);
+            });
         }
 
-        \App\Models\Neighborhood::factory(200)->create();
-        \App\Models\Cell::factory(100)->create();
-        \App\Models\Member::factory(20)->create();
+        \App\Models\Cell::factory(50)->create()->each(function ($cell) {
+            \App\Models\Member::factory(5)->create([
+                'cell_id' => $cell->id,
+                'neighborhood_id' => $cell->neighborhood->id,
+            ]);
+        });
+
+        \App\Models\Member::factory(100)->create();
         \App\Models\BibleSchool::factory(10)->create();
 
         // \App\Models\User::factory()->create([

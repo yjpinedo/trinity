@@ -124,7 +124,7 @@
                                             <x-app-config.button color="link text-cyan" icon="fas fa-edit"
                                                 class="btn-sm" wire:click="edit('{{ $sector->slug }}')" />
                                             <a href="{{ route('admin.sectors.index-cells-sector', $sector) }}" class="btn btn-link text-indigo btn-sm" title="{{ __('list cells') }}"><i
-                                                    class="fas fa-sitemap"></i></a>
+                                                    class="fas fa-map-marked-alt"></i></a>
                                         </td>
                                     </tr>
                                 @empty

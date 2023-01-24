@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\Admin\AdonaiMemberLivewire;
 use App\Http\Livewire\Admin\BeracaMemberLibewire;
 use App\Http\Livewire\Admin\BibleSchoolLivewire;
+use App\Http\Livewire\Admin\Cells\MemberCellLivewire;
 use App\Http\Livewire\Admin\Sectors\CellSectorLivewire;
 use App\Http\Livewire\Admin\JehovaNissiMemberLibewire;
 use App\Http\Livewire\Admin\KyriosMemberLibewire;
@@ -26,9 +27,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
     Route::prefix('admin')->group(function () {
         Route::get('/sectors', SectorLivewire::class)->name('admin.sectors.index');
-        Route::get('/cell-sectors/{sector:slug}', CellSectorLivewire::class)->name('admin.sectors.index-cells-sector');
+        Route::get('/sectors/cell-sectors/{sector:slug}', CellSectorLivewire::class)->name('admin.sectors.index-cells-sector');
         Route::get('/neighborhood', NeighborhoodLivewire::class)->name('admin.neighborhood.index');
         Route::get('/cells', CellLivewire::class)->name('admin.cells.index');
+        Route::get('/cells/members-cells/{cell}', MemberCellLivewire::class)->name('admin.cells.index-members-cells');
         Route::get('/bible-school', BibleSchoolLivewire::class)->name('admin.bible-school.index');
         Route::get('/members', MemberLivewire::class)->name('admin.members.index');
         Route::get('/adonais-members', AdonaiMemberLivewire::class)->name('admin.members.index-adonais');

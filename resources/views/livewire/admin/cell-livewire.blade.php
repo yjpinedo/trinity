@@ -141,7 +141,9 @@
                                             {{-- <x-app-config.button  color="link text-danger" icon="fas fa-trash"
                                                 class="btn-sm" wire:click="$emit('deleteCell', {{ $cellTable }})" /> --}}
                                             <x-app-config.button color="link text-cyan" icon="fas fa-edit"
-                                                class="btn-sm" wire:click="edit('{{ $cellTable->id }}')" />
+                                                class="btn-sm" wire:click="edit('{{ $cellTable->slug }}')" />
+                                            <a href="{{ route('admin.cells.index-members-cells', $cellTable) }}" class="btn btn-link btn-sm text-indigo"><i
+                                                    class="fas fa-user-friends"></i></a>
                                         </td>
                                     </tr>
                                 @empty
@@ -237,7 +239,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
 
-                        Livewire.emit('changeState', cell.id);
+                        Livewire.emit('changeState', cell.slug);
 
                         Swal.fire({
                             position: 'top-end',
