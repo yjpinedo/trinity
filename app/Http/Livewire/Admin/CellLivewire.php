@@ -82,7 +82,7 @@ class CellLivewire extends Component
             $cells->where('neighborhood_id', $this->neighborhood_id_serach);
         }
 
-        return view('livewire.cell-livewire', ['cells' => $cells->paginate(10), 'neighborhoods' => $neighborhoods, 'leaders' => []])
+        return view('livewire.admin.cell-livewire', ['cells' => $cells->paginate(10), 'neighborhoods' => $neighborhoods, 'leaders' => []])
             ->layout('components.layouts.app');
     }
 
@@ -113,6 +113,7 @@ class CellLivewire extends Component
 
         if ($this->cell) {
             $this->cell->name = $this->name;
+            $this->cell->slug = str($this->name)->slug();
             $this->cell->description = $this->description;
             $this->cell->neighborhood_id = $this->neighborhood_id;
             $this->cell->save();
@@ -121,6 +122,7 @@ class CellLivewire extends Component
         } else {
             $cellNew = Cell::create([
                 'name' => $this->name,
+                'slug' => str($this->name)->slug(),
                 'description' => $this->description,
                 'neighborhood_id' => $this->neighborhood_id,
             ]);

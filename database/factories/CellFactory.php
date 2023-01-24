@@ -17,8 +17,10 @@ class CellFactory extends Factory
      */
     public function definition()
     {
+        $name = $this->faker->sentence(4);
         return [
-            'name' => $this->faker->sentence(4),
+            'name' => $name,
+            'slug' => str($name)->slug(),
             'description' => $this->faker->text(),
             'neighborhood_id' => Neighborhood::all()->random()->id,
             'state' => $this->faker->randomElement(['Activo', 'Inactivo']),

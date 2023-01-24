@@ -33,18 +33,18 @@
                 </div>
                 <div class="card-body">
                     <x-app-config.form submit="save">
-                         <div class="form-group">
-                                <x-app-config.label value="{{ __('Teacher') }}" /> <br>
-                                <div wire:ignore>
-                                    <select class="form-control select2bs4" id="selectTeacherSave" style="width: 100%;">
-                                        <option value="">{{ __('Choose') }}</option>
-                                        @foreach ($teachers as $key => $teacher)
-                                            <option value="{{ $key }}">{{ $teacher }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <x-app-config.label-error for="sector_id" />
+                        <div class="form-group">
+                            <x-app-config.label value="{{ __('Teacher') }}" /> <br>
+                            <div wire:ignore>
+                                <select class="form-control select2bs4" id="selectTeacherSave" style="width: 100%;">
+                                    <option value="">{{ __('Choose') }}</option>
+                                    @foreach ($teachers as $key => $teacher)
+                                        <option value="{{ $key }}">{{ $teacher }}</option>
+                                    @endforeach
+                                </select>
                             </div>
+                            <x-app-config.label-error for="sector_id" />
+                        </div>
                         <div class="form-group">
                             <x-app-config.label value="Name" />
                             <x-app-config.input wire:model.defer="name" id="idNameBibleSchool" />
@@ -78,15 +78,16 @@
                                     wire:model.debounce.500ms="search" />
                             </div>
                             <div class="col-6">
-                                    <div wire:ignore>
-                                        <select class="form-control select2bs4" id="selectTeacherSearch" style="width: 100%">
-                                            <option value="">{{ __('Choose') }}</option>
-                                            @foreach ($teachers as $key => $teacher)
-                                                <option value="{{ $key }}">{{ $teacher }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                <div wire:ignore>
+                                    <select class="form-control select2bs4" id="selectTeacherSearch"
+                                        style="width: 100%">
+                                        <option value="">{{ __('Choose') }}</option>
+                                        @foreach ($teachers as $key => $teacher)
+                                            <option value="{{ $key }}">{{ $teacher }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                            </div>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -107,7 +108,7 @@
                                     <tr>
                                         <td>{{ $biblesSchoolTable->id }}</td>
                                         <td>{{ $biblesSchoolTable->name }}</td>
-                                        <td>{{ $biblesSchoolTable->created_at }}</td>
+                                        <td>{{ $biblesSchoolTable->created_at->format('Y-m-d') }}</td>
                                         <td>{{ $biblesSchoolTable->teacher->name ?? __('Not teacher asigned') }}</td>
                                         <td class="text-center align-middle">
                                             <span
@@ -125,9 +126,8 @@
                                             @endif
                                             {{-- <x-app-config.button color="link text-danger"
                                                 icon="fas fa-trash" class="btn-sm" wire:click="$emit('deleteBiblesSchool', {{ $biblesSchoolTable }})" /> --}}
-                                            <x-app-config.button color="link text-cyan"
-                                                icon="fas fa-edit" class="btn-sm"
-                                                wire:click="edit('{{ $biblesSchoolTable->id }}')" />
+                                            <x-app-config.button color="link text-cyan" icon="fas fa-edit"
+                                                class="btn-sm" wire:click="edit('{{ $biblesSchoolTable->id }}')" />
                                         </td>
                                     </tr>
                                 @empty

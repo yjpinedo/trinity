@@ -9,7 +9,7 @@ class Cell extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'neighborhood_id', 'leader_id'];
+    protected $fillable = ['name', 'slug', 'description', 'neighborhood_id', 'leader_id'];
 
     // Relationship
     public function leader()
@@ -25,5 +25,15 @@ class Cell extends Model
     public function members()
     {
         return $this->hasMany(Member::class);
+    }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }

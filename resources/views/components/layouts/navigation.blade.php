@@ -38,7 +38,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.sectors.index') }}"
-                        class="nav-link {{ request()->routeIs('admin.sectors.index') ? 'active' : '' }}">
+                        class="nav-link {{ request()->routeIs('admin.sectors.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-sitemap"></i>
                         <p>{{ __('Sectors') }}</p>
                     </a>
@@ -52,7 +52,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.cells.index') }}"
-                        class="nav-link {{ request()->routeIs('admin.cells.index') ? 'active' : '' }}">
+                        class="nav-link {{ request()->routeIs('admin.cells.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-compress-arrows-alt"></i>
                         <p>{{ __('Cells') }}</p>
                     </a>

@@ -1,26 +1,34 @@
 <div>
     <x-slot name="title">
-        {{ __('Members - Jehova Nissi') }}
+        {{ __('Cells - Members') }}
     </x-slot>
 
     <x-slot name="page">
-        {{ __('Members Jehova Nissi') }}
+        {{ __('Members cell ' . $cell->name) }}
     </x-slot>
 
     <x-slot name="pageActive">
-        {{ __('Jehova Nissi') }}
+        {{ __('Members') }}
     </x-slot>
 
     <x-slot name="user">
-        {{ __('Members') }}
+        {{ __('Cells') }}
     </x-slot>
 
     <div class="col-12">
         <div class="card card-outline card-primary">
             <div class="card-header">
-                <h6 class=""><i class="fas fa-table text-primary"></i>
-                    {{ __('List of members jehova nissi') }}
-                </h6>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class=""><i class="fas fa-table text-primary"></i>
+                            {{ __('List of members') }}
+                        </h6>
+                    </div>
+                    <div>
+                        <a href="{{ route('admin.cells.index') }}" class="btn btn-default btn-flat btn-sm"><i
+                                class="fas fa-arrow-left text-primary"></i> {{ __('Return') }}</a>
+                    </div>
+                </div>
             </div>
             <div class="card-body mb-0">
                 <div class="card pt-3 px-3">
@@ -28,37 +36,12 @@
                         <strong>{{ __('Filters Advances') }}</strong>
                     </h6>
                     <hr class="mt-0">
-
                     <div class="row">
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
+                        <div class="col-12">
                             <div class="form-group">
                                 <x-app-config.input
                                     placeholder="{{ __('Name, lastname, documet, email, addredd, phone and cellphone') }}"
                                     wire:model.debounce.500ms="search" />
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
-                            <div class="form-group">
-                                <div wire:ignore>
-                                    <select class="custom-select select2bs4" id="selectNeighborhoodId"
-                                        style="width: 100%">
-                                        <option value="">{{ __('Choose by neighborhood') }}</option>
-                                        @foreach ($neighborhoods as $key => $neighborhood)
-                                            <option value="{{ $key }}">{{ $neighborhood }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
-                            <div class="form-group">
-                                <select class="custom-select" wire:model="type_red_search">
-                                    <option value="">{{ __('Chooosen type red') }}</option>
-                                    <option value="children">{{ __('Children') }}</option>
-                                    <option value="teenagers">{{ __('Teenagers') }}</option>
-                                    <option value="youths">{{ __('Youths') }}</option>
-                                    <option value="adults">{{ __('Adults') }}</option>
-                                </select>
                             </div>
                         </div>
                     </div>
@@ -140,34 +123,16 @@
                         </thead>
                         <tbody>
                             @forelse ($members as $memberTable)
-                                @if ((int) $memberTable->age >= $this->rangeFrom && (int) $memberTable->age <= $this->rangeTo)
-                                    <tr>
-                                        <td class="align-middle">{{ $memberTable->id }}</td>
-                                        <td class="align-middle">{{ $memberTable->document_number }}</td>
-                                        <td class="align-middle">{{ $memberTable->name }} {{ $memberTable->lastname }}
-                                        </td>
-                                        <td class="align-middle">{{ $memberTable->email }}</td>
-                                        <td class="align-middle">{{ $memberTable->cellphone }}</td>
-                                        <td class="align-middle">{{ $memberTable->is_baptized }}</td>
-                                        <td class="align-middle">{{ $memberTable->neighborhood->name }}</td>
-                                        <td class="align-middle">{{ $memberTable->age }}</td>
-                                    </tr>
-                                @else
-                                    @if ($this->rangeFrom == 0 && $this->rangeTo == 0)
-                                        <tr>
-                                            <td class="align-middle">{{ $memberTable->id }}</td>
-                                            <td class="align-middle">{{ $memberTable->document_number }}</td>
-                                            <td class="align-middle">{{ $memberTable->name }}
-                                                {{ $memberTable->lastname }}
-                                            </td>
-                                            <td class="align-middle">{{ $memberTable->email }}</td>
-                                            <td class="align-middle">{{ $memberTable->cellphone }}</td>
-                                            <td class="align-middle">{{ $memberTable->is_baptized }}</td>
-                                            <td class="align-middle">{{ $memberTable->neighborhood->name }}</td>
-                                            <td class="align-middle">{{ $memberTable->age }}</td>
-                                        </tr>
-                                    @endif
-                                @endif
+                                <tr>
+                                    <td class="align-middle">{{ $memberTable->id }}</td>
+                                    <td class="align-middle">{{ $memberTable->document_number }}</td>
+                                    <td class="align-middle">{{ $memberTable->name }} {{ $memberTable->lastname }}
+                                    </td>
+                                    <td class="align-middle">{{ $memberTable->email }}</td>
+                                    <td class="align-middle">{{ $memberTable->cellphone }}</td>
+                                    <td class="align-middle">{{ $memberTable->is_baptized }}</td>
+                                    <td class="align-middle">{{ $memberTable->age }}</td>
+                                </tr>
                             @empty
                                 <tr>
                                     <td colspan="8" class="text-center">{{ __('Not members lists') }}</td>
@@ -188,21 +153,4 @@
             @endif
         </div>
     </div>
-
-    @push('js')
-        <!-- SweetAlert2 -->
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script>
-            document.addEventListener('livewire:load', function() {
-
-                //Initialize Select2 Elements
-                // Filtered
-                let select2 = $('#selectNeighborhoodId').select2({
-                    theme: 'bootstrap4'
-                }).on('change', () => {
-                    @this.set('neighborhood_id_serach', select2.select2("val"));
-                });
-            });
-        </script>
-    @endpush
 </div>

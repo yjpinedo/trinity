@@ -8,15 +8,15 @@
     @endpush
 
     <x-slot name="title">
-        {{ __('Cells') }}
+        {{ __('Neighborhood') }}
     </x-slot>
 
     <x-slot name="page">
-        {{ __('Management Cells') }}
+        {{ __('Management Neighborhood') }}
     </x-slot>
 
     <x-slot name="pageActive">
-        {{ __('Cells') }}
+        {{ __('Neighborhood') }}
     </x-slot>
 
     <x-slot name="user">
@@ -28,51 +28,36 @@
             <div class="card card-outline card-primary">
                 <div class="card-header  text-center p-2">
                     <h6><i class="fas fa-map-marked-alt text-primary"></i>
-                        {{ __('Create new cells') }}
+                        {{ __('Create new sector') }}
                     </h6>
                 </div>
                 <div class="card-body">
                     <x-app-config.form submit="save">
                         <div class="form-group">
-                            <x-app-config.label value="{{ __('Neighborhood') }}" /> <br>
+                            <x-app-config.label value="{{ __('Sector') }}" /> <br>
                             <div wire:ignore>
-                                <select class="form-control select2bs4" id="selectNeighborhoodSave"
-                                    style="width: 100%;">
+                                <select class="form-control select2bs4" id="selectSectorSave" style="width: 100%;">
                                     <option value="">{{ __('Choose') }}</option>
-                                    @foreach ($neighborhoods as $key => $neighborhood)
-                                        <option value="{{ $key }}">{{ $neighborhood }}</option>
+                                    @foreach ($sectors as $key => $sector)
+                                        <option value="{{ $key }}">{{ $sector }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <x-app-config.label-error for="neighborhood_id" />
+                            <x-app-config.label-error for="sector_id" />
                         </div>
-                        @if (count($leaders) > 0)
-                            <div class="form-group">
-                                <x-app-config.label value="{{ __('Neighborhood') }}" /> <br>
-                                <div wire:ignore>
-                                    <select class="form-control select2bs4" id="selectLeaderSave" style="width: 100%;">
-                                        <option value="">{{ __('Choose') }}</option>
-                                        @foreach ($leaders as $key => $leader)
-                                            <option value="{{ $key }}">{{ $leader }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <x-app-config.label-error for="neighborhood_id" />
-                            </div>
-                        @endif
                         <div class="form-group">
                             <x-app-config.label value="Name" />
-                            <x-app-config.input wire:model.defer="name" id="idNameCell" />
+                            <x-app-config.input wire:model.defer="name" id="idNameNeighborhood" />
                             <x-app-config.label-error for="name" />
                         </div>
                         <div class="form-group">
                             <x-app-config.label value="Description" />
-                            <textarea class="form-control" rows="5" wire:model.defer="description" id="idDescriptionCell"></textarea>
+                            <textarea class="form-control" rows="5" wire:model.defer="description" id="idDescriptionNeighborhood"></textarea>
                             <x-app-config.label-error for="description" />
                         </div>
                         <div class="form-group">
                             <x-slot name="actions">
-                                @include('partials.actions', ['idButtonReset' => 'Cell'])
+                                @include('partials.actions', ['idButtonReset' => 'Neighborhood'])
                             </x-slot>
                         </div>
                     </x-app-config.form>
@@ -82,7 +67,7 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-8">
             <div class="card card-outline card-primary">
                 <div class="card-header text-center p-2">
-                    <h6><i class="fas fa-table text-primary"></i> {{ __('List of cells') }}
+                    <h6><i class="fas fa-table text-primary"></i> {{ __('List of neighborhoods') }}
                     </h6>
                 </div>
                 <div class="card-body">
@@ -94,71 +79,73 @@
                             </div>
                             <div class="col-6">
                                 <div wire:ignore>
-                                    <select class="form-control select2bs4" id="selectCellId" style="width: 100%">
+                                    <select class="form-control select2bs4" id="selectSectorId" style="width: 100%">
                                         <option value="">{{ __('Choose') }}</option>
-                                        @foreach ($neighborhoods as $key => $neighborhood)
-                                            <option value="{{ $key }}">{{ $neighborhood }}</option>
+                                        @foreach ($sectors as $key => $sector)
+                                            <option value="{{ $key }}">{{ $sector }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
                                 <tr>
                                     @include('partials.columns-table', [
                                         'percentage' => [
-                                            'id' => '7%',
-                                            'column' => '13%',
+                                            'id' => '8%',
+                                            'column' => '11%',
                                             'action' => '14%',
                                         ],
                                     ])
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($cells as $cellTable)
+                                @forelse ($neighborhoods as $neighborhoodTable)
                                     <tr>
-                                        <td>{{ $cellTable->id }}</td>
-                                        <td>{{ $cellTable->name }}</td>
-                                        <td>{{ $cellTable->created_at->format('Y-m-d') }}</td>
-                                        <td>{{ $cellTable->neighborhood->name }}</td>
+                                        <td>{{ $neighborhoodTable->id }}</td>
+                                        <td>{{ $neighborhoodTable->name }}</td>
+                                        <td>{{ $neighborhoodTable->created_at->format('Y-m-d') }}</td>
+                                        <td>{{ $neighborhoodTable->sector->name }}</td>
                                         <td class="text-center align-middle">
                                             <span
-                                                class="badge badge-{{ $cellTable->state == 'Activo' ? 'success' : 'danger' }}">{{ $cellTable->state }}</span>
+                                                class="badge badge-{{ $neighborhoodTable->state == 'Activo' ? 'success' : 'danger' }}">{{ $neighborhoodTable->state }}</span>
                                         </td>
                                         <td style="width: 12%" class="align-middle text-center">
-                                            @if ($cellTable->state == 'Activo')
+                                            @if ($neighborhoodTable->state == 'Activo')
                                                 <x-app-config.button color="link text-danger" icon="fas fa-power-off"
                                                     class="btn-sm"
-                                                    wire:click="$emit('changeStateCell', {{ $cellTable }})" />
+                                                    wire:click="$emit('changeStateNeighborhood', {{ $neighborhoodTable }})" />
                                             @else
                                                 <x-app-config.button color="link text-success" icon="fas fa-power-off"
                                                     class="btn-sm"
-                                                    wire:click="$emit('changeStateCell', {{ $cellTable }})" />
+                                                    wire:click="$emit('changeStateNeighborhood', {{ $neighborhoodTable }})" />
                                             @endif
-                                            {{-- <x-app-config.button  color="link text-danger" icon="fas fa-trash"
-                                                class="btn-sm" wire:click="$emit('deleteCell', {{ $cellTable }})" /> --}}
+                                            {{-- <x-app-config.button color="link text-danger" icon="fas fa-trash"
+                                                class="btn-sm"
+                                                wire:click="$emit('deleteNeighborhood', {{ $neighborhoodTable }})" /> --}}
                                             <x-app-config.button color="link text-cyan" icon="fas fa-edit"
-                                                class="btn-sm" wire:click="edit('{{ $cellTable->id }}')" />
+                                                class="btn-sm" wire:click="edit('{{ $neighborhoodTable->id }}')" />
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="text-center">{{ __('Not cells lists') }}</td>
+                                        <td colspan="5" class="text-center">{{ __('Not neighborhoods lists') }}</td>
                                     </tr>
                                 @endforelse
                             </tbody>
                         </table>
                     </div>
                 </div>
-                @if ($cells->hasPages())
+                @if ($neighborhoods->hasPages())
                     <div class="card-footer bg-white">
                         <div class="d-flex justify-content-between align-item-center pb-0">
-                            {{ __('Showing') }} {!! $cells->firstItem() !!} {{ __('to') }} {!! $cells->lastItem() !!}
-                            {{ __('of') }} {!! $cells->total() !!} {{ __('entries') }}
-                            {!! $cells->links() !!}
+                            {{ __('Showing') }} {!! $neighborhoods->firstItem() !!} {{ __('to') }} {!! $neighborhoods->lastItem() !!}
+                            {{ __('of') }} {!! $neighborhoods->total() !!} {{ __('entries') }}
+                            {!! $neighborhoods->links() !!}
                         </div>
                     </div>
                 @endif
@@ -174,36 +161,34 @@
         <script>
             document.addEventListener('livewire:load', function() {
 
-                // Hide - Show btn
-                $('#btnResetCell').hide();
-                hideShowBtn('input', '#idNameCell', '#btnResetCell');
-                hideShowBtn('input', '#idDescriptionCell', '#btnResetCell');
-                hideShowBtn('change', '#selectNeighborhoodSave', '#btnResetCell');
+                $('#btnResetNeighborhood').hide();
+
+                hideShowBtn('input', '#idNameNeighborhood', '#btnResetNeighborhood');
+                hideShowBtn('input', '#idDescriptionNeighborhood', '#btnResetNeighborhood');
+                hideShowBtn('change', '#selectSectorSave', '#btnResetNeighborhood');
 
                 //Initialize Select2 Elements
                 // Filtered
-                let select2 = $('#selectCellId').select2({
+                let select2 = $('#selectSectorId').select2({
                     theme: 'bootstrap4'
                 }).on('change', () => {
-                    @this.set('neighborhood_id_serach', select2.select2("val"));
+                    @this.set('sector_id_search', select2.select2("val"));
                 });
 
                 // Save
-                let select2NeighborhoodSave = $('#selectNeighborhoodSave').select2({
+                let select2Save = $('#selectSectorSave').select2({
                     theme: 'bootstrap4'
                 }).on('change', () => {
-                    @this.set('neighborhood_id', select2NeighborhoodSave.select2("val"));
+                    @this.set('sector_id', select2Save.select2("val"));
                 });
-
-                let select2LeaderSave = $('#selectLeaderSave').select2({
-                    theme: 'bootstrap4'
-                }).on('change', () => {
-                    @this.set('leader_id', select2LeaderSave.select2("val"));
-                });
-            })
+            });
 
             Livewire.on('clear-select', () => {
-                $('#selectNeighborhoodSave').val('').trigger('change');
+                $('#selectSectorSave').val('').trigger('change');
+            });
+
+            Livewire.on('selected-item', sector_id => {
+                $('#selectSectorSave').val(sector_id).trigger('change');
             });
 
             Livewire.on('alert', (data) => {
@@ -219,41 +204,7 @@
                 });
             });
 
-            Livewire.on('selected-item', neighborhood_id => {
-                $('#selectNeighborhoodSave').val(neighborhood_id).trigger('change');
-            });
-
-            Livewire.on('changeStateCell', cell => {
-                Swal.fire({
-                    title: "{{ __('Are you sure you want to change state') }}",
-                    toast: true,
-                    text: `{{ __('There is no way back') }}`,
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    position: 'top-end',
-                    confirmButtonText: "{{ __('Yes, change state it!') }}"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-
-                        Livewire.emit('changeState', cell.id);
-
-                        Swal.fire({
-                            position: 'top-end',
-                            toast: true,
-                            icon: 'success',
-                            title: "{{ __('Change state cell') }}",
-                            text: `{{ __('The state of the cell ${cell.name} was successfully updated') }}`,
-                            showConfirmButton: false,
-                            timer: 2500,
-                            timerProgressBar: true,
-                        });
-                    }
-                });
-            });
-
-            /* Livewire.on('deleteCell', cell => {
+            /* Livewire.on('deleteNeighborhood', neighborhood => {
                 Swal.fire({
                     title: "{{ __('Are you sure you want to delete') }}",
                     toast: true,
@@ -267,14 +218,14 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
 
-                        Livewire.emit('delete', cell.id);
+                        Livewire.emit('delete', neighborhood.id);
 
                         Swal.fire({
                             position: 'top-end',
                             toast: true,
                             icon: 'success',
-                            title: "{{ __('Delete cell') }}",
-                            text: `{{ __('The cell ${cell.name} has been successfully removed') }}`,
+                            title: "{{ __('Delete neighborhood') }}",
+                            text: `{{ __('The neighborhood ${neighborhood.name} has been successfully removed') }}`,
                             showConfirmButton: false,
                             timer: 2500,
                             timerProgressBar: true,
@@ -282,6 +233,36 @@
                     }
                 });
             }); */
+
+            Livewire.on('changeStateNeighborhood', neighborhood => {
+                Swal.fire({
+                    title: "{{ __('Are you sure you want to change state') }}",
+                    toast: true,
+                    text: `{{ __('There is no way back') }}`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    position: 'top-end',
+                    confirmButtonText: "{{ __('Yes, change state it!') }}"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        Livewire.emit('changeState', neighborhood.id);
+
+                        Swal.fire({
+                            position: 'top-end',
+                            toast: true,
+                            icon: 'success',
+                            title: "{{ __('Change state neighborhood') }}",
+                            text: `{{ __('The state of the neighborhood ${neighborhood.name} was successfully updated') }}`,
+                            showConfirmButton: false,
+                            timer: 2500,
+                            timerProgressBar: true,
+                        });
+                    }
+                });
+            });
 
             function hideShowBtn(event, field, button) {
                 $(field).on(event, () => {

@@ -1,25 +1,24 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\Admin\Cells;
 
+use App\Models\Cell;
 use App\Models\Member;
 use Livewire\Component;
 use App\Models\Neighborhood;
 use Livewire\WithPagination;
 use App\Traits\WithOrderTrait;
-use App\Traits\WithRangeTypeNetworkTrait;
 
-class KyriosMemberLibewire extends Component
+class MemberCellLivewire extends Component
 {
-    use WithOrderTrait, WithPagination, WithRangeTypeNetworkTrait;
+    use WithOrderTrait, WithPagination;
 
+    public $cell;
     public $document_type_search, $sex_search, $civil_state_search, $is_baptized_search;
     public $is_baptized = 'No';
-    public $neighborhood_id_serach = '';
     public $search = '';
     public $sex = 'Femenino';
     public $from, $to;
-    public $type_red_search;
 
     protected $paginationTheme = 'bootstrap';
 
@@ -30,20 +29,18 @@ class KyriosMemberLibewire extends Component
         'email' => 'Email',
         'cellphone' => 'Cellphone',
         'is_baptized' => 'Is Baptized',
-        'neighborhood_id' => 'Neighborhood',
     ];
+
+    public function mount(Cell $cell)
+    {
+        $this->cell = $cell;
+    }
 
     public function render()
     {
-        $members = Member::orderBy($this->sortColumn, $this->sortDirection)->whereHas('neighborhood', function ($neighborhood) {
-            return $neighborhood->whereHas('sector', function ($sector) {
-                return $sector->where('slug', 'kyrios');
-            });
+        $members = Member::orderBy($this->sortColumn, $this->sortDirection)->whereHas('cell', function ($cell) {
+            return $cell->where('id', $this->cell->id);
         });
-
-        $neighborhoods = Neighborhood::orderBy('name', 'asc')->whereHas('sector', function ($sector) {
-            return $sector->where('slug', 'kyrios');
-        })->pluck('name', 'id');
 
         if ($this->search && $this->search != '') {
             $members->where(function ($query) {
@@ -78,13 +75,7 @@ class KyriosMemberLibewire extends Component
             $members->whereBetween('date_of_birth', [date($this->from), date($this->to)]);
         }
 
-        if ($this->neighborhood_id_serach && $this->neighborhood_id_serach != '') {
-            $members->where('neighborhood_id', $this->neighborhood_id_serach);
-        }
-
-        $this->rangeByNetwork($this->type_red_search);
-
-        return view('livewire.admin.kyrios-member-libewire', ['members' => $members->paginate(10), 'neighborhoods' => $neighborhoods])
+        return view('livewire.admin.cells.member-cell-livewire', ['members' => $members->paginate(10), 'cell' => $this->cell])
             ->layout('components.layouts.app');
     }
 }
