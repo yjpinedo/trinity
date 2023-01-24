@@ -13,12 +13,8 @@
         {{ __('Management Sectors') }}
     </x-slot>
 
-    <x-slot name="pageActive">
-        {{ __('Sectors') }}
-    </x-slot>
-
     <x-slot name="user">
-        {{ Auth::user()->name }}
+        {{ __('Sectors') }}
     </x-slot>
 
     <div class="row">
@@ -124,7 +120,7 @@
                                             <x-app-config.button color="link text-cyan" icon="fas fa-edit"
                                                 class="btn-sm" wire:click="edit('{{ $sector->slug }}')" />
                                             <a href="{{ route('admin.sectors.index-cells-sector', $sector) }}" class="btn btn-link text-indigo btn-sm" title="{{ __('list cells') }}"><i
-                                                    class="fas fa-map-marked-alt"></i></a>
+                                                    class="fas fa-compress-arrows-alt"></i></a>
                                         </td>
                                     </tr>
                                 @empty

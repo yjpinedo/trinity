@@ -15,12 +15,8 @@
         {{ __('Management Neighborhood') }}
     </x-slot>
 
-    <x-slot name="pageActive">
-        {{ __('Neighborhood') }}
-    </x-slot>
-
     <x-slot name="user">
-        {{ Auth::user()->name }}
+        {{ __('Neighborhood') }}
     </x-slot>
 
     <div class="row">

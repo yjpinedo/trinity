@@ -15,12 +15,8 @@
         {{ __('Management Cells') }}
     </x-slot>
 
-    <x-slot name="pageActive">
-        {{ __('Cells') }}
-    </x-slot>
-
     <x-slot name="user">
-        {{ Auth::user()->name }}
+        {{ __('Cells') }}
     </x-slot>
 
     <div class="row">

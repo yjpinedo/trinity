@@ -30,7 +30,7 @@
     </x-slot>
 
     <x-slot name="user">
-        {{ Auth::user()->name }}
+        {{ __('Members') }}
     </x-slot>
 
     <div class="row">
