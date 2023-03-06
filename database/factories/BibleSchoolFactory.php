@@ -17,8 +17,10 @@ class BibleSchoolFactory extends Factory
      */
     public function definition()
     {
+        $name = $this->faker->sentence(2);
         return [
-            'name' => $this->faker->sentence(2),
+            'name' => $name,
+            'slug' => str($name)->slug(),
             'description' => $this->faker->text(),
             'teacher_id' => Member::all()->random()->id,
             'state' => $this->faker->randomElement(['Activo', 'Inactivo']),

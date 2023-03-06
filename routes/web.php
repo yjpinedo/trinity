@@ -10,6 +10,7 @@ use App\Http\Livewire\Admin\Cells\MemberCellLivewire;
 use App\Http\Livewire\Admin\Sectors\CellSectorLivewire;
 use App\Http\Livewire\Admin\JehovaNissiMemberLibewire;
 use App\Http\Livewire\Admin\KyriosMemberLibewire;
+use App\Http\Livewire\Admin\LessonLivewire;
 use App\Http\Livewire\Admin\MemberLivewire;
 use App\Http\Livewire\Admin\SectorLivewire;
 use App\Http\Livewire\Admin\NeighborhoodLivewire;
@@ -32,6 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/cells', CellLivewire::class)->name('admin.cells.index');
         Route::get('/cells/members-cells/{cell}', MemberCellLivewire::class)->name('admin.cells.index-members-cells');
         Route::get('/bible-school', BibleSchoolLivewire::class)->name('admin.bible-school.index');
+        Route::get('/lessons-bible-schools/{bibleSchool:slug}', LessonLivewire::class)->name('admin.bible-school.index-lessons');
         Route::get('/members', MemberLivewire::class)->name('admin.members.index');
         Route::get('/adonais-members', AdonaiMemberLivewire::class)->name('admin.members.index-adonais');
         Route::get('/beraca-members', BeracaMemberLibewire::class)->name('admin.members.index-beraca');

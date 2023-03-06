@@ -115,19 +115,24 @@
                                                 class="badge badge-{{ $biblesSchoolTable->state == 'Activo' ? 'success' : 'danger' }}">{{ $biblesSchoolTable->state }}</span>
                                         </td>
                                         <td style="width: 12%" class="align-middle text-center">
-                                            @if ($biblesSchoolTable->state == 'Activo')
-                                                <x-app-config.button color="link text-danger" icon="fas fa-power-off"
-                                                    class="btn-sm"
-                                                    wire:click="$emit('changeStateBiblesSchool', {{ $biblesSchoolTable }})" />
-                                            @else
-                                                <x-app-config.button color="link text-success" icon="fas fa-power-off"
-                                                    class="btn-sm"
-                                                    wire:click="$emit('changeStateBiblesSchool', {{ $biblesSchoolTable }})" />
-                                            @endif
-                                            {{-- <x-app-config.button color="link text-danger"
+                                            <div class="btn-group">
+                                                @if ($biblesSchoolTable->state == 'Activo')
+                                                    <x-app-config.button color="link text-danger"
+                                                        icon="fas fa-power-off" class="btn-sm"
+                                                        wire:click="$emit('changeStateBiblesSchool', {{ $biblesSchoolTable }})" />
+                                                @else
+                                                    <x-app-config.button color="link text-success"
+                                                        icon="fas fa-power-off" class="btn-sm"
+                                                        wire:click="$emit('changeStateBiblesSchool', {{ $biblesSchoolTable }})" />
+                                                @endif
+                                                {{-- <x-app-config.button color="link text-danger"
                                                 icon="fas fa-trash" class="btn-sm" wire:click="$emit('deleteBiblesSchool', {{ $biblesSchoolTable }})" /> --}}
-                                            <x-app-config.button color="link text-cyan" icon="fas fa-edit"
-                                                class="btn-sm" wire:click="edit('{{ $biblesSchoolTable->id }}')" />
+                                                <x-app-config.button color="link text-cyan" icon="fas fa-edit"
+                                                    class="btn-sm" wire:click="edit('{{ $biblesSchoolTable->slug }}')" />
+                                                <a href="{{ route('admin.bible-school.index-lessons', $biblesSchoolTable) }}"
+                                                    class="btn btn-link text-indigo btn-sm"
+                                                    title="{{ __('list lessons') }}"><i class="fas fa-list-ul"></i></a>
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty
@@ -223,7 +228,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
 
-                        Livewire.emit('changeState', bibleSchool.id);
+                        Livewire.emit('changeState', bibleSchool.slug);
 
                         Swal.fire({
                             position: 'top-end',

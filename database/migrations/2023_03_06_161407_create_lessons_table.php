@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bible_schools', function (Blueprint $table) {
+        Schema::create('lessons', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name', 70);
             $table->string('slug');
+            $table->timestamp('lesson_date');
             $table->text('description')->nullable();
             $table->enum('state', ['Activo', 'Inactivo'])->default('Activo');
             $table->timestamps();
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bible_schools');
+        Schema::dropIfExists('lessons');
     }
 };

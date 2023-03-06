@@ -59,7 +59,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.bible-school.index') }}"
-                        class="nav-link {{ request()->routeIs('admin.bible-school.index') ? 'active' : '' }}">
+                        class="nav-link {{ request()->routeIs('admin.bible-school.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-school"></i>
                         <p>{{ __('Bible Schools') }}</p>
                     </a>
