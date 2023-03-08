@@ -14,22 +14,32 @@ class EnrollLivewire extends Component
     use WithOrderTrait, WithPagination;
 
     public $bibleSchool, $member_id;
+    public $search = '';
 
     public $columns = [
         'id' => '#',
         'document_number' => 'Document',
         'name' => 'Name',
-        'is_baptized' => 'Is Baptized',
+        'cellphone' => 'Cellphone',
         'progress' => 'Progress'
     ];
 
     protected $paginationTheme = 'bootstrap';
 
-    protected $listeners = ['render'];
+    protected $listeners = ['changeProgress'];
+
+    protected $queryString = [
+        'search' => ['except' => ''],
+    ];
 
     protected $rules = [
         'member_id' => ['required', 'exists:members,id']
     ];
+
+    public function changeProgress(Member $member, $progress)
+    {
+        $member->bibleSchools()->updateExistingPivot($this->bibleSchool->id, ['progress' => $progress]);
+    }
 
     public function mount(BibleSchool $bibleSchool)
     {
@@ -41,6 +51,15 @@ class EnrollLivewire extends Component
         $members = $this->getMembers();
         $membersCourse = $this->bibleSchool->members();
         $membersCourse->orderBy($this->sortColumn, $this->sortDirection);
+
+        if ($this->search && $this->search != '') {
+            $membersCourse->where(function ($query) {
+                $query->orWhere('members.id', 'like', "%$this->search%")
+                    ->orWhere('members.name', 'like', "%$this->search%")
+                    ->orWhere('members.lastname', 'like', "%$this->search%")
+                    ->orWhere('members.cellphone', 'like', "%$this->search%");
+            });
+        }
 
         return view(
             'livewire.admin.bible-school.enroll-livewire',
@@ -116,5 +135,10 @@ class EnrollLivewire extends Component
         }
 
         return $idsBiblesSchools;
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
     }
 }

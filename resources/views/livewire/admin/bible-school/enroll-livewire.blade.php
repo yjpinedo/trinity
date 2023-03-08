@@ -69,6 +69,14 @@
                     </h6>
                 </div>
                 <div class="card-body mb-0">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <x-app-config.input placeholder="{{ __('Choosen by, id, Name') }}"
+                                    wire:model.debounce.500ms="search" />
+                            </div>
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
@@ -79,7 +87,6 @@
                                             'column' => '12%',
                                             'action' => '8%',
                                         ],
-                                        'actionShow' => false,
                                     ])
                                 </tr>
                             </thead>
@@ -88,8 +95,8 @@
                                     <tr>
                                         <td class="align-middle">{{ $memberTable->id }}</td>
                                         <td class="align-middle">{{ $memberTable->document_number }}</td>
-                                        <td class="align-middle">{{ $memberTable->full_name }}</td>
-                                        <td class="align-middle">{{ $memberTable->is_baptized }}</td>
+                                        <td class="align-middle">{{ $memberTable->name }} {{ $memberTable->lastname }}</td>
+                                        <td class="align-middle">{{ $memberTable->cellphone }}</td>
                                         <td class="text-center align-middle">
                                             @if ($memberTable->pivot->progress == 'Inscrito')
                                                 <span
@@ -102,6 +109,29 @@
                                                     class="badge badge-success">{{ $memberTable->pivot->progress }}</span>
                                             @endif
                                         </td>
+                                        <td style="width: 12%" class="align-middle text-center">
+                                            <div class="btn-group">
+                                                @if ($memberTable->pivot->progress == 'Inscrito')
+                                                    <x-app-config.button color="link text-warning" icon="fas fa-spinner"
+                                                        class="btn-sm"
+                                                        wire:click="$emit('changeProgressMember', {{ $memberTable }}, 'En curso')" />
+                                                    <x-app-config.button color="link text-success" icon="fas fa-tasks"
+                                                        class="btn-sm"
+                                                        wire:click="$emit('changeProgressMember', {{ $memberTable }}, 'Finalizado')" />
+                                                @elseif ($memberTable->pivot->progress == 'En curso')
+                                                    <x-app-config.button color="link text-primary"
+                                                        icon="fas fa-user-graduate" class="btn-sm"
+                                                        wire:click="$emit('changeProgressMember', {{ $memberTable }}, 'Inscrito')" />
+                                                    <x-app-config.button color="link text-success" icon="fas fa-tasks"
+                                                        class="btn-sm"
+                                                        wire:click="$emit('changeProgressMember', {{ $memberTable }}, 'Finalizado')" />
+                                                @else
+                                                    <x-app-config.button color="link text-warning" icon="fas fa-spinner"
+                                                        class="btn-sm"
+                                                        wire:click="$emit('changeProgressMember', {{ $memberTable }}, 'En curso')" />
+                                                @endif
+                                            </div>
+                                        </td>
                                     </tr>
                                 @empty
                                     <tr>
@@ -112,6 +142,15 @@
                         </table>
                     </div>
                 </div>
+                @if ($membersCourse->hasPages())
+                    <div class="card-footer bg-white">
+                        <div class="d-flex justify-content-between align-item-center pb-0">
+                            {{ __('Showing') }} {!! $membersCourse->firstItem() !!} {{ __('to') }} {!! $membersCourse->lastItem() !!}
+                            {{ __('of') }} {!! $membersCourse->total() !!} {{ __('entries') }}
+                            {!! $membersCourse->links() !!}
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -123,6 +162,9 @@
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             document.addEventListener('livewire:load', function() {
+
+                $('.lastName').hide();
+
                 let selectMember = $('#selectMemberSearch').select2({
                     theme: 'bootstrap4'
                 }).on('change', () => {
@@ -145,6 +187,36 @@
 
             Livewire.on('clear-select', () => {
                 $('#selectMemberSearch').val('').trigger('change');
+            });
+
+            Livewire.on('changeProgressMember', (member, progress) => {
+                Swal.fire({
+                    title: "{{ __('Are you sure you want to state') }}",
+                    toast: true,
+                    text: `{{ __('There is no way back') }}`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    position: 'top-end',
+                    confirmButtonText: "{{ __('Yes, state it!') }}"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        Livewire.emit('changeProgress', member.id, progress);
+
+                        Swal.fire({
+                            position: 'top-end',
+                            toast: true,
+                            icon: 'success',
+                            title: "{{ __('Change state member') }}",
+                            text: `{{ __('The member ${member.name} has been successfully change') }}`,
+                            showConfirmButton: false,
+                            timer: 2500,
+                            timerProgressBar: true,
+                        });
+                    }
+                });
             });
         </script>
     @endpush
