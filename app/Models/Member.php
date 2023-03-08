@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use App\Enums\BibleSchoolProgressEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -28,6 +29,15 @@ class Member extends Model
         'cell_id'
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'progress' => BibleSchoolProgressEnum::class,
+    ];
+
     protected $appends = ['age', 'full_name'];
 
     //Accesors
@@ -38,13 +48,13 @@ class Member extends Model
 
     public function getFullNameAttribute()
     {
-        return $this->name . ' ' .$this->lastname;
+        return $this->name . ' ' . $this->lastname;
     }
 
     // Relationship
     public function bibleSchools()
     {
-        return $this->belongsToMany(BibleSchool::class)->withTimestamps();
+        return $this->belongsToMany(BibleSchool::class)->withPivot('progress')->withTimestamps();
     }
 
     public function cell()

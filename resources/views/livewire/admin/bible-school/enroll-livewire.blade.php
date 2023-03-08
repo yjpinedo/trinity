@@ -89,8 +89,19 @@
                                         <td class="align-middle">{{ $memberTable->id }}</td>
                                         <td class="align-middle">{{ $memberTable->document_number }}</td>
                                         <td class="align-middle">{{ $memberTable->full_name }}</td>
-                                        <td class="align-middle">{{ $memberTable->email }}</td>
                                         <td class="align-middle">{{ $memberTable->is_baptized }}</td>
+                                        <td class="text-center align-middle">
+                                            @if ($memberTable->pivot->progress == 'Inscrito')
+                                                <span
+                                                    class="badge badge-info">{{ $memberTable->pivot->progress }}</span>
+                                            @elseif ($memberTable->pivot->progress == 'En curso')
+                                                <span
+                                                    class="badge badge-warning">{{ $memberTable->pivot->progress }}</span>
+                                            @else
+                                                <span
+                                                    class="badge badge-success">{{ $memberTable->pivot->progress }}</span>
+                                            @endif
+                                        </td>
                                     </tr>
                                 @empty
                                     <tr>

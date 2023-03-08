@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\BibleSchoolProgressEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,6 +12,15 @@ class BibleSchool extends Model
 
     protected $fillable = ['name', 'description', 'teacher_id'];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'progress' => BibleSchoolProgressEnum::class,
+    ];
+
     // Relationship
     public function lessons()
     {
@@ -19,7 +29,7 @@ class BibleSchool extends Model
 
     public function members()
     {
-        return $this->belongsToMany(Member::class)->withTimestamps();
+        return $this->belongsToMany(Member::class)->withPivot('progress')->withTimestamps();
     }
 
     public function teacher()

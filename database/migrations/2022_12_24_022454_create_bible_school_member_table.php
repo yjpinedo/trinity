@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('bible_school_member', function (Blueprint $table) {
             $table->id();
+            $table->string('progress', 20)->default('Inscrito');
             $table->foreignId('bible_school_id')->constrained()->onDelete('cascade');
             $table->foreignId('member_id')->constrained()->onDelete('cascade');
             $table->timestamps();
