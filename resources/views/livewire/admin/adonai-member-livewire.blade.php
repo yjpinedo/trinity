@@ -28,7 +28,6 @@
                         <strong>{{ __('Filters Advances') }}</strong>
                     </h6>
                     <hr class="mt-0">
-
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
                             <div class="form-group">

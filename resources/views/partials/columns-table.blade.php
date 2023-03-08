@@ -67,7 +67,7 @@
         {{ __('Actions') }}
         <i class="fas fa-cogs text-primary"></i>
     </th>
-@else
+@elseif ($actionShow)
     <th style="width: {{ $percentage['action'] }}" class="">
         {{ __('Age') }}
         <i class="fas fa-minus text-danger"></i>

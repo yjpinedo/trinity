@@ -43,7 +43,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <x-app-config.label-error for="sector_id" />
+                            <x-app-config.label-error for="teacher_id" />
                         </div>
                         <div class="form-group">
                             <x-app-config.label value="Name" />
@@ -128,10 +128,15 @@
                                                 {{-- <x-app-config.button color="link text-danger"
                                                 icon="fas fa-trash" class="btn-sm" wire:click="$emit('deleteBiblesSchool', {{ $biblesSchoolTable }})" /> --}}
                                                 <x-app-config.button color="link text-cyan" icon="fas fa-edit"
-                                                    class="btn-sm" wire:click="edit('{{ $biblesSchoolTable->slug }}')" />
+                                                    class="btn-sm"
+                                                    wire:click="edit('{{ $biblesSchoolTable->slug }}')" />
                                                 <a href="{{ route('admin.bible-school.index-lessons', $biblesSchoolTable) }}"
                                                     class="btn btn-link text-indigo btn-sm"
                                                     title="{{ __('list lessons') }}"><i class="fas fa-list-ul"></i></a>
+                                                <a href="{{ route('admin.bible-school.enroll-bible-school', $biblesSchoolTable) }}"
+                                                    class="btn btn-link text-gray btn-sm"
+                                                    title="{{ __('Enroll members') }}"><i
+                                                        class="fas fa-user-graduate"></i></a>
                                             </div>
                                         </td>
                                     </tr>
