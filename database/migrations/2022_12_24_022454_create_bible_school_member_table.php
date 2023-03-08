@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bible_school_members', function (Blueprint $table) {
+        Schema::create('bible_school_member', function (Blueprint $table) {
             $table->id();
+            $table->string('progress', 20)->default('Inscrito');
             $table->foreignId('bible_school_id')->constrained()->onDelete('cascade');
             $table->foreignId('member_id')->constrained()->onDelete('cascade');
             $table->timestamps();
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bible_school_members');
+        Schema::dropIfExists('bible_school_member');
     }
 };
