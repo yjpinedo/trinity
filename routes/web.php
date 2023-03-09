@@ -6,7 +6,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\Admin\AdonaiMemberLivewire;
 use App\Http\Livewire\Admin\BeracaMemberLibewire;
 use App\Http\Livewire\Admin\BibleSchool\EnrollLivewire;
-use App\Http\Livewire\Admin\BibleSchool\MemberLivewire as BibleSchoolMemberLivewire;
+//use App\Http\Livewire\Admin\BibleSchool\MemberLivewire as BibleSchoolMemberLivewire;
+use App\Http\Livewire\Admin\BibleSchool\TakeAttendanceLivewire;
 use App\Http\Livewire\Admin\BibleSchoolLivewire;
 use App\Http\Livewire\Admin\Cells\MemberCellLivewire;
 use App\Http\Livewire\Admin\Sectors\CellSectorLivewire;
@@ -37,6 +38,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/bible-school', BibleSchoolLivewire::class)->name('admin.bible-school.index');
         Route::get('/enroll-bible-schools/{bibleSchool:slug}', EnrollLivewire::class)->name('admin.bible-school.enroll-bible-school');
         Route::get('/lessons-bible-schools/{bibleSchool:slug}', LessonLivewire::class)->name('admin.bible-school.index-lessons');
+        Route::get('/lessons-take-attendance-bible-schools/{bibleSchool:slug}/{lesson:slug}', TakeAttendanceLivewire::class)->name('admin.bible-school.lessons-take-attendance');
         Route::get('/members', MemberLivewire::class)->name('admin.members.index');
         Route::get('/adonais-members', AdonaiMemberLivewire::class)->name('admin.members.index-adonais');
         Route::get('/beraca-members', BeracaMemberLibewire::class)->name('admin.members.index-beraca');

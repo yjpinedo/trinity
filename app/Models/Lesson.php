@@ -17,6 +17,11 @@ class Lesson extends Model
         return $this->belongsToMany(BibleSchool::class)->withTimestamps();
     }
 
+    public function members()
+    {
+        return $this->belongsToMany(Member::class)->withTimestamps();
+    }
+
     /**
      * Get the route key for the model.
      *
