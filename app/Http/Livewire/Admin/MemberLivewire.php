@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\BibleSchool;
+use App\Models\Cell;
 use App\Models\Member;
 use Livewire\Component;
 use App\Models\Neighborhood;
@@ -22,6 +23,7 @@ class MemberLivewire extends Component
     public $is_baptized = 'No';
     public $name, $lastname, $email, $document_type, $document_number, $date_of_birth, $civil_state, $address, $phone, $cellphone, $member;
     public $neighborhood_id = '';
+    public $cell_id = '';
     public $neighborhood_id_serach = '';
     public $step = 1;
     public $search = '';
@@ -81,6 +83,7 @@ class MemberLivewire extends Component
             'cellphone' => ['nullable', 'numeric', 'digits_between:6,10', 'unique:members,cellphone,' . $id],
             'is_baptized' => ['required', 'in:Si,No'],
             'neighborhood_id' => ['required', 'exists:neighborhoods,id'],
+            'cell_id' => ['nullable', 'exists:cells,id'],
         ];
     }
 
@@ -120,11 +123,12 @@ class MemberLivewire extends Component
         $this->cellphone = $member->cellphone;
         $this->is_baptized = $member->is_baptized;
         $this->neighborhood_id = $member->neighborhood_id;
+        $this->cell_id = $member->cell_id;
         $this->bibles_schools = $this->getBiblesSchoolByMember($member);
 
         $this->btnAction = 'edit';
 
-        $this->emit('selected-item', $member->neighborhood_id);
+        $this->emit('selected-item', $member->neighborhood_id, $member->cell_id);
     }
 
     public function getBiblesSchoolByMember($member)
@@ -147,6 +151,7 @@ class MemberLivewire extends Component
         $members = Member::orderBy($this->sortColumn, $this->sortDirection)->with('neighborhood.sector');
         $neighborhoods = Neighborhood::orderBy('name', 'asc')->pluck('name', 'id');
         $biblesSchols = BibleSchool::orderBy('name', 'asc')->pluck('name', 'id');
+        $listCells = Cell::orderBy('name', 'asc')->pluck('name', 'id');
 
         if ($this->search && $this->search != '') {
             $members->where(function ($query) {
@@ -185,7 +190,7 @@ class MemberLivewire extends Component
             $members->where('neighborhood_id', $this->neighborhood_id_serach);
         }
 
-        return view('livewire.admin.member-livewire', ['members' => $members->paginate(10), 'neighborhoods' => $neighborhoods, 'biblesSchols' => $biblesSchols])
+        return view('livewire.admin.member-livewire', ['members' => $members->paginate(10), 'neighborhoods' => $neighborhoods, 'biblesSchols' => $biblesSchols, 'cells' => $listCells])
             ->layout('components.layouts.app');
     }
 
@@ -225,6 +230,7 @@ class MemberLivewire extends Component
                 'cellphone' => $this->cellphone,
                 'is_baptized' => $this->is_baptized,
                 'neighborhood_id' => $this->neighborhood_id,
+                'cell_id' => $this->cell_id,
             ]
         );
 

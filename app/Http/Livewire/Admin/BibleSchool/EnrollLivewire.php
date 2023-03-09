@@ -56,6 +56,7 @@ class EnrollLivewire extends Component
             $membersCourse->where(function ($query) {
                 $query->orWhere('members.id', 'like', "%$this->search%")
                     ->orWhere('members.name', 'like', "%$this->search%")
+                    ->orWhere('members.document_number', 'like', "%$this->search%")
                     ->orWhere('members.lastname', 'like', "%$this->search%")
                     ->orWhere('members.cellphone', 'like', "%$this->search%");
             });

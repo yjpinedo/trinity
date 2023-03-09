@@ -15,6 +15,8 @@ class TakeAttendanceLivewire extends Component
     use WithOrderTrait, WithPagination;
 
     public $bibleSchool, $lesson;
+    public $search = '';
+    public $search_lesson = '';
 
     public $columns = [
         'id' => '#',
@@ -25,6 +27,10 @@ class TakeAttendanceLivewire extends Component
 
     protected $listeners = ['takeAttendance', 'removeAttendance'];
 
+    protected $queryString = [
+        'search' => ['except' => ''],
+    ];
+
     public function mount(BibleSchool $bibleSchool, Lesson $lesson)
     {
         $this->bibleSchool = $bibleSchool;
@@ -34,7 +40,6 @@ class TakeAttendanceLivewire extends Component
     public function removeAttendance(Member $member)
     {
         $member->lessons()->detach($this->lesson->id);
-        //$this->emit('alert', ['icon' => 'success', 'message' => "Attendance of $member->name taken correctly."]);
     }
 
     public function render()
@@ -45,10 +50,30 @@ class TakeAttendanceLivewire extends Component
             ->whereIN('members.id', $this->getEnrolledMember())
             ->whereNotIn('members.id', $this->getAssistedMember());
 
+            if ($this->search && $this->search != '') {
+                $membersCourse->where(function ($query) {
+                    $query->orWhere('members.id', 'like', "%$this->search%")
+                        ->orWhere('members.name', 'like', "%$this->search%")
+                        ->orWhere('members.document_number', 'like', "%$this->search%")
+                        ->orWhere('members.lastname', 'like', "%$this->search%")
+                        ->orWhere('members.cellphone', 'like', "%$this->search%");
+                });
+            }
+
         $membersLessons = $this->lesson
             ->members()
             ->orderBy($this->sortColumn, $this->sortDirection)
             ->whereIn('members.id', $this->getAssistedMember());
+
+            if ($this->search_lesson && $this->search_lesson != '') {
+                $membersLessons->where(function ($query) {
+                    $query->orWhere('members.id', 'like', "%$this->search_lesson%")
+                        ->orWhere('members.name', 'like', "%$this->search_lesson%")
+                        ->orWhere('members.document_number', 'like', "%$this->search_lesson%")
+                        ->orWhere('members.lastname', 'like', "%$this->search_lesson%")
+                        ->orWhere('members.cellphone', 'like', "%$this->search_lesson%");
+                });
+            }
 
         return view('livewire.admin.bible-school.take-attendance-livewire', ['members' => $membersCourse->paginate(10), 'membersLesson' => $membersLessons->paginate(10)])
             ->layout('components.layouts.app');
@@ -81,5 +106,10 @@ class TakeAttendanceLivewire extends Component
         }
 
         return $idMembers;
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
     }
 }

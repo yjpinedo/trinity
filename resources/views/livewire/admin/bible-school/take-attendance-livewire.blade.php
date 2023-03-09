@@ -31,6 +31,14 @@
                     </h6>
                 </div>
                 <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <x-app-config.input placeholder="{{ __('Chosen by Id, Name, lastname, document') }}"
+                                    wire:model.debounce.500ms="search" />
+                            </div>
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
@@ -83,6 +91,14 @@
                     </h6>
                 </div>
                 <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <x-app-config.input placeholder="{{ __('Chosen by Id, Name, lastname, document') }}"
+                                    wire:model.debounce.500ms="search_lesson" />
+                            </div>
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>

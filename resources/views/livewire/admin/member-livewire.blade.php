@@ -169,6 +169,19 @@
                                 <x-app-config.input wire:model.defer="cellphone" id="idCellPhoneMember" />
                                 <x-app-config.label-error for="cellphone" />
                             </div>
+                            <div class="form-group">
+                                <x-app-config.label value="Cell" /> <br>
+                                <div wire:ignore>
+                                    <select class="form-control select2bs4" id="selectCellSave" style="width: 100%;">
+                                        <option value="">{{ __('Choose') }}</option>
+                                        @foreach ($cells as $key => $cell)
+                                            <option value="{{ $key }}">{{ $cell }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <x-app-config.label-error for="cell_id" />
+                                </select>
+                            </div>
                             <div class="form-group text-center">
                                 <h5><strong>{{ __('Ecclesiastical information') }}</strong></h5>
                             </div>
@@ -447,10 +460,17 @@
                 }).on('change', () => {
                     @this.set('neighborhood_id', select2NeighborhoodSave.select2("val"));
                 });
+
+                let select2CellSave = $('#selectCellSave').select2({
+                    theme: 'bootstrap4'
+                }).on('change', () => {
+                    @this.set('cell_id', select2CellSave.select2("val"));
+                });
             });
 
             Livewire.on('clear-select', () => {
                 $('#selectNeighborhoodSave').val('').trigger('change');
+                $('#selectCellSave').val('').trigger('change');
             });
 
             Livewire.on('alert', (data) => {
@@ -466,69 +486,10 @@
                 });
             });
 
-            Livewire.on('selected-item', neighborhood_id => {
+            Livewire.on('selected-item', (neighborhood_id, cell_id) => {
                 $('#selectNeighborhoodSave').val(neighborhood_id).trigger('change');
+                $('#selectCellSave').val(cell_id).trigger('change');
             });
-
-            /* Livewire.on('changeStateMember', member => {
-                Swal.fire({
-                    title: "{{ __('Are you sure you want to change state') }}",
-                    toast: true,
-                    text: `{{ __('There is no way back') }}`,
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    position: 'top-end',
-                    confirmButtonText: "{{ __('Yes, change state it!') }}"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-
-                        Livewire.emit('changeState', member.id);
-
-                        Swal.fire({
-                            position: 'top-end',
-                            toast: true,
-                            icon: 'success',
-                            title: "{{ __('Change state member') }}",
-                            text: `{{ __('The state of the member ${member.name} was successfully updated') }}`,
-                            showConfirmButton: false,
-                            timer: 2500,
-                            timerProgressBar: true,
-                        });
-                    }
-                });
-            }); */
-
-            /* Livewire.on('changeStateMember', sector => {
-                Swal.fire({
-                    title: "{{ __('Are you sure you want to change state') }}",
-                    toast: true,
-                    text: `{{ __('There is no way back') }}`,
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    position: 'top-end',
-                    confirmButtonText: "{{ __('Yes, change state it!') }}"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-
-                        Livewire.emit('changeState', sector.id);
-
-                        Swal.fire({
-                            position: 'top-end',
-                            toast: true,
-                            icon: 'success',
-                            title: "{{ __('Change state sector') }}",
-                            text: `{{ __('The state of the sector ${sector.name} was successfully updated') }}`,
-                            showConfirmButton: false,
-                            timer: 2500,
-                            timerProgressBar: true,
-                        });
-                    }
-                });
-            }); */
 
             /* Livewire.on('deleteMember', member => {
                 Swal.fire({
