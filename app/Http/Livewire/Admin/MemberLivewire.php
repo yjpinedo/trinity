@@ -35,7 +35,6 @@ class MemberLivewire extends Component
         'is_baptized' => 'Is Baptized',
         'neighborhood_id' => 'Neighborhood',
         'state' => 'State',
-        //'neighborhood_sector_id' => 'Sector',
     ];
 
     protected $paginationTheme = 'bootstrap';
@@ -50,6 +49,21 @@ class MemberLivewire extends Component
         'civil_state_search' => ['except' => ''],
         'is_baptized_search' => ['except' => ''],
     ];
+
+    public function attachBibleSchool($member)
+    {
+        if ($this->all_school) {
+            foreach ($this->bibles_schools as $key => $school) {
+                $member->bibleSchools()->attach($key, ['progress' => 'Finalizado']);
+            }
+        } else {
+            if ($this->bibles_schools) {
+                foreach ($this->bibles_schools as $bibles) {
+                    $member->bibleSchools()->attach($bibles, ['progress' => 'Finalizado']);
+                }
+            }
+        }
+    }
 
     protected function rules()
     {
@@ -107,10 +121,26 @@ class MemberLivewire extends Component
         $this->cellphone = $member->cellphone;
         $this->is_baptized = $member->is_baptized;
         $this->neighborhood_id = $member->neighborhood_id;
+        $this->bibles_schools = $this->getBiblesSchoolByMember($member);
 
         $this->btnAction = 'edit';
 
         $this->emit('selected-item', $member->neighborhood_id);
+    }
+
+    public function getBiblesSchoolByMember($member)
+    {
+        $idsSchools = [];
+
+        if ($member->bibleSchools) {
+            foreach ($member->bibleSchools as $schools) {
+                if ($schools->pivot->progress == 'Finalizado') {
+                    $idsSchools[] = $schools->id;
+                }
+            }
+        }
+
+        return $idsSchools;
     }
 
     public function render()
@@ -201,6 +231,10 @@ class MemberLivewire extends Component
 
         if ($this->member) {
             $action = 'updated';
+            $this->member->bibleSchools()->detach();
+            $this->attachBibleSchool($this->member);
+        } else {
+            $this->attachBibleSchool($memberNew);
         }
 
         $this->resetTo();
