@@ -32,7 +32,6 @@ class MemberLivewire extends Component
         'id' => '#',
         'document_number' => 'Document',
         'name' => 'Name',
-        'is_baptized' => 'Is Baptized',
         'neighborhood_id' => 'Neighborhood',
         'state' => 'State',
     ];

@@ -286,7 +286,7 @@
                                 <div wire:ignore>
                                     <select class="custom-select select2bs4" id="selectNeighborhoodId"
                                         style="width: 100%">
-                                        <option value="">{{ __('Choose') }}</option>
+                                        <option value="">{{ __('Choose by neighborhood') }}</option>
                                         @foreach ($neighborhoods as $key => $neighborhood)
                                             <option value="{{ $key }}">{{ $neighborhood }}</option>
                                         @endforeach
@@ -383,7 +383,6 @@
                                         <td>{{ $memberTable->id }}</td>
                                         <td>{{ $memberTable->document_number }}</td>
                                         <td>{{ $memberTable->name }} {{ $memberTable->lastname }}</td>
-                                        <td>{{ $memberTable->is_baptized }}</td>
                                         <td>{{ $memberTable->neighborhood->name }}</td>
                                         <td class="text-center align-middle">
                                             <span

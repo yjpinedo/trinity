@@ -122,7 +122,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="text-center">{{ __('Not bible schools lists') }}
+                                        <td colspan="6" class="text-center">{{ __('Not bible schools lists') }}
                                         </td>
                                     </tr>
                                 @endforelse
