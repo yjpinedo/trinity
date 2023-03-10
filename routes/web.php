@@ -17,6 +17,7 @@ use App\Http\Livewire\Admin\LessonLivewire;
 use App\Http\Livewire\Admin\MemberLivewire;
 use App\Http\Livewire\Admin\SectorLivewire;
 use App\Http\Livewire\Admin\NeighborhoodLivewire;
+use App\Http\Livewire\Admin\Sectors\MemberLivewire as SectorsMemberLivewire;
 use App\Http\Livewire\Admin\ShalomMemberLibewire;
 
 Route::get('/', function () {
@@ -31,7 +32,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
     Route::prefix('admin')->group(function () {
         Route::get('/sectors', SectorLivewire::class)->name('admin.sectors.index');
-        Route::get('/sectors/cell-sectors/{sector:slug}', CellSectorLivewire::class)->name('admin.sectors.index-cells-sector');
+        Route::get('/sectors/members/{sector:slug}', SectorsMemberLivewire::class)->name('admin.sectors.index-members-sector');
+        Route::get('/sectors/cell/{sector:slug}', CellSectorLivewire::class)->name('admin.sectors.index-cells-sector');
         Route::get('/neighborhood', NeighborhoodLivewire::class)->name('admin.neighborhood.index');
         Route::get('/cells', CellLivewire::class)->name('admin.cells.index');
         Route::get('/cells/members-cells/{cell}', MemberCellLivewire::class)->name('admin.cells.index-members-cells');

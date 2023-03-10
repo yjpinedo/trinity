@@ -80,7 +80,7 @@
                                 <x-app-config.label-error for="email" />
                             </div>
                             <div class="form-group">
-                                <x-app-config.label for="idDocumentTypeMember" value="Document Type" />
+                                <x-app-config.label for="idDocumentTypeMember" value="Document type" />
                                 <select class="custom-select" id="idDocumentTypeMember"
                                     wire:model.defer="document_type">
                                     <option value="">{{ __('Choosen') }}</option>
@@ -95,7 +95,7 @@
                                 <x-app-config.label-error for="document_type" />
                             </div>
                             <div class="form-group">
-                                <x-app-config.label for="idDocumentNumberMember" value="Document Number" />
+                                <x-app-config.label for="idDocumentNumberMember" value="Document number" />
                                 <x-app-config.input wire:model.defer="document_number" id="idDocumentNumberMember" />
                                 <x-app-config.label-error for="document_number" />
                             </div>
@@ -103,7 +103,7 @@
 
                         <div class="step-2 {{ $step != 2 ? 'display-none' : '' }}">
                             <div class="form-group">
-                                <x-app-config.label for="idDateMember" value="Date of Birth" />
+                                <x-app-config.label for="idDateMember" value="Date of birth" />
                                 <input type="date" class="form-control" wire:model.defer="date_of_birth"
                                     id="idDateMember">
                                 <x-app-config.label-error for="date_of_birth" />
@@ -121,7 +121,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <x-app-config.label for="idCivilStateMember" value="{{ __('Civil State') }}" />
+                                <x-app-config.label for="idCivilStateMember" value="{{ __('Civil state') }}" />
                                 <select class="custom-select" id="idCivilStateMember" wire:model="civil_state">
                                     <option value="">{{ __('Choosen') }}</option>
                                     <option value="Soltero">{{ __('Soltero') }}</option>
@@ -169,6 +169,7 @@
                                 <x-app-config.input wire:model.defer="cellphone" id="idCellPhoneMember" />
                                 <x-app-config.label-error for="cellphone" />
                             </div>
+
                             <div class="form-group">
                                 <x-app-config.label value="Cell" /> <br>
                                 <div wire:ignore>
@@ -182,6 +183,7 @@
                                 <x-app-config.label-error for="cell_id" />
                                 </select>
                             </div>
+
                             <div class="form-group text-center">
                                 <h5><strong>{{ __('Ecclesiastical information') }}</strong></h5>
                             </div>
@@ -289,8 +291,7 @@
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-8">
                             <div class="form-group">
-                                <x-app-config.input
-                                    placeholder="{{ __('Search') }}"
+                                <x-app-config.input placeholder="{{ __('Search') }}"
                                     wire:model.debounce.500ms="search" />
                             </div>
                         </div>
@@ -318,7 +319,7 @@
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3">
                                     <div class="form-group">
                                         <select class="custom-select" wire:model="document_type_search">
-                                            <option value="">{{ __('Document Type') }}</option>
+                                            <option value="">{{ __('Document type') }}</option>
                                             <option value="Registro civil">{{ __('Registro civil') }}</option>
                                             <option value="Tarjeta de identidad">{{ __('Tarjeta de identidad') }}
                                             </option>
@@ -343,7 +344,7 @@
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3">
                                     <div class="form-group">
                                         <select class="custom-select" wire:model="civil_state_search">
-                                            <option value="">{{ __('Civil State') }}</option>
+                                            <option value="">{{ __('Civil state') }}</option>
                                             <option value="Soltero">{{ __('Soltero') }}</option>
                                             <option value="Casado">{{ __('Casado') }}</option>
                                             <option value="Conviviente civil">{{ __('Conviviente civil') }}
@@ -464,6 +465,7 @@
                 let select2CellSave = $('#selectCellSave').select2({
                     theme: 'bootstrap4'
                 }).on('change', () => {
+                    console.log(select2CellSave.select2("val"));
                     @this.set('cell_id', select2CellSave.select2("val"));
                 });
             });

@@ -110,20 +110,22 @@
                                                 class="badge badge-{{ $neighborhoodTable->state == 'Activo' ? 'success' : 'danger' }}">{{ $neighborhoodTable->state }}</span>
                                         </td>
                                         <td style="width: 12%" class="align-middle text-center">
-                                            @if ($neighborhoodTable->state == 'Activo')
-                                                <x-app-config.button color="link text-danger" icon="fas fa-power-off"
-                                                    class="btn-sm"
-                                                    wire:click="$emit('changeStateNeighborhood', {{ $neighborhoodTable }})" />
-                                            @else
-                                                <x-app-config.button color="link text-success" icon="fas fa-power-off"
-                                                    class="btn-sm"
-                                                    wire:click="$emit('changeStateNeighborhood', {{ $neighborhoodTable }})" />
-                                            @endif
-                                            {{-- <x-app-config.button color="link text-danger" icon="fas fa-trash"
+                                            <div class="btn-group">
+                                                @if ($neighborhoodTable->state == 'Activo')
+                                                    <x-app-config.button color="link text-danger"
+                                                        icon="fas fa-power-off" class="btn-sm"
+                                                        wire:click="$emit('changeStateNeighborhood', {{ $neighborhoodTable }})" />
+                                                @else
+                                                    <x-app-config.button color="link text-success"
+                                                        icon="fas fa-power-off" class="btn-sm"
+                                                        wire:click="$emit('changeStateNeighborhood', {{ $neighborhoodTable }})" />
+                                                @endif
+                                                {{-- <x-app-config.button color="link text-danger" icon="fas fa-trash"
                                                 class="btn-sm"
                                                 wire:click="$emit('deleteNeighborhood', {{ $neighborhoodTable }})" /> --}}
-                                            <x-app-config.button color="link text-cyan" icon="fas fa-edit"
-                                                class="btn-sm" wire:click="edit('{{ $neighborhoodTable->id }}')" />
+                                                <x-app-config.button color="link text-cyan" icon="fas fa-edit"
+                                                    class="btn-sm" wire:click="edit('{{ $neighborhoodTable->id }}')" />
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty

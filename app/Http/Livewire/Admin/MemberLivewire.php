@@ -230,7 +230,7 @@ class MemberLivewire extends Component
                 'cellphone' => $this->cellphone,
                 'is_baptized' => $this->is_baptized,
                 'neighborhood_id' => $this->neighborhood_id,
-                'cell_id' => $this->cell_id,
+                'cell_id' => $this->cell_id != '' ?  $this->cell_id : null,
             ]
         );
 
