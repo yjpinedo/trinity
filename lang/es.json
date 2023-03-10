@@ -1,0 +1,19 @@
+{
+    "Title" : "Título",
+    "Sign in to start" : "Inicia sesión para comenzar",
+    "Email" : "Correo electrónico",
+    "Password" : "Contraseña",
+    "Remember Me" : "Recuerdame",
+    "Sign In" : "Iniciar sesión",
+    "I forgot my password" : "Olvidé mi contraseña",
+    "Register a new membership" : "Registra una nueva membresía",
+    "Name" : "Nombre",
+    "Confirm Password" : "Confirmar Contraseña",
+    "I agree to the" : "Se aceptan los",
+    "terms" : "términos",
+    "Register" : "Registro",
+    "I already have a membership" : "Ya tengo una membresia",
+    "Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one." : "¿Olvidaste tu contraseña? No hay problema. Simplemente háganos saber su dirección de correo electrónico y le enviaremos un enlace de restablecimiento de contraseña que le permitirá elegir una nueva.",
+    "Email Password Reset Link" : "Enlace para reestablecer tu contraseña",
+    "Login" : "Inicia sesión"
+}

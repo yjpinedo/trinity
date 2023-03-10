@@ -81,7 +81,7 @@
                                 <div wire:ignore>
                                     <select class="form-control select2bs4" id="selectTeacherSearch"
                                         style="width: 100%">
-                                        <option value="">{{ __('Choose') }}</option>
+                                        <option value="">{{ __('Choose by teacher') }}</option>
                                         @foreach ($teachers as $key => $teacher)
                                             <option value="{{ $key }}">{{ $teacher }}</option>
                                         @endforeach
@@ -108,7 +108,6 @@
                                     <tr>
                                         <td>{{ $biblesSchoolTable->id }}</td>
                                         <td>{{ $biblesSchoolTable->name }}</td>
-                                        <td>{{ $biblesSchoolTable->created_at->format('Y-m-d') }}</td>
                                         <td>{{ $biblesSchoolTable->teacher->name ?? __('Not teacher asigned') }}</td>
                                         <td class="text-center align-middle">
                                             <span

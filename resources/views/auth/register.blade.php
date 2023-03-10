@@ -9,7 +9,7 @@
                    name="name"
                    class="form-control {{ $errors->get('name') ? 'is-invalid' : '' }}"
                    {{ $errors->get('name') ? 'aria-invalid="true" aria-describedby="name-error"' : '' }}
-                   placeholder="Name" value="{{ old('name') }}"
+                   placeholder="{{ __('Name') }}" value="{{ old('name') }}"
                    required
                    autofocus>
             <div class="input-group-append">
@@ -92,7 +92,7 @@
             </div>
             <!-- /.col -->
             <div class="col-4">
-                <button type="submit" class="btn btn-primary btn-block">{{ __('Register') }}</button>
+                <button type="submit" class="btn btn-primary btn-block btn-sm">{{ __('Register') }}</button>
             </div>
             <!-- /.col -->
         </div>

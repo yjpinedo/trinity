@@ -91,7 +91,7 @@
                             <div class="col-6">
                                 <div wire:ignore>
                                     <select class="form-control select2bs4" id="selectCellId" style="width: 100%">
-                                        <option value="">{{ __('Choose') }}</option>
+                                        <option value="">{{ __('Choose by neighborhoods') }}</option>
                                         @foreach ($neighborhoods as $key => $neighborhood)
                                             <option value="{{ $key }}">{{ $neighborhood }}</option>
                                         @endforeach

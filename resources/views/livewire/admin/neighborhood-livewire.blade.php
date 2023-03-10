@@ -76,7 +76,7 @@
                             <div class="col-6">
                                 <div wire:ignore>
                                     <select class="form-control select2bs4" id="selectSectorId" style="width: 100%">
-                                        <option value="">{{ __('Choose') }}</option>
+                                        <option value="">{{ __('Choose by sector') }}</option>
                                         @foreach ($sectors as $key => $sector)
                                             <option value="{{ $key }}">{{ $sector }}</option>
                                         @endforeach

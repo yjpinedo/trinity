@@ -36,7 +36,7 @@
         </div>
 
         <div class="row">
-            <div class="col-8">
+            <div class="col-6">
                 <div class="icheck-primary">
                     <input type="checkbox" id="remember_me" name="remember">
                     <label for="remember_me">
@@ -46,8 +46,8 @@
             </div>
 
             <!-- /.col -->
-            <div class="col-4">
-                <button type="submit" class="btn btn-primary btn-block">{{ __('Sign In') }}</button>
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary btn-block btn-sm">{{ __('Sign In') }}</button>
             </div>
             <!-- /.col -->
         </div>
@@ -74,4 +74,3 @@
         @endif
     </p>
 </x-layouts.guest>
-
