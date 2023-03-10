@@ -171,7 +171,10 @@ return [
     */
 
     'attributes' => [
-
+        'name' => 'Nombre',
+        'description' => 'Descripción',
+        'image' => 'Imagen',
+        'state' => 'Estado',
     ],
 
 ];

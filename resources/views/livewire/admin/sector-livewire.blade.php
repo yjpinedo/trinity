@@ -52,7 +52,7 @@
                         </div>
                         <div class="form-group">
                             <x-app-config.label value="Image" /> <br>
-                            <input type="file" wire:model="image" id="{{ $identificationImage }}">
+                            <input accept="image/*" type="file" wire:model="image" id="{{ $identificationImage }}">
                             <br>
                             <x-app-config.label-error for="image" />
                             <div class="form-group">
@@ -119,7 +119,7 @@
                                                 wire:click="$emit('deleteSector', {{ $sector }})" /> --}}
                                             <x-app-config.button color="link text-cyan" icon="fas fa-edit"
                                                 class="btn-sm" wire:click="edit('{{ $sector->slug }}')" />
-                                            <a href="{{ route('admin.sectors.index-cells-sector', $sector) }}" class="btn btn-link text-indigo btn-sm" title="{{ __('list cells') }}"><i
+                                            <a href="{{ route('admin.sectors.index-cells-sector', $sector) }}" class="btn btn-link text-indigo btn-sm" title="{{ __('List of cells') }}"><i
                                                     class="fas fa-compress-arrows-alt"></i></a>
                                         </td>
                                     </tr>

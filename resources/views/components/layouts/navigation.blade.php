@@ -130,7 +130,7 @@
                         <li class="nav-item">
                             <a href="permission.html" class="nav-link">
                                 <i class="fas fa-genderless nav-icon text-primary"></i>
-                                <p>{{ __('Permission') }}</p>
+                                <p>{{ __('Permissions') }}</p>
                             </a>
                         </li>
                         <li class="nav-item">
