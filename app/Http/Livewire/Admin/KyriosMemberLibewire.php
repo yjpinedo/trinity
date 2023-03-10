@@ -29,7 +29,7 @@ class KyriosMemberLibewire extends Component
         'name' => 'Name',
         'email' => 'Email',
         'cellphone' => 'Cellphone',
-        'is_baptized' => 'Is Baptized',
+        'is_baptized' => 'Baptized',
         'neighborhood_id' => 'Neighborhood',
     ];
 

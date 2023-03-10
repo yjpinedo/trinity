@@ -65,12 +65,12 @@
                                 <h5><strong>{{ __('Personal Information') }}</strong></h5>
                             </div>
                             <div class="form-group">
-                                <x-app-config.label for="idNameMember" value="Name" />
+                                <x-app-config.label for="idNameMember" value="Names" />
                                 <x-app-config.input wire:model.defer="name" id="idNameMember" autofocus="autofocus" />
                                 <x-app-config.label-error for="name" />
                             </div>
                             <div class="form-group">
-                                <x-app-config.label for="idLastnameMember" value="Lastname" />
+                                <x-app-config.label for="idLastnameMember" value="Lastnames" />
                                 <x-app-config.input wire:model.defer="lastname" id="idLastnameMember" />
                                 <x-app-config.label-error for="lastname" />
                             </div>
@@ -165,7 +165,7 @@
                                 <x-app-config.label-error for="phone" />
                             </div>
                             <div class="form-group">
-                                <x-app-config.label for="idCellPhoneMember" value="CellPhone" />
+                                <x-app-config.label for="idCellPhoneMember" value="Cellphone" />
                                 <x-app-config.input wire:model.defer="cellphone" id="idCellPhoneMember" />
                                 <x-app-config.label-error for="cellphone" />
                             </div>
@@ -186,7 +186,7 @@
                                 <h5><strong>{{ __('Ecclesiastical information') }}</strong></h5>
                             </div>
                             <div class="form-group clearfix">
-                                <x-app-config.label value="{{ __('Is Baptized') }}" />
+                                <x-app-config.label value="{{ __('Baptized') }}" />
                                 <br>
                                 <div class="icheck-primary d-inline mr-2">
                                     <input type="radio" id="idIsBaptizedNotMember" wire:model="is_baptized"
@@ -209,7 +209,7 @@
                                         <div class="icheck-primary">
                                             <input type="checkbox" id="allSchool" wire:model="all_school">
                                             <label for="allSchool">
-                                                All school
+                                                {{ __('All schools') }}
                                             </label>
                                         </div>
                                         <br>
@@ -233,12 +233,12 @@
                         </div>
 
                         @if ($step == 1)
-                            <a wire:click="changeStep('2')" class="btn btn-default btn-flat">{{ 'Next' }} <i
+                            <a wire:click="changeStep('2')" class="btn btn-default btn-flat">{{ __('Next') }} <i
                                     class="fas fa-long-arrow-alt-right text-primary"></i></a>
                         @elseif($step == 2)
                             <a wire:click="changeStep('1')" class="btn btn-default btn-flat"><i
                                     class="fas fa-long-arrow-alt-left text-danger"></i> {{ __('Previous') }}</a>
-                            <a wire:click="changeStep('3')" class="btn btn-default btn-flat">{{ 'Next' }} <i
+                            <a wire:click="changeStep('3')" class="btn btn-default btn-flat">{{ __('Next') }} <i
                                     class="fas fa-long-arrow-alt-right text-primary"></i></a>
                         @else
                             <div class="d-flex justify-content-between">
@@ -276,11 +276,11 @@
                         </div>
                         @if (!$actionFilters)
                             <a style="cursor: pointer" wire:click="$set('actionFilters', true)"
-                                class="btn btn-default btn-sm btn-flat">{{ __('Show Filters Advances') }} <i
+                                class="btn btn-default btn-sm btn-flat">{{ __('Show Filters Advanced') }} <i
                                     class="fas fa-eye text-primary"></i></a>
                         @else
                             <a style="cursor: pointer" wire:click="$set('actionFilters', false)"
-                                class="btn btn-default btn-sm btn-flat">{{ __('Hide Filters Advances') }} <i
+                                class="btn btn-default btn-sm btn-flat">{{ __('Hide Filters Advanced') }} <i
                                     class="fas fa-eye-slash text-danger"></i></a>
                         @endif
                     </div>
@@ -290,7 +290,7 @@
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-8">
                             <div class="form-group">
                                 <x-app-config.input
-                                    placeholder="{{ __('Nam, last, doc, ema, addre, pho and cellp') }}"
+                                    placeholder="{{ __('Search') }}"
                                     wire:model.debounce.500ms="search" />
                             </div>
                         </div>
@@ -311,14 +311,14 @@
                     @if ($actionFilters)
                         <div class="card pt-3 px-3">
                             <h6><i class="fas fa-search text-primary"></i>
-                                <strong>{{ __('Filters Advances') }}</strong>
+                                <strong>{{ __('Filters Advanced') }}</strong>
                             </h6>
                             <hr class="mt-0">
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3">
                                     <div class="form-group">
                                         <select class="custom-select" wire:model="document_type_search">
-                                            <option value="">{{ __('Document type') }}</option>
+                                            <option value="">{{ __('Document Type') }}</option>
                                             <option value="Registro civil">{{ __('Registro civil') }}</option>
                                             <option value="Tarjeta de identidad">{{ __('Tarjeta de identidad') }}
                                             </option>
@@ -343,7 +343,7 @@
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3">
                                     <div class="form-group">
                                         <select class="custom-select" wire:model="civil_state_search">
-                                            <option value="">{{ __('Civil state') }}</option>
+                                            <option value="">{{ __('Civil State') }}</option>
                                             <option value="Soltero">{{ __('Soltero') }}</option>
                                             <option value="Casado">{{ __('Casado') }}</option>
                                             <option value="Conviviente civil">{{ __('Conviviente civil') }}

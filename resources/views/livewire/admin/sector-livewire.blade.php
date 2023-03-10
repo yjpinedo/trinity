@@ -76,7 +76,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <x-app-config.input wire:model.debounce.500ms="search"
-                                    placeholder="{{ __('Search by id, title, description') }}" />
+                                    placeholder="{{ __('Search') }}" />
                             </div>
                         </div>
                     </div>
