@@ -4,7 +4,7 @@
     </x-slot>
 
     <x-slot name="page">
-        {{ __('Members cell ' . $cell->name) }}
+        {{ __('Members cell ') }} <i class="align-middle fas fa-long-arrow-alt-right"></i> {{ $cell->name }}
     </x-slot>
 
     <x-slot name="pageActive">
@@ -33,14 +33,14 @@
             <div class="card-body mb-0">
                 <div class="card pt-3 px-3">
                     <h6><i class="fas fa-search text-primary"></i>
-                        <strong>{{ __('Filters Advances') }}</strong>
+                        <strong>{{ __('Filters Advanced') }}</strong>
                     </h6>
                     <hr class="mt-0">
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
                                 <x-app-config.input
-                                    placeholder="{{ __('Name, lastname, documet, email, addredd, phone and cellphone') }}"
+                                    placeholder="{{ __('Search') }}"
                                     wire:model.debounce.500ms="search" />
                             </div>
                         </div>
@@ -49,7 +49,7 @@
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3">
                             <div class="form-group">
                                 <select class="custom-select" wire:model="document_type_search">
-                                    <option value="">{{ __('Document type') }}</option>
+                                    <option value="">{{ __('Document Type') }}</option>
                                     <option value="Registro civil">{{ __('Registro civil') }}</option>
                                     <option value="Tarjeta de identidad">{{ __('Tarjeta de identidad') }}
                                     </option>
@@ -74,7 +74,7 @@
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3">
                             <div class="form-group">
                                 <select class="custom-select" wire:model="civil_state_search">
-                                    <option value="">{{ __('Civil state') }}</option>
+                                    <option value="">{{ __('Civil State') }}</option>
                                     <option value="Soltero">{{ __('Soltero') }}</option>
                                     <option value="Casado">{{ __('Casado') }}</option>
                                     <option value="Conviviente civil">{{ __('Conviviente civil') }}

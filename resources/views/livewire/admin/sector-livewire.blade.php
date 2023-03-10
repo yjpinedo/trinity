@@ -52,7 +52,7 @@
                         </div>
                         <div class="form-group">
                             <x-app-config.label value="Image" /> <br>
-                            <input type="file" wire:model="image" id="{{ $identificationImage }}">
+                            <input accept="image/*" type="file" wire:model="image" id="{{ $identificationImage }}">
                             <br>
                             <x-app-config.label-error for="image" />
                             <div class="form-group">
@@ -76,7 +76,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <x-app-config.input wire:model.debounce.500ms="search"
-                                    placeholder="{{ __('Search by id, title, description') }}" />
+                                    placeholder="{{ __('Search') }}" />
                             </div>
                         </div>
                     </div>
@@ -104,23 +104,32 @@
                                                 class="badge badge-{{ $sector->state == 'Activo' ? 'success' : 'danger' }}">{{ $sector->state }}</span>
                                         </td>
                                         <td style="width: 12%" class="align-middle text-center">
-                                            @if ($sector->state == 'Activo')
-                                                <x-app-config.button color="link text-danger" icon="fas fa-power-off"
-                                                    class="btn-sm"
-                                                    wire:click="$emit('changeStateSector', {{ $sector }})" />
-                                            @else
-                                                <x-app-config.button color="link text-success" icon="fas fa-power-off"
-                                                    class="btn-sm"
-                                                    wire:click="$emit('changeStateSector', {{ $sector }})" />
-                                            @endif
+                                            <div class="btn-group">
+                                                @if ($sector->state == 'Activo')
+                                                    <x-app-config.button color="link text-danger"
+                                                        icon="fas fa-power-off" class="btn-sm"
+                                                        wire:click="$emit('changeStateSector', {{ $sector }})" />
+                                                @else
+                                                    <x-app-config.button color="link text-success"
+                                                        icon="fas fa-power-off" class="btn-sm"
+                                                        wire:click="$emit('changeStateSector', {{ $sector }})" />
+                                                @endif
 
-                                            {{-- <x-app-config.button title="Delete" color="outline-light text-danger"
+                                                {{-- <x-app-config.button title="Delete" color="outline-light text-danger"
                                                 icon="fas fa-trash" class="btn-sm"
                                                 wire:click="$emit('deleteSector', {{ $sector }})" /> --}}
-                                            <x-app-config.button color="link text-cyan" icon="fas fa-edit"
-                                                class="btn-sm" wire:click="edit('{{ $sector->slug }}')" />
-                                            <a href="{{ route('admin.sectors.index-cells-sector', $sector) }}" class="btn btn-link text-indigo btn-sm" title="{{ __('list cells') }}"><i
-                                                    class="fas fa-compress-arrows-alt"></i></a>
+
+                                                <x-app-config.button color="link text-cyan" icon="fas fa-edit"
+                                                    class="btn-sm" wire:click="edit('{{ $sector->slug }}')" />
+                                                <a href="{{ route('admin.sectors.index-cells-sector', $sector) }}"
+                                                    class="btn btn-link text-indigo btn-sm"
+                                                    title="{{ __('List of cells') }}"><i
+                                                        class="fas fa-compress-arrows-alt"></i></a>
+                                                <a href="{{ route('admin.sectors.index-members-sector', $sector) }}"
+                                                    class="btn btn-link text-navy btn-sm"
+                                                    title="{{ __('List of members') }}"><i
+                                                        class="fas fa-users"></i></a>
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty

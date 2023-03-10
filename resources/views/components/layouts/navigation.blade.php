@@ -47,7 +47,7 @@
                     <a href="{{ route('admin.neighborhood.index') }}"
                         class="nav-link {{ request()->routeIs('admin.neighborhood.index') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-map-marked-alt"></i>
-                        <p>{{ __('Neighborhood') }}</p>
+                        <p>{{ __('Neighborhoods') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -64,7 +64,14 @@
                         <p>{{ __('Bible Schools') }}</p>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->routeIs('admin.members.*') ? 'menu-open' : '' }}">
+                <li class="nav-item">
+                    <a href="{{ route('admin.members.index') }}"
+                        class="nav-link {{ request()->routeIs('admin.members.index') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-user-friends"></i>
+                        <p>{{ __('Members') }}</p>
+                    </a>
+                </li>
+                {{-- <li class="nav-item {{ request()->routeIs('admin.members.*') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->routeIs('admin.members.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user-friends"></i>
                         <p>
@@ -116,7 +123,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
                 <li class="nav-header">{{ __('USER ACCOUNT') }}</li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
@@ -130,7 +137,7 @@
                         <li class="nav-item">
                             <a href="permission.html" class="nav-link">
                                 <i class="fas fa-genderless nav-icon text-primary"></i>
-                                <p>{{ __('Permission') }}</p>
+                                <p>{{ __('Permissions') }}</p>
                             </a>
                         </li>
                         <li class="nav-item">

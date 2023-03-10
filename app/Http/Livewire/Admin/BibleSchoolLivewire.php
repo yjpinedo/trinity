@@ -21,7 +21,6 @@ class BibleSchoolLivewire extends Component
     public $columns = [
         'id' => '#',
         'name' => 'Name',
-        'created_at' => 'Date created',
         'teacher_id' => 'Teacher',
         'state' => 'State',
     ];
@@ -32,7 +31,6 @@ class BibleSchoolLivewire extends Component
 
     protected $queryString = [
         'search' => ['except' => ''],
-        //'teacher_id_search' => ['except' => ''],
     ];
 
     protected $rules = [

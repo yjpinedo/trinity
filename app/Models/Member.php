@@ -67,6 +67,12 @@ class Member extends Model
         return $this->hasOne(Cell::class, 'leader_id');
     }
 
+    // Relationship
+    public function lessons()
+    {
+        return $this->belongsToMany(Lesson::class)->withTimestamps();
+    }
+
     public function neighborhood()
     {
         return $this->belongsTo(Neighborhood::class, 'neighborhood_id');

@@ -8,7 +8,7 @@
     @endpush
 
     <x-slot name="title">
-        {{ __('Bible School - Lessons') }}
+        {{ __('Bible Schools - Lessons') }}
     </x-slot>
 
     <x-slot name="page">
@@ -20,8 +20,9 @@
     </x-slot>
 
     <x-slot name="user">
-        {{ __('Bible School') }}
+        {{ __('Bible Schools') }}
     </x-slot>
+
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-4">
             <div class="card card-outline card-primary">
@@ -59,14 +60,15 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-8">
             <div class="card card-outline card-primary">
                 <div class="card-header text-center p-2">
-                    <h6><i class="fas fa-table text-primary"></i> {{ __('List of lessons') }}
+                    <h6><i class="fas fa-table text-primary"></i> {{ __('List of lessons of bible school') }}
+                        <strong>{{ $bibleSchool->name }}</strong>
                     </h6>
                 </div>
                 <div class="card-body">
                     <div class="card p-2">
                         <div class="row p-0">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
-                                <x-app-config.input placeholder="{{ __('Search by id, name') }}"
+                                <x-app-config.input placeholder="{{ __('Search') }}"
                                     wire:model.debounce.500ms="search" />
                             </div>
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3">
@@ -97,7 +99,6 @@
                                         <td>{{ $lessonTable->name }}</td>
                                         <td>{{ \Carbon\Carbon::parse($lessonTable->lesson_date)->format('Y-m-d') }}
                                         </td>
-                                        <td>{{ $lessonTable->created_at->format('Y-m-d') }}</td>
                                         <td class="text-center align-middle">
                                             <span
                                                 class="badge badge-{{ $lessonTable->state == 'Activo' ? 'success' : 'danger' }}">{{ $lessonTable->state }}</span>
@@ -117,12 +118,17 @@
                                                 icon="fas fa-trash" class="btn-sm" wire:click="$emit('deleteBiblesSchool', {{ $lessonTable }})" /> --}}
                                                 <x-app-config.button color="link text-cyan" icon="fas fa-edit"
                                                     class="btn-sm" wire:click="edit('{{ $lessonTable->slug }}')" />
+
+                                                <a href="{{ route('admin.bible-school.lessons-take-attendance', ['bibleSchool' => $bibleSchool->slug, 'lesson' => $lessonTable->slug]) }}"
+                                                    class="btn btn-link text-navy btn-sm"
+                                                    title="{{ __('Take Attendance') }}"><i
+                                                        class="fas fa-clipboard-check"></i></a>
                                             </div>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="text-center">{{ __('Not bible schools lists') }}
+                                        <td colspan="6" class="text-center">{{ __('Not bible schools lists') }}
                                         </td>
                                     </tr>
                                 @endforelse
@@ -143,6 +149,7 @@
             </div>
         </div>
     </div>
+
     @push('js')
         <!-- Select2 -->
         <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>

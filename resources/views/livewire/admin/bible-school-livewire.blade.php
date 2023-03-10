@@ -8,15 +8,15 @@
     @endpush
 
     <x-slot name="title">
-        {{ __('Bible School') }}
+        {{ __('Bible Schools') }}
     </x-slot>
 
     <x-slot name="page">
-        {{ __('Management Bible School') }}
+        {{ __('Management Bible Schools') }}
     </x-slot>
 
     <x-slot name="pageActive">
-        {{ __('Bible School') }}
+        {{ __('Bible Schools') }}
     </x-slot>
 
     <x-slot name="user">
@@ -74,14 +74,14 @@
                     <div class="card p-2">
                         <div class="row">
                             <div class="col-6">
-                                <x-app-config.input placeholder="{{ __('Search by id, name') }}"
+                                <x-app-config.input placeholder="{{ __('Search') }}"
                                     wire:model.debounce.500ms="search" />
                             </div>
                             <div class="col-6">
                                 <div wire:ignore>
                                     <select class="form-control select2bs4" id="selectTeacherSearch"
                                         style="width: 100%">
-                                        <option value="">{{ __('Choose') }}</option>
+                                        <option value="">{{ __('Choose by teacher') }}</option>
                                         @foreach ($teachers as $key => $teacher)
                                             <option value="{{ $key }}">{{ $teacher }}</option>
                                         @endforeach
@@ -108,7 +108,6 @@
                                     <tr>
                                         <td>{{ $biblesSchoolTable->id }}</td>
                                         <td>{{ $biblesSchoolTable->name }}</td>
-                                        <td>{{ $biblesSchoolTable->created_at->format('Y-m-d') }}</td>
                                         <td>{{ $biblesSchoolTable->teacher->name ?? __('Not teacher asigned') }}</td>
                                         <td class="text-center align-middle">
                                             <span

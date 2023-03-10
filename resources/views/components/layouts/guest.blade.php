@@ -25,7 +25,7 @@
             <a href="/" class="h1"><b>Trinity</b>ICCVN</a>
         </div>
         <div class="card-body">
-            <p class="login-box-msg">{{ $title ?? __('Sign in to start your session') }}</p>
+            <p class="login-box-msg">{{ $title ?? __('Sign in to start') }}</p>
             {{ $slot }}
         </div>
         <!-- /.card-body -->
@@ -42,4 +42,3 @@
 <script src="{{ asset('../../dist/js/adminlte.min.js') }}"></script>
 </body>
 </html>
-

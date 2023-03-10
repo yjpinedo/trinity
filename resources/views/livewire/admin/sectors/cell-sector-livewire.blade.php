@@ -35,13 +35,13 @@
                     <div class="card p-2">
                         <div class="row">
                             <div class="col-6">
-                                <x-app-config.input placeholder="{{ __('Search by id, name') }}"
+                                <x-app-config.input placeholder="{{ __('Search') }}"
                                     wire:model.debounce.500ms="search" />
                             </div>
                             <div class="col-6">
                                 <div wire:ignore>
                                     <select class="form-control select2bs4" id="selectCellId" style="width: 100%">
-                                        <option value="">{{ __('Choose') }}</option>
+                                        <option value="">{{ __('Choose by neighborhood') }}</option>
                                         @foreach ($neighborhoods as $key => $neighborhood)
                                             <option value="{{ $key }}">{{ $neighborhood }}</option>
                                         @endforeach

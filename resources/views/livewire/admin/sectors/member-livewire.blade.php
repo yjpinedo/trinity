@@ -1,26 +1,30 @@
 <div>
     <x-slot name="title">
-        {{ __('Members - Beraca') }}
+        {{ __('Members - ' . $this->sector->name) }}
     </x-slot>
 
     <x-slot name="page">
-        {{ __('Members Beraca') }}
+        {{ __('Members') }} {{ $this->sector->name }}
     </x-slot>
 
     <x-slot name="pageActive">
-        {{ __('Beraca') }}
+        {{ __('Members') }}
     </x-slot>
 
     <x-slot name="user">
-        {{ __('Members') }}
+        {{ __('Sectors') }}
     </x-slot>
 
     <div class="col-12">
         <div class="card card-outline card-primary">
             <div class="card-header">
-                <h6 class=""><i class="fas fa-table text-primary"></i>
-                    {{ __('List of members beraca') }}
-                </h6>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h6 class=""><i class="fas fa-table text-primary"></i>
+                        {{ __('List of members') }}
+                    </h6>
+                    <a href="{{ route('admin.sectors.index') }}" class="btn btn-default btn-sm btn-flat"><i
+                            class="fas fa-long-arrow-alt-left text-primary"></i> {{ __('Return') }}</a>
+                </div>
             </div>
             <div class="card-body mb-0">
                 <div class="card pt-3 px-3">
@@ -28,12 +32,10 @@
                         <strong>{{ __('Filters Advanced') }}</strong>
                     </h6>
                     <hr class="mt-0">
-
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
                             <div class="form-group">
-                                <x-app-config.input
-                                    placeholder="{{ __('Search') }}"
+                                <x-app-config.input placeholder="{{ __('Search') }}"
                                     wire:model.debounce.500ms="search" />
                             </div>
                         </div>
@@ -66,7 +68,7 @@
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3">
                             <div class="form-group">
                                 <select class="custom-select" wire:model="document_type_search">
-                                    <option value="">{{ __('Document Type') }}</option>
+                                    <option value="">{{ __('Document type') }}</option>
                                     <option value="Registro civil">{{ __('Registro civil') }}</option>
                                     <option value="Tarjeta de identidad">{{ __('Tarjeta de identidad') }}
                                     </option>
@@ -91,7 +93,7 @@
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3">
                             <div class="form-group">
                                 <select class="custom-select" wire:model="civil_state_search">
-                                    <option value="">{{ __('Civil State') }}</option>
+                                    <option value="">{{ __('Civil state') }}</option>
                                     <option value="Soltero">{{ __('Soltero') }}</option>
                                     <option value="Casado">{{ __('Casado') }}</option>
                                     <option value="Conviviente civil">{{ __('Conviviente civil') }}

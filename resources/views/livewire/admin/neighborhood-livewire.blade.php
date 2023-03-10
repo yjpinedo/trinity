@@ -8,7 +8,7 @@
     @endpush
 
     <x-slot name="title">
-        {{ __('Neighborhood') }}
+        {{ __('Neighborhoods') }}
     </x-slot>
 
     <x-slot name="page">
@@ -16,7 +16,7 @@
     </x-slot>
 
     <x-slot name="user">
-        {{ __('Neighborhood') }}
+        {{ __('Neighborhoods') }}
     </x-slot>
 
     <div class="row">
@@ -24,7 +24,7 @@
             <div class="card card-outline card-primary">
                 <div class="card-header  text-center p-2">
                     <h6><i class="fas fa-map-marked-alt text-primary"></i>
-                        {{ __('Create new sector') }}
+                        {{ __('Create new neighborhood') }}
                     </h6>
                 </div>
                 <div class="card-body">
@@ -70,13 +70,13 @@
                     <div class="card p-2">
                         <div class="row">
                             <div class="col-6">
-                                <x-app-config.input placeholder="{{ __('Search by id, name') }}"
+                                <x-app-config.input placeholder="{{ __('Search') }}"
                                     wire:model.debounce.500ms="search" />
                             </div>
                             <div class="col-6">
                                 <div wire:ignore>
                                     <select class="form-control select2bs4" id="selectSectorId" style="width: 100%">
-                                        <option value="">{{ __('Choose') }}</option>
+                                        <option value="">{{ __('Choose by sector') }}</option>
                                         @foreach ($sectors as $key => $sector)
                                             <option value="{{ $key }}">{{ $sector }}</option>
                                         @endforeach
@@ -104,27 +104,28 @@
                                     <tr>
                                         <td>{{ $neighborhoodTable->id }}</td>
                                         <td>{{ $neighborhoodTable->name }}</td>
-                                        <td>{{ $neighborhoodTable->created_at->format('Y-m-d') }}</td>
                                         <td>{{ $neighborhoodTable->sector->name }}</td>
                                         <td class="text-center align-middle">
                                             <span
                                                 class="badge badge-{{ $neighborhoodTable->state == 'Activo' ? 'success' : 'danger' }}">{{ $neighborhoodTable->state }}</span>
                                         </td>
                                         <td style="width: 12%" class="align-middle text-center">
-                                            @if ($neighborhoodTable->state == 'Activo')
-                                                <x-app-config.button color="link text-danger" icon="fas fa-power-off"
-                                                    class="btn-sm"
-                                                    wire:click="$emit('changeStateNeighborhood', {{ $neighborhoodTable }})" />
-                                            @else
-                                                <x-app-config.button color="link text-success" icon="fas fa-power-off"
-                                                    class="btn-sm"
-                                                    wire:click="$emit('changeStateNeighborhood', {{ $neighborhoodTable }})" />
-                                            @endif
-                                            {{-- <x-app-config.button color="link text-danger" icon="fas fa-trash"
+                                            <div class="btn-group">
+                                                @if ($neighborhoodTable->state == 'Activo')
+                                                    <x-app-config.button color="link text-danger"
+                                                        icon="fas fa-power-off" class="btn-sm"
+                                                        wire:click="$emit('changeStateNeighborhood', {{ $neighborhoodTable }})" />
+                                                @else
+                                                    <x-app-config.button color="link text-success"
+                                                        icon="fas fa-power-off" class="btn-sm"
+                                                        wire:click="$emit('changeStateNeighborhood', {{ $neighborhoodTable }})" />
+                                                @endif
+                                                {{-- <x-app-config.button color="link text-danger" icon="fas fa-trash"
                                                 class="btn-sm"
                                                 wire:click="$emit('deleteNeighborhood', {{ $neighborhoodTable }})" /> --}}
-                                            <x-app-config.button color="link text-cyan" icon="fas fa-edit"
-                                                class="btn-sm" wire:click="edit('{{ $neighborhoodTable->id }}')" />
+                                                <x-app-config.button color="link text-cyan" icon="fas fa-edit"
+                                                    class="btn-sm" wire:click="edit('{{ $neighborhoodTable->id }}')" />
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty

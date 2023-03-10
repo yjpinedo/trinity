@@ -65,12 +65,12 @@
                                 <h5><strong>{{ __('Personal Information') }}</strong></h5>
                             </div>
                             <div class="form-group">
-                                <x-app-config.label for="idNameMember" value="Name" />
+                                <x-app-config.label for="idNameMember" value="Names" />
                                 <x-app-config.input wire:model.defer="name" id="idNameMember" autofocus="autofocus" />
                                 <x-app-config.label-error for="name" />
                             </div>
                             <div class="form-group">
-                                <x-app-config.label for="idLastnameMember" value="Lastname" />
+                                <x-app-config.label for="idLastnameMember" value="Lastnames" />
                                 <x-app-config.input wire:model.defer="lastname" id="idLastnameMember" />
                                 <x-app-config.label-error for="lastname" />
                             </div>
@@ -80,7 +80,7 @@
                                 <x-app-config.label-error for="email" />
                             </div>
                             <div class="form-group">
-                                <x-app-config.label for="idDocumentTypeMember" value="Document Type" />
+                                <x-app-config.label for="idDocumentTypeMember" value="Document type" />
                                 <select class="custom-select" id="idDocumentTypeMember"
                                     wire:model.defer="document_type">
                                     <option value="">{{ __('Choosen') }}</option>
@@ -95,7 +95,7 @@
                                 <x-app-config.label-error for="document_type" />
                             </div>
                             <div class="form-group">
-                                <x-app-config.label for="idDocumentNumberMember" value="Document Number" />
+                                <x-app-config.label for="idDocumentNumberMember" value="Document number" />
                                 <x-app-config.input wire:model.defer="document_number" id="idDocumentNumberMember" />
                                 <x-app-config.label-error for="document_number" />
                             </div>
@@ -103,7 +103,7 @@
 
                         <div class="step-2 {{ $step != 2 ? 'display-none' : '' }}">
                             <div class="form-group">
-                                <x-app-config.label for="idDateMember" value="Date of Birth" />
+                                <x-app-config.label for="idDateMember" value="Date of birth" />
                                 <input type="date" class="form-control" wire:model.defer="date_of_birth"
                                     id="idDateMember">
                                 <x-app-config.label-error for="date_of_birth" />
@@ -121,7 +121,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <x-app-config.label for="idCivilStateMember" value="{{ __('Civil State') }}" />
+                                <x-app-config.label for="idCivilStateMember" value="{{ __('Civil state') }}" />
                                 <select class="custom-select" id="idCivilStateMember" wire:model="civil_state">
                                     <option value="">{{ __('Choosen') }}</option>
                                     <option value="Soltero">{{ __('Soltero') }}</option>
@@ -165,15 +165,30 @@
                                 <x-app-config.label-error for="phone" />
                             </div>
                             <div class="form-group">
-                                <x-app-config.label for="idCellPhoneMember" value="CellPhone" />
+                                <x-app-config.label for="idCellPhoneMember" value="Cellphone" />
                                 <x-app-config.input wire:model.defer="cellphone" id="idCellPhoneMember" />
                                 <x-app-config.label-error for="cellphone" />
                             </div>
+
+                            <div class="form-group">
+                                <x-app-config.label value="Cell" /> <br>
+                                <div wire:ignore>
+                                    <select class="form-control select2bs4" id="selectCellSave" style="width: 100%;">
+                                        <option value="">{{ __('Choose') }}</option>
+                                        @foreach ($cells as $key => $cell)
+                                            <option value="{{ $key }}">{{ $cell }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <x-app-config.label-error for="cell_id" />
+                                </select>
+                            </div>
+
                             <div class="form-group text-center">
                                 <h5><strong>{{ __('Ecclesiastical information') }}</strong></h5>
                             </div>
                             <div class="form-group clearfix">
-                                <x-app-config.label value="{{ __('Is Baptized') }}" />
+                                <x-app-config.label value="{{ __('Baptized') }}" />
                                 <br>
                                 <div class="icheck-primary d-inline mr-2">
                                     <input type="radio" id="idIsBaptizedNotMember" wire:model="is_baptized"
@@ -196,7 +211,7 @@
                                         <div class="icheck-primary">
                                             <input type="checkbox" id="allSchool" wire:model="all_school">
                                             <label for="allSchool">
-                                                All school
+                                                {{ __('All schools') }}
                                             </label>
                                         </div>
                                         <br>
@@ -220,12 +235,12 @@
                         </div>
 
                         @if ($step == 1)
-                            <a wire:click="changeStep('2')" class="btn btn-default btn-flat">{{ 'Next' }} <i
+                            <a wire:click="changeStep('2')" class="btn btn-default btn-flat">{{ __('Next') }} <i
                                     class="fas fa-long-arrow-alt-right text-primary"></i></a>
                         @elseif($step == 2)
                             <a wire:click="changeStep('1')" class="btn btn-default btn-flat"><i
                                     class="fas fa-long-arrow-alt-left text-danger"></i> {{ __('Previous') }}</a>
-                            <a wire:click="changeStep('3')" class="btn btn-default btn-flat">{{ 'Next' }} <i
+                            <a wire:click="changeStep('3')" class="btn btn-default btn-flat">{{ __('Next') }} <i
                                     class="fas fa-long-arrow-alt-right text-primary"></i></a>
                         @else
                             <div class="d-flex justify-content-between">
@@ -263,11 +278,11 @@
                         </div>
                         @if (!$actionFilters)
                             <a style="cursor: pointer" wire:click="$set('actionFilters', true)"
-                                class="btn btn-default btn-sm btn-flat">{{ __('Show Filters Advances') }} <i
+                                class="btn btn-default btn-sm btn-flat">{{ __('Show Filters Advanced') }} <i
                                     class="fas fa-eye text-primary"></i></a>
                         @else
                             <a style="cursor: pointer" wire:click="$set('actionFilters', false)"
-                                class="btn btn-default btn-sm btn-flat">{{ __('Hide Filters Advances') }} <i
+                                class="btn btn-default btn-sm btn-flat">{{ __('Hide Filters Advanced') }} <i
                                     class="fas fa-eye-slash text-danger"></i></a>
                         @endif
                     </div>
@@ -276,8 +291,7 @@
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-8">
                             <div class="form-group">
-                                <x-app-config.input
-                                    placeholder="{{ __('Nam, last, doc, ema, addre, pho and cellp') }}"
+                                <x-app-config.input placeholder="{{ __('Search') }}"
                                     wire:model.debounce.500ms="search" />
                             </div>
                         </div>
@@ -286,7 +300,7 @@
                                 <div wire:ignore>
                                     <select class="custom-select select2bs4" id="selectNeighborhoodId"
                                         style="width: 100%">
-                                        <option value="">{{ __('Choose') }}</option>
+                                        <option value="">{{ __('Choose by neighborhood') }}</option>
                                         @foreach ($neighborhoods as $key => $neighborhood)
                                             <option value="{{ $key }}">{{ $neighborhood }}</option>
                                         @endforeach
@@ -298,7 +312,7 @@
                     @if ($actionFilters)
                         <div class="card pt-3 px-3">
                             <h6><i class="fas fa-search text-primary"></i>
-                                <strong>{{ __('Filters Advances') }}</strong>
+                                <strong>{{ __('Filters Advanced') }}</strong>
                             </h6>
                             <hr class="mt-0">
                             <div class="row">
@@ -383,27 +397,28 @@
                                         <td>{{ $memberTable->id }}</td>
                                         <td>{{ $memberTable->document_number }}</td>
                                         <td>{{ $memberTable->name }} {{ $memberTable->lastname }}</td>
-                                        <td>{{ $memberTable->is_baptized }}</td>
                                         <td>{{ $memberTable->neighborhood->name }}</td>
                                         <td class="text-center align-middle">
                                             <span
                                                 class="badge badge-{{ $memberTable->state == 'Activo' ? 'success' : 'danger' }}">{{ $memberTable->state }}</span>
                                         </td>
                                         <td style="width: 12%" class="align-middle text-center">
-                                            @if ($memberTable->state == 'Activo')
-                                                <x-app-config.button color="link text-danger" icon="fas fa-power-off"
-                                                    class="btn-sm"
-                                                    wire:click="$emit('changeStateMember', {{ $memberTable }})" />
-                                            @else
-                                                <x-app-config.button color="link text-success" icon="fas fa-power-off"
-                                                    class="btn-sm"
-                                                    wire:click="$emit('changeStateMember', {{ $memberTable }})" />
-                                            @endif
-                                            {{-- <x-app-config.button color="link text-danger" icon="fas fa-trash"
+                                            <div class="btn-group">
+                                                @if ($memberTable->state == 'Activo')
+                                                    <x-app-config.button color="link text-danger"
+                                                        icon="fas fa-power-off" class="btn-sm"
+                                                        wire:click="$emit('changeStateMember', {{ $memberTable }})" />
+                                                @else
+                                                    <x-app-config.button color="link text-success"
+                                                        icon="fas fa-power-off" class="btn-sm"
+                                                        wire:click="$emit('changeStateMember', {{ $memberTable }})" />
+                                                @endif
+                                                {{-- <x-app-config.button color="link text-danger" icon="fas fa-trash"
                                                 class="btn-sm"
                                                 wire:click="$emit('deleteMember', {{ $memberTable }})" /> --}}
-                                            <x-app-config.button color="link text-cyan" icon="fas fa-edit"
-                                                class="btn-sm" wire:click="edit('{{ $memberTable->id }}')" />
+                                                <x-app-config.button color="link text-cyan" icon="fas fa-edit"
+                                                    class="btn-sm" wire:click="edit('{{ $memberTable->id }}')" />
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty
@@ -448,10 +463,17 @@
                 }).on('change', () => {
                     @this.set('neighborhood_id', select2NeighborhoodSave.select2("val"));
                 });
+
+                let select2CellSave = $('#selectCellSave').select2({
+                    theme: 'bootstrap4'
+                }).on('change', () => {
+                    @this.set('cell_id', select2CellSave.select2("val"));
+                });
             });
 
             Livewire.on('clear-select', () => {
                 $('#selectNeighborhoodSave').val('').trigger('change');
+                $('#selectCellSave').val('').trigger('change');
             });
 
             Livewire.on('alert', (data) => {
@@ -467,69 +489,10 @@
                 });
             });
 
-            Livewire.on('selected-item', neighborhood_id => {
+            Livewire.on('selected-item', (neighborhood_id, cell_id) => {
                 $('#selectNeighborhoodSave').val(neighborhood_id).trigger('change');
+                $('#selectCellSave').val(cell_id).trigger('change');
             });
-
-            /* Livewire.on('changeStateMember', member => {
-                Swal.fire({
-                    title: "{{ __('Are you sure you want to change state') }}",
-                    toast: true,
-                    text: `{{ __('There is no way back') }}`,
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    position: 'top-end',
-                    confirmButtonText: "{{ __('Yes, change state it!') }}"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-
-                        Livewire.emit('changeState', member.id);
-
-                        Swal.fire({
-                            position: 'top-end',
-                            toast: true,
-                            icon: 'success',
-                            title: "{{ __('Change state member') }}",
-                            text: `{{ __('The state of the member ${member.name} was successfully updated') }}`,
-                            showConfirmButton: false,
-                            timer: 2500,
-                            timerProgressBar: true,
-                        });
-                    }
-                });
-            }); */
-
-            /* Livewire.on('changeStateMember', sector => {
-                Swal.fire({
-                    title: "{{ __('Are you sure you want to change state') }}",
-                    toast: true,
-                    text: `{{ __('There is no way back') }}`,
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    position: 'top-end',
-                    confirmButtonText: "{{ __('Yes, change state it!') }}"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-
-                        Livewire.emit('changeState', sector.id);
-
-                        Swal.fire({
-                            position: 'top-end',
-                            toast: true,
-                            icon: 'success',
-                            title: "{{ __('Change state sector') }}",
-                            text: `{{ __('The state of the sector ${sector.name} was successfully updated') }}`,
-                            showConfirmButton: false,
-                            timer: 2500,
-                            timerProgressBar: true,
-                        });
-                    }
-                });
-            }); */
 
             /* Livewire.on('deleteMember', member => {
                 Swal.fire({

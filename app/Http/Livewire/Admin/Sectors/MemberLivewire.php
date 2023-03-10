@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\Admin\Sectors;
 
 use App\Models\Member;
 use Livewire\Component;
 use App\Models\Neighborhood;
+use App\Models\Sector;
 use Livewire\WithPagination;
 use App\Traits\WithOrderTrait;
 use App\Traits\WithRangeTypeNetworkTrait;
 
-class KyriosMemberLibewire extends Component
+class MemberLivewire extends Component
 {
     use WithOrderTrait, WithPagination, WithRangeTypeNetworkTrait;
 
-    public $document_type_search, $sex_search, $civil_state_search, $is_baptized_search;
+    public $document_type_search, $sex_search, $civil_state_search, $is_baptized_search, $sector;
     public $is_baptized = 'No';
     public $neighborhood_id_serach = '';
     public $search = '';
@@ -33,16 +34,21 @@ class KyriosMemberLibewire extends Component
         'neighborhood_id' => 'Neighborhood',
     ];
 
+    public function mount(Sector $sector)
+    {
+        $this->sector = $sector;
+    }
+
     public function render()
     {
         $members = Member::orderBy($this->sortColumn, $this->sortDirection)->whereHas('neighborhood', function ($neighborhood) {
             return $neighborhood->whereHas('sector', function ($sector) {
-                return $sector->where('slug', 'kyrios');
+                return $sector->where('slug', $this->sector->slug);
             });
         });
 
         $neighborhoods = Neighborhood::orderBy('name', 'asc')->whereHas('sector', function ($sector) {
-            return $sector->where('slug', 'kyrios');
+            return $sector->where('slug', $this->sector->slug);
         })->pluck('name', 'id');
 
         if ($this->search && $this->search != '') {
@@ -84,7 +90,7 @@ class KyriosMemberLibewire extends Component
 
         $this->rangeByNetwork($this->type_red_search);
 
-        return view('livewire.admin.kyrios-member-libewire', ['members' => $members->paginate(10), 'neighborhoods' => $neighborhoods])
-            ->layout('components.layouts.app');
+        return view('livewire.admin.sectors.member-livewire', ['members' => $members->paginate(10), 'neighborhoods' => $neighborhoods])
+        ->layout('components.layouts.app');
     }
 }

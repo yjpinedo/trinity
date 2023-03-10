@@ -28,7 +28,7 @@ class MemberCellLivewire extends Component
         'name' => 'Name',
         'email' => 'Email',
         'cellphone' => 'Cellphone',
-        'is_baptized' => 'Is Baptized',
+        'is_baptized' => 'Baptized',
     ];
 
     public function mount(Cell $cell)

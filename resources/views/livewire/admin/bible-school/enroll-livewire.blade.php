@@ -8,19 +8,19 @@
     @endpush
 
     <x-slot name="title">
-        {{ __('Bible School - Enroll Member') }}
+        {{ __('Bible Schools - Enroll Member') }}
     </x-slot>
 
     <x-slot name="page">
-        {{ __('Enroll Member') }}
+        {{ __('Enroll Members') }}
     </x-slot>
 
     <x-slot name="pageActive">
-        {{ __('Enroll Member') }}
+        {{ __('Enroll Members') }}
     </x-slot>
 
     <x-slot name="user">
-        {{ __('Bible School') }}
+        {{ __('Bible Schools') }}
     </x-slot>
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-4">
@@ -72,7 +72,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <x-app-config.input placeholder="{{ __('Choosen by, id, Name') }}"
+                                <x-app-config.input placeholder="{{ __('Search') }}"
                                     wire:model.debounce.500ms="search" />
                             </div>
                         </div>
@@ -191,7 +191,7 @@
 
             Livewire.on('changeProgressMember', (member, progress) => {
                 Swal.fire({
-                    title: "{{ __('Are you sure you want to state') }}",
+                    title: "{{ __('Are you sure you want to change progress') }}",
                     toast: true,
                     text: `{{ __('There is no way back') }}`,
                     icon: 'warning',
@@ -199,7 +199,8 @@
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
                     position: 'top-end',
-                    confirmButtonText: "{{ __('Yes, state it!') }}"
+                    confirmButtonText: "{{ __('Yes, go ahead!') }}",
+                    cancelButtonText: "{{ __('Cancel') }}"
                 }).then((result) => {
                     if (result.isConfirmed) {
 
@@ -209,8 +210,8 @@
                             position: 'top-end',
                             toast: true,
                             icon: 'success',
-                            title: "{{ __('Change state member') }}",
-                            text: `{{ __('The member ${member.name} has been successfully change') }}`,
+                            title: "{{ __('Change the progress of member') }}",
+                            text: `{{ __('Successfully changed member progress') }} ${member.full_name} `,
                             showConfirmButton: false,
                             timer: 2500,
                             timerProgressBar: true,
