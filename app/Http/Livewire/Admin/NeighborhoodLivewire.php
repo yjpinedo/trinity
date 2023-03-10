@@ -21,7 +21,6 @@ class NeighborhoodLivewire extends Component
     public $columns = [
         'id' => '#',
         'name' => 'Name',
-        'created_at' => 'Date created',
         'sector_id' => 'Sector',
         'state' => 'State',
     ];

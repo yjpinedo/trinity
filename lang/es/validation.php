@@ -175,6 +175,7 @@ return [
         'description' => 'Descripción',
         'image' => 'Imagen',
         'state' => 'Estado',
+        'sector_id' => 'Sector',
     ],
 
 ];

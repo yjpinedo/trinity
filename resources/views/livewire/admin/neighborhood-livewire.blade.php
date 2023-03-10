@@ -24,7 +24,7 @@
             <div class="card card-outline card-primary">
                 <div class="card-header  text-center p-2">
                     <h6><i class="fas fa-map-marked-alt text-primary"></i>
-                        {{ __('Create new sector') }}
+                        {{ __('Create new neighborhood') }}
                     </h6>
                 </div>
                 <div class="card-body">
@@ -104,7 +104,6 @@
                                     <tr>
                                         <td>{{ $neighborhoodTable->id }}</td>
                                         <td>{{ $neighborhoodTable->name }}</td>
-                                        <td>{{ $neighborhoodTable->created_at->format('Y-m-d') }}</td>
                                         <td>{{ $neighborhoodTable->sector->name }}</td>
                                         <td class="text-center align-middle">
                                             <span
