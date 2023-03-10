@@ -24,7 +24,7 @@
             <div class="card card-outline card-primary">
                 <div class="card-header  text-center p-2">
                     <h6><i class="fas fa-map-marked-alt text-primary"></i>
-                        {{ __('Create new cells') }}
+                        {{ __('Create new cell') }}
                     </h6>
                 </div>
                 <div class="card-body">

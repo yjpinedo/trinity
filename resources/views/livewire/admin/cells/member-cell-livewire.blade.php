@@ -4,7 +4,7 @@
     </x-slot>
 
     <x-slot name="page">
-        {{ __('Members cell ' . $cell->name) }}
+        {{ __('Members cell ') }} <i class="align-middle fas fa-long-arrow-alt-right"></i> {{ $cell->name }}
     </x-slot>
 
     <x-slot name="pageActive">
@@ -33,7 +33,7 @@
             <div class="card-body mb-0">
                 <div class="card pt-3 px-3">
                     <h6><i class="fas fa-search text-primary"></i>
-                        <strong>{{ __('Filters Advances') }}</strong>
+                        <strong>{{ __('Filters Advanced') }}</strong>
                     </h6>
                     <hr class="mt-0">
                     <div class="row">
