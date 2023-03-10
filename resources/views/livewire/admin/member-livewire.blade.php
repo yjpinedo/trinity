@@ -403,20 +403,22 @@
                                                 class="badge badge-{{ $memberTable->state == 'Activo' ? 'success' : 'danger' }}">{{ $memberTable->state }}</span>
                                         </td>
                                         <td style="width: 12%" class="align-middle text-center">
-                                            @if ($memberTable->state == 'Activo')
-                                                <x-app-config.button color="link text-danger" icon="fas fa-power-off"
-                                                    class="btn-sm"
-                                                    wire:click="$emit('changeStateMember', {{ $memberTable }})" />
-                                            @else
-                                                <x-app-config.button color="link text-success" icon="fas fa-power-off"
-                                                    class="btn-sm"
-                                                    wire:click="$emit('changeStateMember', {{ $memberTable }})" />
-                                            @endif
-                                            {{-- <x-app-config.button color="link text-danger" icon="fas fa-trash"
+                                            <div class="btn-group">
+                                                @if ($memberTable->state == 'Activo')
+                                                    <x-app-config.button color="link text-danger"
+                                                        icon="fas fa-power-off" class="btn-sm"
+                                                        wire:click="$emit('changeStateMember', {{ $memberTable }})" />
+                                                @else
+                                                    <x-app-config.button color="link text-success"
+                                                        icon="fas fa-power-off" class="btn-sm"
+                                                        wire:click="$emit('changeStateMember', {{ $memberTable }})" />
+                                                @endif
+                                                {{-- <x-app-config.button color="link text-danger" icon="fas fa-trash"
                                                 class="btn-sm"
                                                 wire:click="$emit('deleteMember', {{ $memberTable }})" /> --}}
-                                            <x-app-config.button color="link text-cyan" icon="fas fa-edit"
-                                                class="btn-sm" wire:click="edit('{{ $memberTable->id }}')" />
+                                                <x-app-config.button color="link text-cyan" icon="fas fa-edit"
+                                                    class="btn-sm" wire:click="edit('{{ $memberTable->id }}')" />
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty
@@ -465,7 +467,6 @@
                 let select2CellSave = $('#selectCellSave').select2({
                     theme: 'bootstrap4'
                 }).on('change', () => {
-                    console.log(select2CellSave.select2("val"));
                     @this.set('cell_id', select2CellSave.select2("val"));
                 });
             });
