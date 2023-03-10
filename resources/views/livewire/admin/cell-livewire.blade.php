@@ -118,28 +118,30 @@
                                     <tr>
                                         <td>{{ $cellTable->id }}</td>
                                         <td>{{ $cellTable->name }}</td>
-                                        <td>{{ $cellTable->created_at->format('Y-m-d') }}</td>
                                         <td>{{ $cellTable->neighborhood->name }}</td>
                                         <td class="text-center align-middle">
                                             <span
                                                 class="badge badge-{{ $cellTable->state == 'Activo' ? 'success' : 'danger' }}">{{ $cellTable->state }}</span>
                                         </td>
                                         <td style="width: 12%" class="align-middle text-center">
-                                            @if ($cellTable->state == 'Activo')
-                                                <x-app-config.button color="link text-danger" icon="fas fa-power-off"
-                                                    class="btn-sm"
-                                                    wire:click="$emit('changeStateCell', {{ $cellTable }})" />
-                                            @else
-                                                <x-app-config.button color="link text-success" icon="fas fa-power-off"
-                                                    class="btn-sm"
-                                                    wire:click="$emit('changeStateCell', {{ $cellTable }})" />
-                                            @endif
-                                            {{-- <x-app-config.button  color="link text-danger" icon="fas fa-trash"
+                                            <div class="btn-group">
+                                                @if ($cellTable->state == 'Activo')
+                                                    <x-app-config.button color="link text-danger"
+                                                        icon="fas fa-power-off" class="btn-sm"
+                                                        wire:click="$emit('changeStateCell', {{ $cellTable }})" />
+                                                @else
+                                                    <x-app-config.button color="link text-success"
+                                                        icon="fas fa-power-off" class="btn-sm"
+                                                        wire:click="$emit('changeStateCell', {{ $cellTable }})" />
+                                                @endif
+                                                {{-- <x-app-config.button  color="link text-danger" icon="fas fa-trash"
                                                 class="btn-sm" wire:click="$emit('deleteCell', {{ $cellTable }})" /> --}}
-                                            <x-app-config.button color="link text-cyan" icon="fas fa-edit"
-                                                class="btn-sm" wire:click="edit('{{ $cellTable->slug }}')" />
-                                            <a href="{{ route('admin.cells.index-members-cells', $cellTable) }}" class="btn btn-link btn-sm text-indigo"><i
-                                                    class="fas fa-user-friends"></i></a>
+                                                <x-app-config.button color="link text-cyan" icon="fas fa-edit"
+                                                    class="btn-sm" wire:click="edit('{{ $cellTable->slug }}')" />
+                                                <a href="{{ route('admin.cells.index-members-cells', $cellTable) }}"
+                                                    class="btn btn-link btn-sm text-indigo"><i
+                                                        class="fas fa-user-friends"></i></a>
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty

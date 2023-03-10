@@ -29,7 +29,8 @@
     "Dashboard": "Inicio",
     "MENU OPTIONS": "MENÚ",
     "Sectors": "Sectores",
-    "Neighborhood": "Barrios",
+    "Neighborhood": "Barrio",
+    "Neighborhoods": "Barrios",
     "Cells": "Céulas",
     "Bible Schools": "Escuelas Bíblicas",
     "Members": "Miembros",
@@ -59,5 +60,7 @@
     "Showing": "Mostrando",
     "to": "a",
     "of": "de",
-    "entries": "entradas"
+    "entries": "entradas",
+    "Date created": "Fecha de Creación",
+    "Choose by neighborhoods": "Seleccione un barrio"
 }

@@ -176,6 +176,7 @@ return [
         'image' => 'Imagen',
         'state' => 'Estado',
         'sector_id' => 'Sector',
+        'neighborhood_id' => 'Barrio',
     ],
 
 ];

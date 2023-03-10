@@ -8,7 +8,7 @@
     @endpush
 
     <x-slot name="title">
-        {{ __('Neighborhood') }}
+        {{ __('Neighborhoods') }}
     </x-slot>
 
     <x-slot name="page">
@@ -16,7 +16,7 @@
     </x-slot>
 
     <x-slot name="user">
-        {{ __('Neighborhood') }}
+        {{ __('Neighborhoods') }}
     </x-slot>
 
     <div class="row">

@@ -21,7 +21,6 @@ class CellLivewire extends Component
     public $columns = [
         'id' => '#',
         'name' => 'Name',
-        'created_at' => 'Date created',
         'neighborhood_id' => 'Neighborhood',
         'state' => 'State',
     ];
