@@ -80,19 +80,19 @@ class EnrollLivewire extends Component
         $idsBibleSchools = $this->getBibleSchoolByMember($member);
 
         $icon = 'success';
-        $message = "The miembro $member->name enrolle successfully";
+        $message = __("Member successfully enrolled") . $member->full_name;
 
         if (!count($memberEnroled) && !in_array($this->bibleSchool->id, $idsBibleSchools)) {
             if (!is_null($member->bibleSchools()->attach($this->bibleSchool->id))) {
                 $icon = 'error';
-                $message = "The miembro $member->name not enrolle";
+                $message = __("The miembro not enrolle");
             }
         } else if (count($memberEnroled)) {
             $icon = 'error';
-            $message = "The miembro $member->name is already enrolled";
+            $message = __("The miembro is already enrolled");
         } else {
             $icon = 'error';
-            $message = "The miembro $member->name already ends the Bible School";
+            $message = __("The miembro already ends the Bible School");
         }
 
         $this->emit('alert', ['icon' => $icon, 'message' => $message]);

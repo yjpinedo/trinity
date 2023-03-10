@@ -8,7 +8,7 @@
     @endpush
 
     <x-slot name="title">
-        {{ __('Bible School - Lessons') }}
+        {{ __('Bible Schools - Lessons') }}
     </x-slot>
 
     <x-slot name="page">
@@ -20,7 +20,7 @@
     </x-slot>
 
     <x-slot name="user">
-        {{ __('Bible School') }}
+        {{ __('Bible Schools') }}
     </x-slot>
 
     <div class="row">
@@ -99,7 +99,6 @@
                                         <td>{{ $lessonTable->name }}</td>
                                         <td>{{ \Carbon\Carbon::parse($lessonTable->lesson_date)->format('Y-m-d') }}
                                         </td>
-                                        <td>{{ $lessonTable->created_at->format('Y-m-d') }}</td>
                                         <td class="text-center align-middle">
                                             <span
                                                 class="badge badge-{{ $lessonTable->state == 'Activo' ? 'success' : 'danger' }}">{{ $lessonTable->state }}</span>
@@ -120,7 +119,8 @@
                                                 <x-app-config.button color="link text-cyan" icon="fas fa-edit"
                                                     class="btn-sm" wire:click="edit('{{ $lessonTable->slug }}')" />
 
-                                                <a href="{{ route('admin.bible-school.lessons-take-attendance', ['bibleSchool' => $bibleSchool->slug, 'lesson' => $lessonTable->slug]) }}" class="btn btn-link text-navy btn-sm"
+                                                <a href="{{ route('admin.bible-school.lessons-take-attendance', ['bibleSchool' => $bibleSchool->slug, 'lesson' => $lessonTable->slug]) }}"
+                                                    class="btn btn-link text-navy btn-sm"
                                                     title="{{ __('Take Attendance') }}"><i
                                                         class="fas fa-clipboard-check"></i></a>
                                             </div>

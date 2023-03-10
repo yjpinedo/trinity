@@ -8,11 +8,11 @@
     @endpush
 
     <x-slot name="title">
-        {{ __('Bible School - Lessons - Take Attendance') }}
+        {{ __('Bible Schools - Lessons - Take Attendance') }}
     </x-slot>
 
     <x-slot name="page">
-        {{ __('Management Take Attendance') }}
+        {{ __('Management Take Attendance for the lessons') }} <i class="align-middle fas fa-long-arrow-alt-right"></i> {{ $this->lesson->name }}
     </x-slot>
 
     <x-slot name="pageActive">
@@ -26,7 +26,7 @@
     <div class="row">
         <div class="col-6">
             <div class="card card-outline card-primary">
-                <div class="card-header text-center p-2">
+                <div class="card-header p-2">
                     <h6><i class="fas fa-table text-primary"></i> {{ __('List of member take attendance') }}
                     </h6>
                 </div>
@@ -34,7 +34,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <x-app-config.input placeholder="{{ __('Chosen by Id, Name, lastname, document') }}"
+                                <x-app-config.input placeholder="{{ __('Search') }}"
                                     wire:model.debounce.500ms="search" />
                             </div>
                         </div>
@@ -87,14 +87,18 @@
         <div class="col-6">
             <div class="card card-outline card-primary">
                 <div class="card-header text-center p-2">
-                    <h6><i class="fas fa-table text-primary"></i> {{ __('List of member remove assistance') }}
-                    </h6>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6><i class="fas fa-table text-primary"></i> {{ __('List of member remove assistance') }}
+                        </h6>
+                        <a href="{{ route('admin.bible-school.index-lessons', $bibleSchool->slug) }}" class="btn btn-default btn-sm btn-flat"><i class="fas fa-long-arrow-alt-left text-primary"></i> {{ __('Return') }}</a>
+                    </div>
+
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <x-app-config.input placeholder="{{ __('Chosen by Id, Name, lastname, document') }}"
+                                <x-app-config.input placeholder="{{ __('Search') }}"
                                     wire:model.debounce.500ms="search_lesson" />
                             </div>
                         </div>

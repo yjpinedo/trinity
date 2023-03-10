@@ -8,15 +8,15 @@
     @endpush
 
     <x-slot name="title">
-        {{ __('Bible School') }}
+        {{ __('Bible Schools') }}
     </x-slot>
 
     <x-slot name="page">
-        {{ __('Management Bible School') }}
+        {{ __('Management Bible Schools') }}
     </x-slot>
 
     <x-slot name="pageActive">
-        {{ __('Bible School') }}
+        {{ __('Bible Schools') }}
     </x-slot>
 
     <x-slot name="user">

@@ -177,6 +177,10 @@ return [
         'state' => 'Estado',
         'sector_id' => 'Sector',
         'neighborhood_id' => 'Barrio',
+        'teacher_id' => 'Profesor',
+        'lesson_date' => 'Fecha de clase',
+        'lesson_id' => 'Clase',
+        'member_id' => 'Miembro',
     ],
 
 ];

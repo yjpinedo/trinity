@@ -22,7 +22,6 @@ class LessonLivewire extends Component
         'id' => '#',
         'name' => 'Name',
         'lesson_date' => 'Date Lesson',
-        'created_at' => 'Date created',
         'state' => 'State',
     ];
 
