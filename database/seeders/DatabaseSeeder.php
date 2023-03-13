@@ -25,18 +25,19 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.com'
         ]);
 
-        $nameSector = [
-            'Adonais',
-            'Beraca',
-            'Jehova Nissi',
-            'Kyrios',
-            'Shalom',
+        $sectors = [
+            ['name' => 'Adonais', 'color' => 'info'],
+            ['name' => 'Beraca', 'color' => 'warning'],
+            ['name' => 'Jehova Nissi', 'color' => 'white'],
+            ['name' => 'Kyrios', 'color' => 'danger'],
+            ['name' => 'Shalom', 'color' => 'indigo'],
         ];
 
-        foreach ($nameSector as $value) {
+        foreach ($sectors as $sector) {
             \App\Models\Sector::factory()->create([
-                'name' => $value,
-                'slug' => str($value)->slug(),
+                'name' => $sector['name'],
+                'slug' => str($sector['name'])->slug(),
+                'color' => $sector['color'],
             ])->each(function ($sector) {
                 \App\Models\Neighborhood::factory(11)->create([
                     'sector_id' => $sector->id,
@@ -51,7 +52,7 @@ class DatabaseSeeder extends Seeder
             ]);
         });
 
-        \App\Models\Member::factory(50)->create();
+        \App\Models\Member::factory(1050)->create();
         \App\Models\BibleSchool::factory(10)->create();
 
         // \App\Models\User::factory()->create([

@@ -1,8 +1,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{ route('dashboard') }}" class="brand-link">
-        <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-            style="opacity: .8">
+    <a href="{{ route('admin.dashboard') }}" class="brand-link">
+        <img src="{{ asset('dist/img/iglesia-cristiana-cuadrangular-logo.png') }}" alt="ICVVN Logo"
+            class="brand-image img-circle elevation-3">
         <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
     </a>
 
@@ -10,7 +10,10 @@
     <div class="sidebar">
 
         <!-- Sidebar user (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 text-center d-flex justify-content-center">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            {{-- <div class="image">
+                <img src="{{ asset('dist/img/iglesia-cristiana-cuadrangular-logo.png') }}" class="img-circle elevation-2" alt="User Image">
+            </div> --}}
             <div class="info">
                 <form method="POST" action="{{ route('logout') }}" class="form-inline">
                     @csrf
@@ -30,8 +33,8 @@
                 data-accordion="false">
                 <li class="nav-header">{{ __('MENU OPTIONS') }}</li>
                 <li class="nav-item">
-                    <a href="{{ route('dashboard') }}"
-                        class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('admin.dashboard') }}"
+                        class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-home"></i>
                         <p>{{ __('Dashboard') }}</p>
                     </a>

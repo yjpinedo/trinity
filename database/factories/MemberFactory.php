@@ -33,6 +33,7 @@ class MemberFactory extends Factory
             'is_baptized' => $this->faker->randomElement(['Si', 'No']),
             'state' => $this->faker->randomElement(['Activo', 'Inactivo']),
             'neighborhood_id' => Neighborhood::all()->random()->id,
+            'created_at' => $this->faker->dateTimeBetween(date('Y-m-d', strtotime('2022-01-01')), now()),
         ];
     }
 }

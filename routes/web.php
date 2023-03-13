@@ -3,22 +3,23 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Admin\CellLivewire;
 use App\Http\Controllers\ProfileController;
-use App\Http\Livewire\Admin\AdonaiMemberLivewire;
-use App\Http\Livewire\Admin\BeracaMemberLibewire;
-use App\Http\Livewire\Admin\BibleSchool\EnrollLivewire;
-//use App\Http\Livewire\Admin\BibleSchool\MemberLivewire as BibleSchoolMemberLivewire;
-use App\Http\Livewire\Admin\BibleSchool\TakeAttendanceLivewire;
-use App\Http\Livewire\Admin\BibleSchoolLivewire;
-use App\Http\Livewire\Admin\Cells\MemberCellLivewire;
-use App\Http\Livewire\Admin\Sectors\CellSectorLivewire;
-use App\Http\Livewire\Admin\JehovaNissiMemberLibewire;
-use App\Http\Livewire\Admin\KyriosMemberLibewire;
 use App\Http\Livewire\Admin\LessonLivewire;
 use App\Http\Livewire\Admin\MemberLivewire;
 use App\Http\Livewire\Admin\SectorLivewire;
+//use App\Http\Livewire\Admin\BibleSchool\MemberLivewire as BibleSchoolMemberLivewire;
+use App\Http\Livewire\Admin\DashboardLivewire;
+use App\Http\Livewire\Admin\BibleSchoolLivewire;
+use App\Http\Livewire\Admin\AdonaiMemberLivewire;
+use App\Http\Livewire\Admin\BeracaMemberLibewire;
+use App\Http\Livewire\Admin\KyriosMemberLibewire;
 use App\Http\Livewire\Admin\NeighborhoodLivewire;
-use App\Http\Livewire\Admin\Sectors\MemberLivewire as SectorsMemberLivewire;
 use App\Http\Livewire\Admin\ShalomMemberLibewire;
+use App\Http\Livewire\Admin\Cells\MemberCellLivewire;
+use App\Http\Livewire\Admin\JehovaNissiMemberLibewire;
+use App\Http\Livewire\Admin\BibleSchool\EnrollLivewire;
+use App\Http\Livewire\Admin\Sectors\CellSectorLivewire;
+use App\Http\Livewire\Admin\BibleSchool\TakeAttendanceLivewire;
+use App\Http\Livewire\Admin\Sectors\MemberLivewire as SectorsMemberLivewire;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,8 +30,10 @@ Route::get('/', function () {
 })->middleware(['auth', 'verified'])->name('dashboard'); */
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::view('/dashboard', 'dashboard')->name('dashboard');
+    /* Route::view('/dashboard', 'dashboard')->name('dashboard'); */
     Route::prefix('admin')->group(function () {
+
+        Route::get('/dashboard', DashboardLivewire::class)->name('admin.dashboard');
         Route::get('/sectors', SectorLivewire::class)->name('admin.sectors.index');
         Route::get('/sectors/members/{sector:slug}', SectorsMemberLivewire::class)->name('admin.sectors.index-members-sector');
         Route::get('/sectors/cell/{sector:slug}', CellSectorLivewire::class)->name('admin.sectors.index-cells-sector');
